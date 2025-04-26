@@ -56,30 +56,11 @@
     opacity: 1;
     transform: translateY(0); /* 元の位置に降りてくる */
   }
-
-  /* 揺れるアニメーション */
-  .shake {
-    animation: shake 0.4s;
-  }
-  @keyframes shake {
-    0% { transform: translate(0, 0); }
-    25% { transform: translate(5px, 0); }
-    50% { transform: translate(-5px, 0); }
-    75% { transform: translate(5px, 0); }
-    100% { transform: translate(0, 0); }
-  }
-
-  /* 大吉と小吉に光る効果 */
-  .glow {
-    animation: glow 1.5s ease-in-out infinite alternate;
-  }
-  @keyframes glow {
-    0% {
-      text-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 30px gold, 0 0 40px gold;
-    }
-    100% {
-      text-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00, 0 0 50px #ffcc00;
-    }
+  #shareButton {
+    margin-top: 20px;
+    background-color: #1DA1F2; /* Xのカラー */
+    color: white;
+    border-radius: 5px;
   }
 </style>
 </head>
@@ -93,9 +74,13 @@
   <button onclick="drawOmikuji()">占ってみる</button>
 
   <div id="result"></div>
+
+  <button id="shareButton" style="display: none;" onclick="shareResult()">Xにポストする</button>
 </div>
 
 <script>
+  let resultText = "";
+
   function drawOmikuji() {
     const fortunes = ["大吉", "小吉", "普通", "凶", "大凶"];
     const numbers = ["①", "②", "③"];
@@ -103,27 +88,23 @@
     const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
     const number = numbers[Math.floor(Math.random() * numbers.length)];
 
-    const resultText =
+    resultText =
       "今日の運勢は……\n" +
       fortune + "\n" +
       "ラッキーナンバー\n" +
       number;
 
     const resultDiv = document.getElementById("result");
-    const container = document.getElementById("container");
 
-    // 結果に基づいて色と効果を変更
+    // 結果に基づいて色を変更
     let color;
-    let glowClass = ""; // 初期値は光らない
 
     switch(fortune) {
       case "大吉":
         color = "gold"; // 金色
-        glowClass = "glow"; // 光る効果を適用
         break;
       case "小吉":
-        color = "blue"; // 青
-        glowClass = "glow"; // 小吉にも光る効果
+        color = "lightblue"; // 明るい青
         break;
       case "普通":
         color = "white"; // 白
@@ -139,19 +120,23 @@
     }
 
     resultDiv.style.color = color; // 結果の文字色を変更
-    resultDiv.classList.remove("show", "glow"); // 毎回リセット
+    resultDiv.classList.remove("show"); // 毎回リセット
     void resultDiv.offsetWidth; // 強制リフレッシュでアニメーションリスタート
     resultDiv.textContent = resultText;
     
     setTimeout(() => {
-      resultDiv.classList.add("show", glowClass); // ふわっと下に降りる & 光る効果を追加
+      resultDiv.classList.add("show"); // ふわっと下に降りる
     }, 50);
 
-    // ページ全体を揺らす
-    container.classList.add("shake");
-    setTimeout(() => {
-      container.classList.remove("shake");
-    }, 400); // 揺れが終わったらクラスを外す
+    // シェアボタンを表示
+    document.getElementById("shareButton").style.display = "block";
+  }
+
+  function shareResult() {
+    const encodedText = encodeURIComponent(resultText); // 結果をURLエンコード
+    const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
+
+    window.open(url, "_blank"); // Xのツイート画面を開く
   }
 </script>
 
