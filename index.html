@@ -25,16 +25,6 @@
     max-width: 90%;
     height: auto;
   }
-  button {
-    padding: 10px 20px;
-    font-size: 22px;
-    background-color: white;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
   h2 {
     background: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red); /* 虹色グラデーション */
     -webkit-background-clip: text; /* テキストに背景をクリップ */
@@ -48,20 +38,46 @@
     font-size: 20px;
     line-height: 2em;
     white-space: pre-line;
-    opacity: 0; /* 最初は透明 */
-    transform: translateY(-30px); /* 上にずらす */
-    transition: opacity 1s ease, transform 1s ease; /* アニメーション設定 */
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 1s ease, transform 1s ease;
   }
   #result.show {
     opacity: 1;
-    transform: translateY(0); /* 元の位置に降りてくる */
+    transform: translateY(0);
   }
   #shareButton {
     margin-top: 20px;
-    background-color: #1DA1F2; /* Xのカラー */
+    background-color: #1DA1F2;
     color: white;
     border-radius: 5px;
   }
+  
+  /* ゴージャスなボタンデザイン */
+  button {
+    padding: 15px 30px;
+    font-size: 24px;
+    background: linear-gradient(45deg, #ff3366, #ffcc33);
+    border: 2px solid #fff;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.6); /* シャドウ効果 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    text-transform: uppercase; /* 文字を大文字に */
+    font-weight: bold;
+  }
+
+  button:hover {
+    background: linear-gradient(45deg, #ffcc33, #ff3366); /* ホバー時にグラデーションが逆転 */
+    transform: scale(1.1); /* 少し拡大 */
+    box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.8); /* ホバー時にシャドウが強調 */
+  }
+
+  button:active {
+    transform: scale(0.95); /* クリック時に少し縮む */
+  }
+  
 </style>
 </head>
 <body>
