@@ -11,6 +11,7 @@
     color: white;
     height: 100%;
     font-family: sans-serif;
+    overflow-x: hidden;
   }
   .container {
     min-height: 100vh;
@@ -34,22 +35,57 @@
     cursor: pointer;
     margin-top: 20px;
   }
+  h2 {
+    background: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red); /* 虹色グラデーション */
+    -webkit-background-clip: text; /* テキストに背景をクリップ */
+    color: transparent; /* 背景のみを表示 */
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
   #result {
     margin-top: 30px;
     font-size: 20px;
     line-height: 2em;
     white-space: pre-line;
     opacity: 0; /* 最初は透明 */
-    transition: opacity 1s ease; /* ふわっと効果 */
+    transform: translateY(-30px); /* 上にずらす */
+    transition: opacity 1s ease, transform 1s ease; /* アニメーション設定 */
   }
   #result.show {
-    opacity: 1; /* 表示するとき */
+    opacity: 1;
+    transform: translateY(0); /* 元の位置に降りてくる */
+  }
+
+  /* 揺れるアニメーション */
+  .shake {
+    animation: shake 0.4s;
+  }
+  @keyframes shake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(5px, 0); }
+    50% { transform: translate(-5px, 0); }
+    75% { transform: translate(5px, 0); }
+    100% { transform: translate(0, 0); }
+  }
+
+  /* 大吉と小吉に光る効果 */
+  .glow {
+    animation: glow 1.5s ease-in-out infinite alternate;
+  }
+  @keyframes glow {
+    0% {
+      text-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 30px gold, 0 0 40px gold;
+    }
+    100% {
+      text-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00, 0 0 50px #ffcc00;
+    }
   }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="container">
   <img src="https://lh3.googleusercontent.com/pw/AP1GczPQgsXMEgPyHgXeD9FF41GKbkrjKdc69skJfEC8QniLRzyisxHJrXUEoD_nHa_HK23GvtuIYehyqTHDL1FbhaOI25DKKeSoqt5K_dEcQ4Z41G-kermT=w2400" alt="SNOWY UNDERロゴ">
   
   <h2>SNOWY UNDER OMIKUJI</h2>
@@ -74,13 +110,48 @@
       number;
 
     const resultDiv = document.getElementById("result");
-    resultDiv.classList.remove("show"); // いったん非表示
+    const container = document.getElementById("container");
+
+    // 結果に基づいて色と効果を変更
+    let color;
+    let glowClass = ""; // 初期値は光らない
+
+    switch(fortune) {
+      case "大吉":
+        color = "gold"; // 金色
+        glowClass = "glow"; // 光る効果を適用
+        break;
+      case "小吉":
+        color = "blue"; // 青
+        glowClass = "glow"; // 小吉にも光る効果
+        break;
+      case "普通":
+        color = "white"; // 白
+        break;
+      case "凶":
+        color = "red"; // 赤
+        break;
+      case "大凶":
+        color = "purple"; // 紫
+        break;
+      default:
+        color = "white"; // デフォルトは白
+    }
+
+    resultDiv.style.color = color; // 結果の文字色を変更
+    resultDiv.classList.remove("show", "glow"); // 毎回リセット
+    void resultDiv.offsetWidth; // 強制リフレッシュでアニメーションリスタート
     resultDiv.textContent = resultText;
     
-    // 少し時間をおいてふわっと出す
     setTimeout(() => {
-      resultDiv.classList.add("show");
+      resultDiv.classList.add("show", glowClass); // ふわっと下に降りる & 光る効果を追加
     }, 50);
+
+    // ページ全体を揺らす
+    container.classList.add("shake");
+    setTimeout(() => {
+      container.classList.remove("shake");
+    }, 400); // 揺れが終わったらクラスを外す
   }
 </script>
 
