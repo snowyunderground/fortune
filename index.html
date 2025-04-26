@@ -82,6 +82,15 @@
   let resultText = "";
 
   function drawOmikuji() {
+    const today = new Date().toISOString().split('T')[0]; // 今日の日付 (yyyy-mm-dd)
+    const lastDrawnDate = localStorage.getItem('lastDrawnDate');
+
+    // すでに占いが行われている場合、何もしない
+    if (today === lastDrawnDate) {
+      alert("今日はすでに占いました。明日までお待ちください。");
+      return;
+    }
+
     const fortunes = ["大吉", "小吉", "普通", "凶", "大凶"];
     const numbers = ["①", "②", "③"];
 
@@ -130,6 +139,9 @@
 
     // シェアボタンを表示
     document.getElementById("shareButton").style.display = "block";
+
+    // 今日の日付を保存（占い結果が表示された後）
+    localStorage.setItem('lastDrawnDate', today);
   }
 
   function shareResult() {
