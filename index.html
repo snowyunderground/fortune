@@ -1,19 +1,51 @@
  <center> <img src="https://lh3.googleusercontent.com/pw/AP1GczPQgsXMEgPyHgXeD9FF41GKbkrjKdc69skJfEC8QniLRzyisxHJrXUEoD_nHa_HK23GvtuIYehyqTHDL1FbhaOI25DKKeSoqt5K_dEcQ4Z41G-kermT=w2400" /> </a> </center> 
 
-<div style="text-align: center; margin-top: 50px;">
-  <h2>SNOWY UNDER OMIKUJI</h2>
-  <button onclick="drawOmikuji()" style="padding: 10px 20px; font-size: 20px; cursor: pointer;">占ってみる</button>
-  <div id="result" style="margin-top: 30px; font-size: 24px;"></div>
+<div style="
+  background-color: black;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: sans-serif;
+">
+
+  <h2 style="margin-bottom: 20px;">SNOWY UNDER OMIKUJI</h2>
+
+  <button onclick="drawOmikuji()" style="
+    padding: 10px 20px;
+    font-size: 22px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  ">占ってみる</button>
+
+  <div id="result" style="
+    margin-top: 30px;
+    font-size: 20px;
+    line-height: 2em;
+    white-space: pre-line;
+  "></div>
 </div>
 
 <script>
   function drawOmikuji() {
     const fortunes = ["大吉", "小吉", "普通", "凶", "大凶"];
-    const options = ["①", "②", "③"];
+    const numbers = ["①", "②", "③"];
 
     const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    const option = options[Math.floor(Math.random() * options.length)];
+    const number = numbers[Math.floor(Math.random() * numbers.length)];
 
-    document.getElementById("result").textContent = `結果：${fortune} - ${option}`;
+    const resultText =
+      "今日の運勢は……\n" +
+      fortune + "\n" +
+      "ラッキーナンバー\n" +
+      number;
+
+    document.getElementById("result").textContent = resultText;
   }
 </script>
