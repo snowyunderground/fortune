@@ -1,780 +1,789 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>SNOWY UNDER OMIKUJI</title>
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    background-color: black;
-    color: white;
-    height: 100%;
-    font-family: sans-serif;
-    overflow-x: hidden;
-  }
-  .container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  img {
-    max-width: 90%;
-    height: auto;
-  }
-  h2 {
-    background: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red);
-    -webkit-background-clip: text;
-    color: transparent;
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  #result {
-    margin-top: 30px;
-    font-size: 20px;
-    line-height: 2em;
-    white-space: pre-line;
-    opacity: 0;
-    transform: translateY(-30px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-  #result.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  #shareButton, #musicButton {
-    margin-top: 20px;
-    background-color: #1DA1F2;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  #musicButton {
-    background-color: #ff66cc; /* 音源リンクボタンはピンクに */
-  }
-  button {
-    padding: 15px 30px;
-    font-size: 24px;
-    background: linear-gradient(45deg, #ff3366, #ffcc33);
-    border: 2px solid #fff;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  button:hover {
-    background: linear-gradient(45deg, #ffcc33, #ff3366);
-    transform: scale(1.1);
-    box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.8);
-  }
-  button:active {
-    transform: scale(0.95);
-  }
-</style>
-</head>
-<body>
+"{\rtf1\ansi\ansicpg932\cocoartf2821
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww12860\viewh9900\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
 
-<div class="container" id="container">
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDERロゴ">
-  
-  <h2>SNOWY UNDER OMIKUJI</h2>
-
-  <button onclick="drawOmikuji()">占ってみる</button>
-
-  <div id="result"></div>
-
-  <button id="shareButton" style="display: none;" onclick="shareResult()">Xにポストする</button>
-  <a id="musicButton" href="#" target="_blank" style="display: none;">音源情報を見る</a>
-</div>
-
-<script>
-  let resultText = "";
-
-  function drawOmikuji() {
-    const today = new Date();
-    const currentTime = today.getTime();
-    const lastDrawnDate = localStorage.getItem('lastDrawnDate');
-    const lastDrawnTime = localStorage.getItem('lastDrawnTime');
-
-    const resetTime = new Date();
-    resetTime.setHours(5, 0, 0, 0);
-    if (currentTime > resetTime.getTime()) {
-      localStorage.setItem('lastDrawnDate', null);
-      localStorage.setItem('lastDrawnTime', null);
-    }
-
-    if (lastDrawnDate && lastDrawnDate === today.toISOString().split('T')[0]) {
-      alert("今日はすでに占いました。明日までお待ちください。");
-      return;
-    }
-
-    const fortunes = ["世界は君を中心に動く最強の1日", "笑いが止まんねぇ日", "ごはんがおいしい日", "無風…逆に一番かもな日", "もう心がザワザワする…日",  "引き篭もるが吉な日", "諦めて明日は良い1日になるはずだ…よ"];
-    const numbers = ["Sink in white(Sink in white-p.e-収録)", "クリスマス(Sink in white-p.e-収録)", "Gravity of luv(Sink in white-p.e-収録)", "月明かりと弱虫(Sink in white-p.e-収録)", "最愛と最哀(Sink in white-p.e-収録)", "A secret of under the snow(Sink in white-p.e-収録)", "結び目(Sink in white-p.e-収録)", "遺言", "蝶とマリー（忘れてください-p.e-収録）", "忘れて下さい（忘れてください-p.e-収録）", "極彩色の灰世界で（忘れてください-p.e-収録）", "とんがり帽子と苺ケーキ（忘れてください-p.e-収録）", "THE ONE（忘れてください-p.e-収録）", "HONEY(PINK TAPIR収録)", "卒業(PINK TAPIR収録)", "Sleepy hollow(PINK TAPIR収録)", "the sadman(PINK TAPIR収録)", "Pretend not to see(PINK TAPIR収録)", "百年桜(PINK TAPIR収録)", "さくら(PINK TAPIR収録)", "ゴースト(GHOSTNOTE収録）", "ロミ夫とジュリ恵さん(GHOSTNOTE収録）", "秒_沁(GHOSTNOTE収録）", "Ultra Hyper Soul(GHOSTNOTE収録）", "LONGINUS(GHOSTNOTE収録）", "ホーリーグレイル・シンドローム(GHOSTNOTE収録）", "Vestiges(GHOSTNOTE収録）", "STAY(GHOSTNOTE収録）", "blue on blue(blue on blue収録)", "マリンスノウ(blue on blue収録)", "シネマチック・ブギー・ナイト(blue on blue収録)", "透明な花(blue on blue収録)", "Spider’s Aim(blue on blue収録)", "Voyage(blue on blue収録)", "陽炎(blue on blue収録)", "Hello,Crappy World(blue on blue収録)", "DRAGON WARS あわよくば伝説へ(blue on blue収録)", "No,Summerdays(blue on blue収録)", "君に会いに行くよ(blue on blue収録)", "Violet fear(Violet fear収録)", "ハッピィデイズ(Violet fear収録)", "りせっとぼたん(Violet fear収録)", "ヘヴンズアンブレラ(Violet fear収録)", "Bloody Love Song(Violet fear収録)", "Midnight Pumpkin Drive(Violet fear収録)", "楓恋(Violet fear収録)", "シオン(Violet fear収録)", "Between the sky and you(Violet fear収録)", "embers(Violet fear収録)", "MUSEUM(MUSEUM収録)", "落日(MUSEUM収録)", "桃色MURDER SHOW(MUSEUM収録)", "心葬の月(MUSEUM収録)", "星屑(MUSEUM収録)", "溺愛本能ステータス(MUSEUM収録)", "負け猫は遠吠える(MUSEUM収録)", "緋い絲(MUSEUM収録)", "殉職トリックスター(MUSEUM収録)", "イノセントワールド(MUSEUM収録)", "離魂届(MUSEUM収録)", "クリスマスイヴの夜は部屋にお父さんお母さんが入って来ても寝たふりが好ましいと思います(MUSEUM収録)", "極悪御法度天誅殺(MUSEUM収録)", 
-                     "Chocolate Discord(Chocolate Discord収録)", "21g(Chocolate Discord収録)", "Theory of evolution(Chocolate Discord収録)", "Brain in a vat(Chocolate Discord収録)", "regret(Chocolate Discord収録)", "52ヘルツの鯨(Chocolate Discord収録)", "Wizard(Chocolate Discord収録)", "THE INNER BEAST(Singer in the dark収録)", "世界で一つだけの花(Singer in the dark収録)", "シーソーゲーム(Singer in the dark収録)", "眠れる森(Singer in the dark収録)", "あとがき(Singer in the dark収録)", "Alchemy(Singer in the dark収録)", "メガロドン(Singer in the dark収録)", "プラナリア(Singer in the dark収録)", "パラダイス・ロスト(Singer in the dark収録)", "マスカレード(Singer in the dark収録)", "紫陽花と雨の夜(Singer in the dark収録)", "小規模な愛の唄(Singer in the dark収録)", "ライフ・イズ・ビューティフル(Singer in the dark収録)", "惨獄死(Singer in the dark収録)", "バナナはおやつに入りません(Singer in the dark収録)", "真夜中のサーカス(THE END IS THE BEGINNING収録)", "Another Cosmos(THE END IS THE BEGINNING収録)", "シルバニア家族(THE END IS THE BEGINNING収録)", "evergreen(THE END IS THE BEGINNING収録)", "Eden for automata(THE END IS THE BEGINNING収録)", "GUILTY(THE END IS THE BEGINNING収録)", "エンドロール(THE END IS THE BEGINNING収録)", "forbidden flame(THE END IS THE BEGINNING収録)", "Little adventure in my room(THE END IS THE BEGINNING収録)", "Magnetar(THE END IS THE BEGINNING収録)", "vlinder(THE END IS THE BEGINNING収録)", "灰とダイヤモンド(THE END IS THE BEGINNING収録)", "ないものねだり(THE END IS THE BEGINNING収録)", "Pray(THE END IS THE BEGINNING収録)", "バタフライ・エフェクト(MUSEUM Ⅱ収録)", "毒(MUSEUM Ⅱ収録)", "苺センチメンタル(MUSEUM Ⅱ収録)", "SUPER CHORD(MUSEUM Ⅱ収録)", "六本木心中(MUSEUM Ⅱ収録)", "終着駅(MUSEUM Ⅱ収録)", "エル(MUSEUM Ⅱ収録)", "君が望む永遠と僕が欲しかった唯一の倖せ(MUSEUM Ⅱ収録)", "Smiley killer tune Z(MUSEUM Ⅱ収録)", "課長風月(MUSEUM Ⅱ収録)", "星屑セレネイド(MUSEUM Ⅱ収録)", "雪の花(MUSEUM Ⅱ収録)", "滅殺興行八九三式(MUSEUM Ⅱ収録)", "ray not disappear(MUSEUM Ⅱ収録)", "天使(MUSEUM Ⅱ収録)", "ジャック・スパ郎(heavenly!heavenly!heavenly!収録)", "heavenly(heavenly!heavenly!heavenly!収録)", "スピカ(heavenly!heavenly!heavenly!収録)", "北斗の件(heavenly!heavenly!heavenly!収録)", "鎮痛薬(heavenly!heavenly!heavenly!収録)", "サイコパる(heavenly!heavenly!heavenly!収録)", "GOLD HAZE(heavenly!heavenly!heavenly!収録)", "讃美歌(heavenly!heavenly!heavenly!収録)", "くたくたのブランケット(heavenly!heavenly!heavenly!収録)", "東京懐色ラプソディー(heavenly!heavenly!heavenly!収録)", 
-                     "PAINS LABYRINTH(ORIGINAL SIN収録)", "堕天(ORIGINAL SIN収録)", "LAND MINE GIRL(ORIGINAL SIN収録)", "Necessary?(ORIGINAL SIN収録)", "惑(ORIGINAL SIN収録)", "ドッペる(ORIGINAL SIN収録)", "too young to die(ORIGINAL SIN収録)", "Reincarnation(ORIGINAL SIN収録)", "mosquitone(ORIGINAL SIN収録)", "太陽(ORIGINAL SIN収録)", "BeAUTIFUL MInd people(TOO HIGH DIMENSION収録)", "Orange(TOO HIGH DIMENSION収録)", "Insect invasion(TOO HIGH DIMENSION収録)", "セイレーン(TOO HIGH DIMENSION収録)", "エリーゼのために(TOO HIGH DIMENSION収録)", "熱帯夜(TOO HIGH DIMENSION収録)", "EPHEMERAL KINGDOM(TOO HIGH DIMENSION収録)", "三日月(TOO HIGH DIMENSION収録)", "Allergie(TOO HIGH DIMENSION収録)", "Mole(TOO HIGH DIMENSION収録)", "CK.L(Still life goes on)", "ハリネズミ(Still life goes on)", "残り香(Still life goes on)", "Dead carpet(Still life goes on)", "オルフェ(Still life goes on)", "Wednesday(Still life goes on)", "nightmare(Still life goes on)", "atmosphere(Still life goes on)", "etude(Still life goes on)", "Hermit crab(Still life goes on)", "Life goes on(Still life goes on)", "ナイトライダー(TAMED SPEED収録)", "Door(TAMED SPEED収録)", "impurities(TAMED SPEED収録)", "Movin’on(TAMED SPEED収録)", "rainy blues(TAMED SPEED収録)", "to the next(TAMED SPEED収録)", "ラフレシア(TAMED SPEED収録)", "ホームシック(TAMED SPEED収録)", "ヒロイン(TAMED SPEED収録)", "Sign(TAMED SPEED収録)", "タイガー＆ドラゴン(Inferior to animals収録)", "ポケットの魔物(Inferior to animals収録)", "Delay(Inferior to animals収録)", "Wolves howling(Inferior to animals収録)", "ORNAMENTAL(Inferior to animals収録)", "hyena(Inferior to animals収録)", "aquarium(Inferior to animals収録)", "the Thinking dead(Inferior to animals収録)", "Shallow scheme(Inferior to animals収録)", "惑星(Inferior to animals収録)", "HELLy Christmas", "Maze walker(FAIRYTALE ADDICTION収録)", "STRANGE LAND(FAIRYTALE ADDICTION収録)", "Little Red Riding Hood(FAIRYTALE ADDICTION収録)", "The Wicked Witch of the West(FAIRYTALE ADDICTION収録)", "True Lies(FAIRYTALE ADDICTION収録)", "NEVERLAND(FAIRYTALE ADDICTION収録)", "愛のままにわがままに僕は君だけを傷つけちゃうかもしれない(FAIRYTALE ADDICTION収録)", "Mr.Invincible(FAIRYTALE ADDICTION収録)", "諸刃の剣(FAIRYTALE ADDICTION収録)", "ヒカリトカゲ(FAIRYTALE ADDICTION収録)", "Hopeless town(Hopeless town収録)", "BADMAN(Hopeless town収録)", "GODS HAND(Hopeless town収録)", "Crack(Hopeless town収録)", "darker than darkness(Hopeless town収録)", "monopoly(Hopeless town収録)", "Know your limits(Hopeless town収録)", "爆ぜる(Hopeless town収録)", "怪物(Hopeless town収録)", "Across the way(Hopeless town収録)"];
-
-    const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    const number = numbers[Math.floor(Math.random() * numbers.length)];
-
-    resultText =
-      "今日は……\n" +
-      fortune + "\n" +
-      “今日はこの曲を聴くと最高♩\n” +
-      number;
-
-    const resultDiv = document.getElementById("result");
-
-    let color;
-    switch(fortune) {
-      case "世界は君を中心に動く最強の1日":
-        color = "gold";
-        break;
-      case “もう笑いが止まんねぇ日":
-        color = "lightblue";
-        break;
-      case "ごはんがおいしい日":
-        color = "white";
-        break;
-      case “無風…逆に一番かもな日":
-        color = "red";
-        break;
-      case “なんかもう心がザワザワする…日":
-        color = "green";
-        break;
-　　case "引き篭もるが吉な日":
-        color = "pink";
-        break;
-　　case "もう諦めて明日は良い1日になるはずだ…よ":
-        color = "purple";
-        break;
-      default:
-        color = "white";
-    }
-
-    resultDiv.style.color = color;
-    resultDiv.classList.remove("show");
-    void resultDiv.offsetWidth;
-    resultDiv.textContent = resultText;
-    
-    setTimeout(() => {
-      resultDiv.classList.add("show");
-    }, 50);
-
-    // シェアボタンを表示
-    document.getElementById("shareButton").style.display = "inline-block";
-
-    // 音源情報ボタンの設定
-    const musicButton = document.getElementById("musicButton");
-
-    if (number === “Sink in white(Sink in white-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/PzmVnz62";
-      musicButton.style.display = "inline-block";
-    } else if (number === “ラストクリスマス(Sink in white-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/PzmVnz62";
-      musicButton.style.display = "inline-block";
- } else if (number === “Gravity of luv(Sink in white-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/PzmVnz62";
-      musicButton.style.display = "inline-block";
- } else if (number === “月明かりと弱虫(Sink in white-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/PzmVnz62";
-      musicButton.style.display = "inline-block";
- } else if (number === “最愛と最哀(Sink in white-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/PzmVnz62";
-      musicButton.style.display = "inline-block";
- } else if (number === “A secret under the snow(Sink in white-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/PzmVnz62";
-      musicButton.style.display = "inline-block";
- } else if (number === “結び目(Sink in white-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/PzmVnz62";
-      musicButton.style.display = "inline-block";
- } else if (number === “遺言”) {
-      musicButton.href = "https://linkco.re/880faBsu";
-      musicButton.style.display = "inline-block";
- } else if (number === “蝶とマリー(忘れて下さい-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/UHepNv67";
-      musicButton.style.display = "inline-block";
- } else if (number === “忘れて下さい(忘れて下さい-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/UHepNv67";
-      musicButton.style.display = "inline-block";
- } else if (number === “極彩色の灰世界で(忘れて下さい-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/UHepNv67";
-      musicButton.style.display = "inline-block";
- } else if (number === “とんがり帽子と苺ケーキ(忘れて下さい-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/UHepNv67";
-      musicButton.style.display = "inline-block";
- } else if (number === “THE ONE(忘れて下さい-p.e-収録）”) {
-      musicButton.href = "https://linkco.re/UHepNv67";
-      musicButton.style.display = "inline-block";
- } else if (number === “HONEY(PINK TAPIR収録）”) {
-      musicButton.href = "https://linkco.re/CfZ2AMq3";
-      musicButton.style.display = "inline-block";
- } else if (number === “卒業(PINK TAPIR収録）”) {
-      musicButton.href = "https://linkco.re/CfZ2AMq3";
-      musicButton.style.display = "inline-block";
- } else if (number === “Sleepy hollow(PINK TAPIR収録）”) {
-      musicButton.href = "https://linkco.re/CfZ2AMq3";
-      musicButton.style.display = "inline-block";
- } else if (number === “the sadman(PINK TAPIR収録）”) {
-      musicButton.href = "https://linkco.re/CfZ2AMq3";
-      musicButton.style.display = "inline-block";
- } else if (number === “Pretend not to see(PINK TAPIR収録）”) {
-      musicButton.href = "https://linkco.re/CfZ2AMq3";
-      musicButton.style.display = "inline-block";
- } else if (number === “百年桜(PINK TAPIR収録）”) {
-      musicButton.href = "https://linkco.re/CfZ2AMq3";
-      musicButton.style.display = "inline-block";
- } else if (number === “さくら(PINK TAPIR収録）”) {
-      musicButton.href = "https://linkco.re/CfZ2AMq3";
-      musicButton.style.display = "inline-block";
- } else if (number === “ゴースト(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “ロミ夫とジュリ恵さん(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “秒_沁(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “Ultra Hyper Soul(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “LONGINUS(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “ホーリーグレイル・シンドローム(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “Vestiges(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “STAY(GHOSTNOTE収録）”) {
-      musicButton.href = "https://linkco.re/fcxAVvX8";
-      musicButton.style.display = "inline-block";
- } else if (number === “blue on blue(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “マリンスノウ(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “シネマチック・ブギー・ナイト(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “透明な花(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “Spider’s Aim(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “Voyage(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “陽炎(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “Hello,Crappy World(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “DRAGON WARS あわよくば伝説へ(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “No,Summerdays(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “君に会いに行くよ(blue on blue収録）”) {
-      musicButton.href = "https://linkco.re/t13YVHDp";
-      musicButton.style.display = "inline-block";
- } else if (number === “Violet fear(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “ハッピィデイズ(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “りせっとぼたん(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “ヘヴンズアンブレラ(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “Bloody Love Song(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “Midnight Pumpkin Drive(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “楓恋(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “シオン(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “Between the sky and you(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “embers(Violet fear収録）”) {
-      musicButton.href = "https://linkco.re/RqHVxVaX";
-      musicButton.style.display = "inline-block";
- } else if (number === “MUSEUM(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “落日(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “桃色MURDER SHOW(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “心葬の月(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “星屑(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “溺愛本能ステータス(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “負け猫は遠吠える(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “緋い絲(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “殉職トリックスター(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “イノセントワールド(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “離魂届(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “クリスマスイヴの夜はお父さんお母さんが部屋に入って来ても寝たふりが好ましいと思います(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “極悪御法度天誅殺(MUSEUM収録）”) {
-      musicButton.href = "https://linkco.re/vESsScZr";
-      musicButton.style.display = "inline-block";
- } else if (number === “Chocolate Discord(Chocolate Discord収録）”) {
-      musicButton.href = "https://linkco.re/X3YByyCG";
-      musicButton.style.display = "inline-block";
- } else if (number === “21g(Chocolate Discord収録）”) {
-      musicButton.href = "https://linkco.re/X3YByyCG";
-      musicButton.style.display = "inline-block";
- } else if (number === “Theory of evolution(Chocolate Discord収録）”) {
-      musicButton.href = "https://linkco.re/X3YByyCG";
-      musicButton.style.display = "inline-block";
- } else if (number === “Brain in a vat(Chocolate Discord収録）”) {
-      musicButton.href = "https://linkco.re/X3YByyCG";
-      musicButton.style.display = "inline-block";
- } else if (number === “regret(Chocolate Discord収録）”) {
-      musicButton.href = "https://linkco.re/X3YByyCG";
-      musicButton.style.display = "inline-block";
- } else if (number === “52ヘルツの鯨(Chocolate Discord収録）”) {
-      musicButton.href = "https://linkco.re/X3YByyCG";
-      musicButton.style.display = "inline-block";
- } else if (number === “THE INNER BEAST(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “世界で一つだけの花(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “シーソーゲーム(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “眠れる森(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “あとがき(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “Alchemy(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “メガロドン(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “プラナリア(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “パラダイス・ロスト(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “マスカレード(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “紫陽花と雨の夜(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “小規模な愛の唄(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “ライフ・イズ・ビューティフル(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “惨獄死(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “バナナはおやつに入りません(Singer in the dark収録）”) {
-      musicButton.href = "https://linkco.re/MnEA7Ne0";
-      musicButton.style.display = "inline-block";
- } else if (number === “真夜中のサーカス(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “Another Cosmos(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “シルバニア家族(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “evergreen(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “Eden for automata(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “GUILTY(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “エンドロール(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “forbidden flame(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “Little adventurer in my room(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “Magnetar(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “vlinder(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “灰とダイヤモンド(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “ないものねだり(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “Pray(THE END IS THE BEGINNING収録）”) {
-      musicButton.href = "https://linkco.re/s3zFGZRD";
-      musicButton.style.display = "inline-block";
- } else if (number === “バタフライ・エフェクト(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “毒(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “苺センチメンタル(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “SUPER CHORD(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “六本木心中(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “終着駅(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “エル(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “君が望む永遠と僕が欲しかった唯一の倖せ(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “Smiley killer tune Z(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “課長風月(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “星屑セレネイド(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “雪の花(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “滅殺興行八九三式(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “ray not disappear(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “天使(MUSEUM Ⅱ収録）”) {
-      musicButton.href = "https://linkco.re/uhG4qGe8";
-      musicButton.style.display = "inline-block";
- } else if (number === “ジャック・スパ郎(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “heavenly(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “スピカ(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “北斗の件(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “鎮痛薬(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “サイコパる(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “GOLD HAZE(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “讃美歌(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “くたくたのブランケット(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “東京懐色ラプソディー(heavenly!heavenly!heavenly!収録）”) {
-      musicButton.href = "https://linkco.re/ysm2QFub";
-      musicButton.style.display = "inline-block";
- } else if (number === “PAINS LABYLINTH(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “堕天(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “LAND MINE GIRL(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “Necesary?(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “惑(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “ドッペる(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “too young to die(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “Reincarnation(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “mosquitone(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “太陽(ORIGINAL SIN収録）”) {
-      musicButton.href = "https://linkco.re/8tdYfQUB";
-      musicButton.style.display = "inline-block";
-} else if (number === “BeAUTIFUL MInd people(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Orange(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Insect invasion(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “セイレーン(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “エリーゼのために(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “熱帯夜(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “EPHEMERAL KINGDOM(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “三日月(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Allergie(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Mole(TOO HIGH DIMENSION収録）”) {
-      musicButton.href = "https://linkco.re/4NrfCgbA”;
-      musicButton.style.display = "inline-block";
-} else if (number === “CK.L(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ハリネズミ(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “残り香(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Dead carpet(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “オルフェ(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Wednesday(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “nightmare(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “atmosphere(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “etude(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Hermit crab(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “life goes on(Still life goes on収録）”) {
-      musicButton.href = "https://linkco.re/PHQEBCGH”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ナイトライダー(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Door(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “impurities(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Movin’on(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “rainy blues(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “to the next(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ラフレシア(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ホームシック(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ヒロイン(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Sign(TAMED SPEED収録）”) {
-      musicButton.href = "https://linkco.re/C0Cg6F1U”;
-      musicButton.style.display = "inline-block";
-} else if (number === “タイガー＆ドラゴン(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ポケットの魔物(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Delay(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Wolves howling(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ORNAMENTAL(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “hyena(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “aquarium(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “the Thinking dead(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Shallow scheme(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “惑星(Inferior to animals収録）”) {
-      musicButton.href = "https://linkco.re/BXT9YsAx”;
-      musicButton.style.display = "inline-block";
-} else if (number === “HELLy Christmas”) {
-      musicButton.href = "https://linkco.re/DEfMznyf”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Maze walker(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “STRANGE LAND(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Little Red Riding Hood(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “The Wicked Wicth of the West(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “True Lies(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “NEVERLAND(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “愛のままにわがままに僕は君だけを傷つけちゃうかもしれないr(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Mr.Invincible(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “諸刃の剣(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “ヒカリトカゲr(FAIRYTALE ADDICTION収録）”) {
-      musicButton.href = "https://linkco.re/qRa87Tyv”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Hopeless town(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “BADMAN(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “GODS HAND(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Crack(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “darker than darkness(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “monopoly(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Know your limits(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “爆ぜる(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “怪物(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-} else if (number === “Across the way(Hopeless town収録）”) {
-      musicButton.href = "https://linkco.re/GEs0DeME”;
-      musicButton.style.display = "inline-block";
-
-
-    } else {
-      musicButton.style.display = "none";
-    }
-
-    localStorage.setItem('lastDrawnDate', today.toISOString().split('T')[0]);
-    localStorage.setItem('lastDrawnTime', currentTime);
-  }
-
-  function shareResult() {
-    const encodedText = encodeURIComponent(resultText);
-    const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
-    window.open(url, "_blank");
-  }
-</script>
-
-</body>
-</html>
+\f0\fs26 \cf0 <!DOCTYPE html>\
+<html lang="ja">\
+<head>\
+<meta charset="UTF-8">\
+<title>SNOWY UNDER OMIKUJI</title>\
+<style>\
+  html, body \{\
+    margin: 0;\
+    padding: 0;\
+    background-color: black;\
+    color: white;\
+    height: 100%;\
+    font-family: sans-serif;\
+    overflow-x: hidden;\
+  \}\
+  .container \{\
+    min-height: 100vh;\
+    display: flex;\
+    flex-direction: column;\
+    align-items: center;\
+    justify-content: center;\
+    text-align: center;\
+  \}\
+  img \{\
+    max-width: 90%;\
+    height: auto;\
+  \}\
+  h2 \{\
+    background: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red);\
+    -webkit-background-clip: text;\
+    color: transparent;\
+    font-size: 36px;\
+    font-weight: bold;\
+    margin-bottom: 20px;\
+  \}\
+  #result \{\
+    margin-top: 30px;\
+    font-size: 20px;\
+    line-height: 2em;\
+    white-space: pre-line;\
+    opacity: 0;\
+    transform: translateY(-30px);\
+    transition: opacity 1s ease, transform 1s ease;\
+  \}\
+  #result.show \{\
+    opacity: 1;\
+    transform: translateY(0);\
+  \}\
+  #shareButton, #musicButton \{\
+    margin-top: 20px;\
+    background-color: #1DA1F2;\
+    color: white;\
+    border: none;\
+    padding: 10px 20px;\
+    font-size: 18px;\
+    border-radius: 5px;\
+    cursor: pointer;\
+    text-decoration: none;\
+  \}\
+  #musicButton \{\
+    background-color: #ff66cc; /* \uc0\u38899 \u28304 \u12522 \u12531 \u12463 \u12508 \u12479 \u12531 \u12399 \u12500 \u12531 \u12463 \u12395  */\
+  \}\
+  button \{\
+    padding: 15px 30px;\
+    font-size: 24px;\
+    background: linear-gradient(45deg, #ff3366, #ffcc33);\
+    border: 2px solid #fff;\
+    color: white;\
+    border-radius: 10px;\
+    cursor: pointer;\
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.6);\
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;\
+    text-transform: uppercase;\
+    font-weight: bold;\
+  \}\
+  button:hover \{\
+    background: linear-gradient(45deg, #ffcc33, #ff3366);\
+    transform: scale(1.1);\
+    box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.8);\
+  \}\
+  button:active \{\
+    transform: scale(0.95);\
+  \}\
+</style>\
+</head>\
+<body>\
+\
+<div class="container" id="container">\
+  <img src="{\field{\*\fldinst{HYPERLINK "https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400"}}{\fldrslt https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400}}" alt="SNOWY UNDER\uc0\u12525 \u12468 ">\
+  \
+  <h2>SNOWY UNDER OMIKUJI</h2>\
+\
+  <button onclick="drawOmikuji()">\uc0\u21344 \u12387 \u12390 \u12415 \u12427 </button>\
+\
+  <div id="result"></div>\
+\
+  <button id="shareButton" style="display: none;" onclick="shareResult()">X\uc0\u12395 \u12509 \u12473 \u12488 \u12377 \u12427 </button>\
+  <a id="musicButton" href="#" target="_blank" style="display: none;">\uc0\u38899 \u28304 \u24773 \u22577 \u12434 \u35211 \u12427 </a>\
+</div>\
+\
+<script>\
+  let resultText = "";\
+\
+  function drawOmikuji() \{\
+    const today = new Date();\
+    const currentTime = today.getTime();\
+    const lastDrawnDate = localStorage.getItem('lastDrawnDate');\
+    const lastDrawnTime = localStorage.getItem('lastDrawnTime');\
+\
+    const resetTime = new Date();\
+    resetTime.setHours(5, 0, 0, 0);\
+    if (currentTime > resetTime.getTime()) \{\
+      localStorage.setItem('lastDrawnDate', null);\
+      localStorage.setItem('lastDrawnTime', null);\
+    \}\
+\
+    if (lastDrawnDate && lastDrawnDate === today.toISOString().split('T')[0]) \{\
+      alert("\uc0\u20170 \u26085 \u12399 \u12377 \u12391 \u12395 \u21344 \u12356 \u12414 \u12375 \u12383 \u12290 \u26126 \u26085 \u12414 \u12391 \u12362 \u24453 \u12385 \u12367 \u12384 \u12373 \u12356 \u12290 ");\
+      return;\
+    \}\
+\
+    const fortunes = ["\uc0\u19990 \u30028 \u12399 \u21531 \u12434 \u20013 \u24515 \u12395 \u21205 \u12367 \u26368 \u24375 \u12398 1\u26085 ", \'93\u12418 \u12358 \u31505 \u12356 \u12364 \u27490 \u12414 \u12435 \u12397 \u12359 \u26085 ", "\u12372 \u12399 \u12435 \u12364 \u12362 \u12356 \u12375 \u12356 \u26085 ", \'93\u28961 \u39080 \'85\u36870 \u12395 \u19968 \u30058 \u12363 \u12418 \u12394 \u26085 ", \'93\u12394 \u12435 \u12363 \u12418 \u12358 \u24515 \u12364 \u12470 \u12527 \u12470 \u12527 \u12377 \u12427 \'85\u26085 ",  "\u24341 \u12365 \u31725 \u12418 \u12427 \u12364 \u21513 \u12394 \u26085 ", "\u35558 \u12417 \u12390 \u26126 \u26085 \u12399 \u33391 \u12356 1\u26085 \u12395 \u12394 \u12427 \u12399 \u12378 \u12384 \'85\u12424 "];\
+    const numbers = ["Sink in white(Sink in white-p.e-\uc0\u21454 \u37682 )\'94, \'93\u12521 \u12473 \u12488 \u12463 \u12522 \u12473 \u12510 \u12473 (Sink in white-p.e-\u21454 \u37682 )\'94, \'93Gravity of luv(Sink in white-p.e-\u21454 \u37682 )\'94, \'94\u26376 \u26126 \u12363 \u12426 \u12392 \u24369 \u34411 (Sink in white-p.e-\u21454 \u37682 )\'94, \'93\u26368 \u24859 \u12392 \u26368 \u21696 (Sink in white-p.e-\u21454 \u37682 )\'94, \'93A secret of under the snow(Sink in white-p.e-\u21454 \u37682 )\'94, \'93\u32080 \u12403 \u30446 (Sink in white-p.e-\u21454 \u37682 )\'94, \'93\u36986 \u35328 \'94, \'93\u34678 \u12392 \u12510 \u12522 \u12540 \u65288 \u24536 \u12428 \u12390 \u12367 \u12384 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94, \'93\u24536 \u12428 \u12390 \u19979 \u12373 \u12356 \u65288 \u24536 \u12428 \u12390 \u12367 \u12384 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94, \'93\u26997 \u24425 \u33394 \u12398 \u28784 \u19990 \u30028 \u12391 \u65288 \u24536 \u12428 \u12390 \u12367 \u12384 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94, \'93\u12392 \u12435 \u12364 \u12426 \u24125 \u23376 \u12392 \u33530 \u12465 \u12540 \u12461 \u65288 \u24536 \u12428 \u12390 \u12367 \u12384 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94, \'93THE ONE\u65288 \u24536 \u12428 \u12390 \u12367 \u12384 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94, \'93HONEY(PINK TAPIR\u21454 \u37682 )\'94, \'93\u21330 \u26989 (PINK TAPIR\u21454 \u37682 )\'94, \'93Sleepy hollow(PINK TAPIR\u21454 \u37682 )\'94, \'93the sadman(PINK TAPIR\u21454 \u37682 )\'94, \'93Pretend not to see(PINK TAPIR\u21454 \u37682 )\'94, \'93\u30334 \u24180 \u26716 (PINK TAPIR\u21454 \u37682 )\'94, \'93\u12373 \u12367 \u12425 (PINK TAPIR\u21454 \u37682 )\'94, \'93\u12468 \u12540 \u12473 \u12488 (GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93\u12525 \u12511 \u22827 \u12392 \u12472 \u12517 \u12522 \u24693 \u12373 \u12435 (GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93\u31186 _\u27777 (GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93Ultra Hyper Soul(GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93LONGINUS(GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93\u12507 \u12540 \u12522 \u12540 \u12464 \u12524 \u12452 \u12523 \u12539 \u12471 \u12531 \u12489 \u12525 \u12540 \u12512 (GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93Vestiges(GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93STAY(GHOSTNOTE\u21454 \u37682 \u65289 \'94, \'93blue on blue(blue on blue\u21454 \u37682 )\'94, \'93\u12510 \u12522 \u12531 \u12473 \u12494 \u12454 (blue on blue\u21454 \u37682 )\'94, \'93\u12471 \u12493 \u12510 \u12481 \u12483 \u12463 \u12539 \u12502 \u12462 \u12540 \u12539 \u12490 \u12452 \u12488 (blue on blue\u21454 \u37682 )\'94, \'93\u36879 \u26126 \u12394 \u33457 (blue on blue\u21454 \u37682 )\'94, \'93Spider\'92s Aim(blue on blue\u21454 \u37682 )\'94, \'93Voyage(blue on blue\u21454 \u37682 )\'94, \'93\u38525 \u28814 (blue on blue\u21454 \u37682 )\'94, \'93Hello,Crappy World(blue on blue\u21454 \u37682 )\'94, \'93DRAGON WARS \u12354 \u12431 \u12424 \u12367 \u12400 \u20253 \u35500 \u12408 (blue on blue\u21454 \u37682 )\'94, \'93No,Summerdays(blue on blue\u21454 \u37682 )\'94, \'93\u21531 \u12395 \u20250 \u12356 \u12395 \u34892 \u12367 \u12424 (blue on blue\u21454 \u37682 )\'94, \'93Violet fear(Violet fear\u21454 \u37682 )\'94, \'93\u12495 \u12483 \u12500 \u12451 \u12487 \u12452 \u12474 (Violet fear\u21454 \u37682 )\'94, \'93\u12426 \u12379 \u12387 \u12392 \u12412 \u12383 \u12435 (Violet fear\u21454 \u37682 )\'94, \'93\u12504 \u12532 \u12531 \u12474 \u12450 \u12531 \u12502 \u12524 \u12521 (Violet fear\u21454 \u37682 )\'94, \'93Bloody Love Song(Violet fear\u21454 \u37682 )\'94, \'93Midnight Pumpkin Drive(Violet fear\u21454 \u37682 )\'94, \'93\u26963 \u24651 (Violet fear\u21454 \u37682 )\'94, \'93\u12471 \u12458 \u12531 (Violet fear\u21454 \u37682 )\'94, \'93Between the sky and you(Violet fear\u21454 \u37682 )\'94, \'93embers(Violet fear\u21454 \u37682 )\'94, \'93MUSEUM(MUSEUM\u21454 \u37682 )\'94, \'93\u33853 \u26085 (MUSEUM\u21454 \u37682 )\'94, \'93\u26691 \u33394 MURDER SHOW(MUSEUM\u21454 \u37682 )\'94, \'93\u24515 \u33900 \u12398 \u26376 (MUSEUM\u21454 \u37682 )\'94, \'93\u26143 \u23633 (MUSEUM\u21454 \u37682 )\'94, \'93\u28346 \u24859 \u26412 \u33021 \u12473 \u12486 \u12540 \u12479 \u12473 (MUSEUM\u21454 \u37682 )\'94, \'93\u36000 \u12369 \u29483 \u12399 \u36960 \u21536 \u12360 \u12427 (MUSEUM\u21454 \u37682 )\'94, \'93\u32203 \u12356 \u32114 (MUSEUM\u21454 \u37682 )\'94, \'93\u27529 \u32887 \u12488 \u12522 \u12483 \u12463 \u12473 \u12479 \u12540 (MUSEUM\u21454 \u37682 )\'94, \'93\u12452 \u12494 \u12475 \u12531 \u12488 \u12527 \u12540 \u12523 \u12489 (MUSEUM\u21454 \u37682 )\'94, \'93\u38626 \u39746 \u23626 (MUSEUM\u21454 \u37682 )\'94, \'93\u12463 \u12522 \u12473 \u12510 \u12473 \u12452 \u12532 \u12398 \u22812 \u12399 \u37096 \u23627 \u12395 \u12362 \u29238 \u12373 \u12435 \u12362 \u27597 \u12373 \u12435 \u12364 \u20837 \u12387 \u12390 \u26469 \u12390 \u12418 \u23517 \u12383 \u12405 \u12426 \u12364 \u22909 \u12414 \u12375 \u12356 \u12392 \u24605 \u12356 \u12414 \u12377 (MUSEUM\u21454 \u37682 )\'94, \'93\u26997 \u24746 \u24481 \u27861 \u24230 \u22825 \u35461 \u27578 (MUSEUM\u21454 \u37682 )\'94, \'93Chocolate Discord(Chocolate Discord\u21454 \u37682 )\'94, \'9321g(Chocolate Discord\u21454 \u37682 )\'94, \'93Theory of evolution(Chocolate Discord\u21454 \u37682 )\'94, \'93Brain in a vat(Chocolate Discord\u21454 \u37682 )\'94, \'93regret(Chocolate Discord\u21454 \u37682 )\'94, \'9352\u12504 \u12523 \u12484 \u12398 \u39912 (Chocolate Discord\u21454 \u37682 )\'94, \'93Wizard(Chocolate Discord\u21454 \u37682 )\'94, \'93THE INNER BEAST(Singer in the dark\u21454 \u37682 )\'94, \'93\u19990 \u30028 \u12391 \u19968 \u12388 \u12384 \u12369 \u12398 \u33457 (Singer in the dark\u21454 \u37682 )\'94, \'93\u12471 \u12540 \u12477 \u12540 \u12466 \u12540 \u12512 (Singer in the dark\u21454 \u37682 )\'94, \'93\u30496 \u12428 \u12427 \u26862 (Singer in the dark\u21454 \u37682 )\'94, \'93\u12354 \u12392 \u12364 \u12365 (Singer in the dark\u21454 \u37682 )\'94, \'93Alchemy(Singer in the dark\u21454 \u37682 )\'94, \'93\u12513 \u12460 \u12525 \u12489 \u12531 (Singer in the dark\u21454 \u37682 )\'94, \'93\u12501 \u12442 \u12521 \u12490 \u12522 \u12450 (Singer in the dark\u21454 \u37682 )\'94, \'93\u12497 \u12521 \u12480 \u12452 \u12473 \u12539 \u12525 \u12473 \u12488 (Singer in the dark\u21454 \u37682 )\'94, \'93\u12510 \u12473 \u12459 \u12524 \u12540 \u12489 (Singer in the dark\u21454 \u37682 )\'94, \'93\u32043 \u38525 \u33457 \u12392 \u38632 \u12398 \u22812 (Singer in the dark\u21454 \u37682 )\'94, \'93\u23567 \u35215 \u27169 \u12394 \u24859 \u12398 \u21764 (Singer in the dark\u21454 \u37682 )\'94, \'93\u12521 \u12452 \u12501 \u12539 \u12452 \u12474 \u12539 \u12499 \u12517 \u12540 \u12486 \u12451 \u12501 \u12523 (Singer in the dark\u21454 \u37682 )\'94, \'93\u24808 \u29508 \u27515 (Singer in the dark\u21454 \u37682 )\'94, \'93\u12496 \u12490 \u12490 \u12399 \u12362 \u12420 \u12388 \u12395 \u20837 \u12426 \u12414 \u12379 \u12435 (Singer in the dark\u21454 \u37682 )\'94, \'93\u30495 \u22812 \u20013 \u12398 \u12469 \u12540 \u12459 \u12473 (THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93Another Cosmos(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93\u12471 \u12523 \u12496 \u12491 \u12450 \u23478 \u26063 (THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93evergreen(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93Eden for automata(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93GUILTY(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93\u12456 \u12531 \u12489 \u12525 \u12540 \u12523 (THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93forbidden flame(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93Little adventure in my room(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93Magnetar(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93vlinder(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93\u28784 \u12392 \u12480 \u12452 \u12516 \u12514 \u12531 \u12489 (THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93\u12394 \u12356 \u12418 \u12398 \u12397 \u12384 \u12426 (THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93Pray(THE END IS THE BEGINNING\u21454 \u37682 )\'94, \'93\u12496 \u12479 \u12501 \u12521 \u12452 \u12539 \u12456 \u12501 \u12455 \u12463 \u12488 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u27602 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u33530 \u12475 \u12531 \u12481 \u12513 \u12531 \u12479 \u12523 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93SUPER CHORD(MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u20845 \u26412 \u26408 \u24515 \u20013 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u32066 \u30528 \u39365 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u12456 \u12523 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u21531 \u12364 \u26395 \u12416 \u27704 \u36960 \u12392 \u20693 \u12364 \u27442 \u12375 \u12363 \u12387 \u12383 \u21807 \u19968 \u12398 \u20502 \u12379 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93Smiley killer tune Z(MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u35506 \u38263 \u39080 \u26376 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u26143 \u23633 \u12475 \u12524 \u12493 \u12452 \u12489 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u38634 \u12398 \u33457 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u28357 \u27578 \u33288 \u34892 \u20843 \u20061 \u19977 \u24335 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93ray not disappear(MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u22825 \u20351 (MUSEUM \u8545 \u21454 \u37682 )\'94, \'93\u12472 \u12515 \u12483 \u12463 \u12539 \u12473 \u12497 \u37070 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93heavenly(heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93\u12473 \u12500 \u12459 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93\u21271 \u26007 \u12398 \u20214 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93\u37806 \u30171 \u34220 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93\u12469 \u12452 \u12467 \u12497 \u12427 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93GOLD HAZE(heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93\u35715 \u32654 \u27468 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93\u12367 \u12383 \u12367 \u12383 \u12398 \u12502 \u12521 \u12531 \u12465 \u12483 \u12488 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93\u26481 \u20140 \u25040 \u33394 \u12521 \u12503 \u12477 \u12487 \u12451 \u12540 (heavenly!heavenly!heavenly!\u21454 \u37682 )\'94, \'93PAINS LABYRINTH(ORIGINAL SIN\u21454 \u37682 )\'94, \'93\u22549 \u22825 (ORIGINAL SIN\u21454 \u37682 )\'94, \'93LAND MINE GIRL(ORIGINAL SIN\u21454 \u37682 )\'94, \'93Necessary?(ORIGINAL SIN\u21454 \u37682 )\'94, \'93\u24785 (ORIGINAL SIN\u21454 \u37682 )\'94, \'93\u12489 \u12483 \u12506 \u12427 (ORIGINAL SIN\u21454 \u37682 )\'94, \'93too young to die(ORIGINAL SIN\u21454 \u37682 )\'94, \'93Reincarnation(ORIGINAL SIN\u21454 \u37682 )\'94, \'93mosquitone(ORIGINAL SIN\u21454 \u37682 )\'94, \'93\u22826 \u38525 (ORIGINAL SIN\u21454 \u37682 )\'94, \'93BeAUTIFUL MInd people(TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93Orange(TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93Insect invasion(TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93\u12475 \u12452 \u12524 \u12540 \u12531 (TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93\u12456 \u12522 \u12540 \u12476 \u12398 \u12383 \u12417 \u12395 (TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93\u29105 \u24111 \u22812 (TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93EPHEMERAL KINGDOM(TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93\u19977 \u26085 \u26376 (TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93Allergie(TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93Mole(TOO HIGH DIMENSION\u21454 \u37682 )\'94, \'93CK.L(Still life goes on)\'94, \'93\u12495 \u12522 \u12493 \u12474 \u12511 (Still life goes on)\'94, \'93\u27531 \u12426 \u39321 (Still life goes on)\'94, \'93Dead carpet(Still life goes on)\'94, \'93\u12458 \u12523 \u12501 \u12455 (Still life goes on)\'94, \'93Wednesday(Still life goes on)\'94, \'93nightmare(Still life goes on)\'94, \'93atmosphere(Still life goes on)\'94, \'93etude(Still life goes on)\'94, \'93Hermit crab(Still life goes on)\'94, \'93Life goes on(Still life goes on)\'94, \'93\u12490 \u12452 \u12488 \u12521 \u12452 \u12480 \u12540 (TAMED SPEED\u21454 \u37682 )\'94, \'93Door(TAMED SPEED\u21454 \u37682 )\'94, \'93impurities(TAMED SPEED\u21454 \u37682 )\'94, \'93Movin\'92on(TAMED SPEED\u21454 \u37682 )\'94, \'93rainy blues(TAMED SPEED\u21454 \u37682 )\'94, \'93to the next(TAMED SPEED\u21454 \u37682 )\'94, \'93\u12521 \u12501 \u12524 \u12471 \u12450 (TAMED SPEED\u21454 \u37682 )\'94, \'93\u12507 \u12540 \u12512 \u12471 \u12483 \u12463 (TAMED SPEED\u21454 \u37682 )\'94, \'93\u12498 \u12525 \u12452 \u12531 (TAMED SPEED\u21454 \u37682 )\'94, \'93Sign(TAMED SPEED\u21454 \u37682 )\'94, \'93\u12479 \u12452 \u12460 \u12540 \u65286 \u12489 \u12521 \u12468 \u12531 (Inferior to animals\u21454 \u37682 )\'94, \'93\u12509 \u12465 \u12483 \u12488 \u12398 \u39764 \u29289 (Inferior to animals\u21454 \u37682 )\'94, \'93Delay(Inferior to animals\u21454 \u37682 )\'94, \'93Wolves howling(Inferior to animals\u21454 \u37682 )\'94, \'93ORNAMENTAL(Inferior to animals\u21454 \u37682 )\'94, \'93hyena(Inferior to animals\u21454 \u37682 )\'94, \'93aquarium(Inferior to animals\u21454 \u37682 )\'94, \'93the Thinking dead(Inferior to animals\u21454 \u37682 )\'94, \'93Shallow scheme(Inferior to animals\u21454 \u37682 )\'94, \'93\u24785 \u26143 (Inferior to animals\u21454 \u37682 )\'94, \'93HELLy Christmas\'94, \'93Maze walker(FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93STRANGE LAND(FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93Little Red Riding Hood(FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93The Wicked Witch of the West(FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93True Lies(FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93NEVERLAND(FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93\u24859 \u12398 \u12414 \u12414 \u12395 \u12431 \u12364 \u12414 \u12414 \u12395 \u20693 \u12399 \u21531 \u12384 \u12369 \u12434 \u20663 \u12388 \u12369 \u12385 \u12419 \u12358 \u12363 \u12418 \u12375 \u12428 \u12394 \u12356 (FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93Mr.Invincible(FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93\u35576 \u20995 \u12398 \u21091 (FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93\u12498 \u12459 \u12522 \u12488 \u12459 \u12466 (FAIRYTALE ADDICTION\u21454 \u37682 )\'94, \'93Hopeless town(Hopeless town\u21454 \u37682 )\'94, \'93BADMAN(Hopeless town\u21454 \u37682 )\'94, \'93GODS HAND(Hopeless town\u21454 \u37682 )\'94, \'93Crack(Hopeless town\u21454 \u37682 )\'94, \'93darker than darkness(Hopeless town\u21454 \u37682 )\'94, \'93monopoly(Hopeless town\u21454 \u37682 )\'94, \'93Know your limits(Hopeless town\u21454 \u37682 )\'94, \'93\u29190 \u12380 \u12427 (Hopeless town\u21454 \u37682 )\'94, \'93\u24618 \u29289 (Hopeless town\u21454 \u37682 )\'94, \'93Across the way(Hopeless town\u21454 \u37682 )\'94];\
+\
+    const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];\
+    const number = numbers[Math.floor(Math.random() * numbers.length)];\
+\
+    resultText =\
+      "\uc0\u20170 \u26085 \u12399 \'85\'85\\n" +\
+      fortune + "\\n" +\
+      \'93\uc0\u20170 \u26085 \u12399 \u12371 \u12398 \u26354 \u12434 \u32884 \u12367 \u12392 \u26368 \u39640 \u9833 \\n\'94 +\
+      number;\
+\
+    const resultDiv = document.getElementById("result");\
+\
+    let color;\
+    switch(fortune) \{\
+      case "\uc0\u19990 \u30028 \u12399 \u21531 \u12434 \u20013 \u24515 \u12395 \u21205 \u12367 \u26368 \u24375 \u12398 1\u26085 ":\
+        color = "gold";\
+        break;\
+      case \'93\uc0\u12418 \u12358 \u31505 \u12356 \u12364 \u27490 \u12414 \u12435 \u12397 \u12359 \u26085 ":\
+        color = "lightblue";\
+        break;\
+      case "\uc0\u12372 \u12399 \u12435 \u12364 \u12362 \u12356 \u12375 \u12356 \u26085 ":\
+        color = "white";\
+        break;\
+      case \'93\uc0\u28961 \u39080 \'85\u36870 \u12395 \u19968 \u30058 \u12363 \u12418 \u12394 \u26085 ":\
+        color = "red";\
+        break;\
+      case \'93\uc0\u12394 \u12435 \u12363 \u12418 \u12358 \u24515 \u12364 \u12470 \u12527 \u12470 \u12527 \u12377 \u12427 \'85\u26085 ":\
+        color = "green";\
+        break;\
+\uc0\u12288 \u12288 case "\u24341 \u12365 \u31725 \u12418 \u12427 \u12364 \u21513 \u12394 \u26085 ":\
+        color = "pink";\
+        break;\
+\uc0\u12288 \u12288 case "\u12418 \u12358 \u35558 \u12417 \u12390 \u26126 \u26085 \u12399 \u33391 \u12356 1\u26085 \u12395 \u12394 \u12427 \u12399 \u12378 \u12384 \'85\u12424 ":\
+        color = "purple";\
+        break;\
+      default:\
+        color = "white";\
+    \}\
+\
+    resultDiv.style.color = color;\
+    resultDiv.classList.remove("show");\
+    void resultDiv.offsetWidth;\
+    resultDiv.textContent = resultText;\
+    \
+    setTimeout(() => \{\
+      resultDiv.classList.add("show");\
+    \}, 50);\
+\
+    // \uc0\u12471 \u12455 \u12450 \u12508 \u12479 \u12531 \u12434 \u34920 \u31034 \
+    document.getElementById("shareButton").style.display = "inline-block";\
+\
+    // \uc0\u38899 \u28304 \u24773 \u22577 \u12508 \u12479 \u12531 \u12398 \u35373 \u23450 \
+    const musicButton = document.getElementById("musicButton");\
+\
+    if (number === \'93Sink in white(Sink in white-p.e-\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "https://linkco.re/PzmVnz62";\
+      musicButton.style.display = "inline-block";\
+    \} else if (number === \'93\uc0\u12521 \u12473 \u12488 \u12463 \u12522 \u12473 \u12510 \u12473 (Sink in white-p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "https://linkco.re/PzmVnz62";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Gravity of luv(Sink in white-p.e-\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "https://linkco.re/PzmVnz62";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26376 \u26126 \u12363 \u12426 \u12392 \u24369 \u34411 (Sink in white-p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "https://linkco.re/PzmVnz62";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26368 \u24859 \u12392 \u26368 \u21696 (Sink in white-p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "https://linkco.re/PzmVnz62";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93A secret under the snow(Sink in white-p.e-\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "https://linkco.re/PzmVnz62";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u32080 \u12403 \u30446 (Sink in white-p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "https://linkco.re/PzmVnz62";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u36986 \u35328 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/880faBsu"}}{\fldrslt https://linkco.re/880faBsu}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u34678 \u12392 \u12510 \u12522 \u12540 (\u24536 \u12428 \u12390 \u19979 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/UHepNv67"}}{\fldrslt https://linkco.re/UHepNv67}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u24536 \u12428 \u12390 \u19979 \u12373 \u12356 (\u24536 \u12428 \u12390 \u19979 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/UHepNv67"}}{\fldrslt https://linkco.re/UHepNv67}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26997 \u24425 \u33394 \u12398 \u28784 \u19990 \u30028 \u12391 (\u24536 \u12428 \u12390 \u19979 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/UHepNv67"}}{\fldrslt https://linkco.re/UHepNv67}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12392 \u12435 \u12364 \u12426 \u24125 \u23376 \u12392 \u33530 \u12465 \u12540 \u12461 (\u24536 \u12428 \u12390 \u19979 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/UHepNv67"}}{\fldrslt https://linkco.re/UHepNv67}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93THE ONE(\uc0\u24536 \u12428 \u12390 \u19979 \u12373 \u12356 -p.e-\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/UHepNv67"}}{\fldrslt https://linkco.re/UHepNv67}}";\
+      musicButton.style.display = "inline-block";\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0  \} else if (number === \'93HONEY(PINK TAPIR\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/CfZ2AMq3"}}{\fldrslt https://linkco.re/CfZ2AMq3}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u21330 \u26989 (PINK TAPIR\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/CfZ2AMq3"}}{\fldrslt https://linkco.re/CfZ2AMq3}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Sleepy hollow(PINK TAPIR\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/CfZ2AMq3"}}{\fldrslt https://linkco.re/CfZ2AMq3}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93the sadman(PINK TAPIR\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/CfZ2AMq3"}}{\fldrslt https://linkco.re/CfZ2AMq3}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Pretend not to see(PINK TAPIR\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/CfZ2AMq3"}}{\fldrslt https://linkco.re/CfZ2AMq3}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u30334 \u24180 \u26716 (PINK TAPIR\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/CfZ2AMq3"}}{\fldrslt https://linkco.re/CfZ2AMq3}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12373 \u12367 \u12425 (PINK TAPIR\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/CfZ2AMq3"}}{\fldrslt https://linkco.re/CfZ2AMq3}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12468 \u12540 \u12473 \u12488 (GHOSTNOTE\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12525 \u12511 \u22827 \u12392 \u12472 \u12517 \u12522 \u24693 \u12373 \u12435 (GHOSTNOTE\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u31186 _\u27777 (GHOSTNOTE\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Ultra Hyper Soul(GHOSTNOTE\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93LONGINUS(GHOSTNOTE\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12507 \u12540 \u12522 \u12540 \u12464 \u12524 \u12452 \u12523 \u12539 \u12471 \u12531 \u12489 \u12525 \u12540 \u12512 (GHOSTNOTE\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Vestiges(GHOSTNOTE\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93STAY(GHOSTNOTE\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/fcxAVvX8"}}{\fldrslt https://linkco.re/fcxAVvX8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93blue on blue(blue on blue\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12510 \u12522 \u12531 \u12473 \u12494 \u12454 (blue on blue\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12471 \u12493 \u12510 \u12481 \u12483 \u12463 \u12539 \u12502 \u12462 \u12540 \u12539 \u12490 \u12452 \u12488 (blue on blue\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u36879 \u26126 \u12394 \u33457 (blue on blue\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Spider\'92s Aim(blue on blue\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Voyage(blue on blue\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u38525 \u28814 (blue on blue\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Hello,Crappy World(blue on blue\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93DRAGON WARS \uc0\u12354 \u12431 \u12424 \u12367 \u12400 \u20253 \u35500 \u12408 (blue on blue\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93No,Summerdays(blue on blue\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u21531 \u12395 \u20250 \u12356 \u12395 \u34892 \u12367 \u12424 (blue on blue\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/t13YVHDp"}}{\fldrslt https://linkco.re/t13YVHDp}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Violet fear(Violet fear\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12495 \u12483 \u12500 \u12451 \u12487 \u12452 \u12474 (Violet fear\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12426 \u12379 \u12387 \u12392 \u12412 \u12383 \u12435 (Violet fear\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12504 \u12532 \u12531 \u12474 \u12450 \u12531 \u12502 \u12524 \u12521 (Violet fear\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Bloody Love Song(Violet fear\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Midnight Pumpkin Drive(Violet fear\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26963 \u24651 (Violet fear\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12471 \u12458 \u12531 (Violet fear\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Between the sky and you(Violet fear\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93embers(Violet fear\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/RqHVxVaX"}}{\fldrslt https://linkco.re/RqHVxVaX}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93MUSEUM(MUSEUM\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u33853 \u26085 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26691 \u33394 MURDER SHOW(MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u24515 \u33900 \u12398 \u26376 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26143 \u23633 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u28346 \u24859 \u26412 \u33021 \u12473 \u12486 \u12540 \u12479 \u12473 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u36000 \u12369 \u29483 \u12399 \u36960 \u21536 \u12360 \u12427 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u32203 \u12356 \u32114 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u27529 \u32887 \u12488 \u12522 \u12483 \u12463 \u12473 \u12479 \u12540 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12452 \u12494 \u12475 \u12531 \u12488 \u12527 \u12540 \u12523 \u12489 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u38626 \u39746 \u23626 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12463 \u12522 \u12473 \u12510 \u12473 \u12452 \u12532 \u12398 \u22812 \u12399 \u12362 \u29238 \u12373 \u12435 \u12362 \u27597 \u12373 \u12435 \u12364 \u37096 \u23627 \u12395 \u20837 \u12387 \u12390 \u26469 \u12390 \u12418 \u23517 \u12383 \u12405 \u12426 \u12364 \u22909 \u12414 \u12375 \u12356 \u12392 \u24605 \u12356 \u12414 \u12377 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26997 \u24746 \u24481 \u27861 \u24230 \u22825 \u35461 \u27578 (MUSEUM\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/vESsScZr"}}{\fldrslt https://linkco.re/vESsScZr}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Chocolate Discord(Chocolate Discord\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/X3YByyCG"}}{\fldrslt https://linkco.re/X3YByyCG}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'9321g(Chocolate Discord\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/X3YByyCG"}}{\fldrslt https://linkco.re/X3YByyCG}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Theory of evolution(Chocolate Discord\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/X3YByyCG"}}{\fldrslt https://linkco.re/X3YByyCG}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Brain in a vat(Chocolate Discord\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/X3YByyCG"}}{\fldrslt https://linkco.re/X3YByyCG}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93regret(Chocolate Discord\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/X3YByyCG"}}{\fldrslt https://linkco.re/X3YByyCG}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'9352\uc0\u12504 \u12523 \u12484 \u12398 \u39912 (Chocolate Discord\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/X3YByyCG"}}{\fldrslt https://linkco.re/X3YByyCG}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93THE INNER BEAST(Singer in the dark\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u19990 \u30028 \u12391 \u19968 \u12388 \u12384 \u12369 \u12398 \u33457 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12471 \u12540 \u12477 \u12540 \u12466 \u12540 \u12512 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u30496 \u12428 \u12427 \u26862 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12354 \u12392 \u12364 \u12365 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Alchemy(Singer in the dark\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12513 \u12460 \u12525 \u12489 \u12531 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12503 \u12521 \u12490 \u12522 \u12450 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12497 \u12521 \u12480 \u12452 \u12473 \u12539 \u12525 \u12473 \u12488 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12510 \u12473 \u12459 \u12524 \u12540 \u12489 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u32043 \u38525 \u33457 \u12392 \u38632 \u12398 \u22812 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u23567 \u35215 \u27169 \u12394 \u24859 \u12398 \u21764 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12521 \u12452 \u12501 \u12539 \u12452 \u12474 \u12539 \u12499 \u12517 \u12540 \u12486 \u12451 \u12501 \u12523 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u24808 \u29508 \u27515 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12496 \u12490 \u12490 \u12399 \u12362 \u12420 \u12388 \u12395 \u20837 \u12426 \u12414 \u12379 \u12435 (Singer in the dark\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/MnEA7Ne0"}}{\fldrslt https://linkco.re/MnEA7Ne0}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u30495 \u22812 \u20013 \u12398 \u12469 \u12540 \u12459 \u12473 (THE END IS THE BEGINNING\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Another Cosmos(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12471 \u12523 \u12496 \u12491 \u12450 \u23478 \u26063 (THE END IS THE BEGINNING\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93evergreen(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Eden for automata(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93GUILTY(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12456 \u12531 \u12489 \u12525 \u12540 \u12523 (THE END IS THE BEGINNING\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93forbidden flame(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Little adventurer in my room(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Magnetar(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93vlinder(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u28784 \u12392 \u12480 \u12452 \u12516 \u12514 \u12531 \u12489 (THE END IS THE BEGINNING\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12394 \u12356 \u12418 \u12398 \u12397 \u12384 \u12426 (THE END IS THE BEGINNING\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Pray(THE END IS THE BEGINNING\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/s3zFGZRD"}}{\fldrslt https://linkco.re/s3zFGZRD}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12496 \u12479 \u12501 \u12521 \u12452 \u12539 \u12456 \u12501 \u12455 \u12463 \u12488 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u27602 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u33530 \u12475 \u12531 \u12481 \u12513 \u12531 \u12479 \u12523 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93SUPER CHORD(MUSEUM \uc0\u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u20845 \u26412 \u26408 \u24515 \u20013 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u32066 \u30528 \u39365 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12456 \u12523 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u21531 \u12364 \u26395 \u12416 \u27704 \u36960 \u12392 \u20693 \u12364 \u27442 \u12375 \u12363 \u12387 \u12383 \u21807 \u19968 \u12398 \u20502 \u12379 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93Smiley killer tune Z(MUSEUM \uc0\u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u35506 \u38263 \u39080 \u26376 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26143 \u23633 \u12475 \u12524 \u12493 \u12452 \u12489 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u38634 \u12398 \u33457 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u28357 \u27578 \u33288 \u34892 \u20843 \u20061 \u19977 \u24335 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93ray not disappear(MUSEUM \uc0\u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u22825 \u20351 (MUSEUM \u8545 \u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/uhG4qGe8"}}{\fldrslt https://linkco.re/uhG4qGe8}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12472 \u12515 \u12483 \u12463 \u12539 \u12473 \u12497 \u37070 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93heavenly(heavenly!heavenly!heavenly!\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12473 \u12500 \u12459 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u21271 \u26007 \u12398 \u20214 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u37806 \u30171 \u34220 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12469 \u12452 \u12467 \u12497 \u12427 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93GOLD HAZE(heavenly!heavenly!heavenly!\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u35715 \u32654 \u27468 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u12367 \u12383 \u12367 \u12383 \u12398 \u12502 \u12521 \u12531 \u12465 \u12483 \u12488 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93\uc0\u26481 \u20140 \u25040 \u33394 \u12521 \u12503 \u12477 \u12487 \u12451 \u12540 (heavenly!heavenly!heavenly!\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/ysm2QFub"}}{\fldrslt https://linkco.re/ysm2QFub}}";\
+      musicButton.style.display = "inline-block";\
+ \} else if (number === \'93PAINS LABYLINTH(ORIGINAL SIN\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u22549 \u22825 (ORIGINAL SIN\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93LAND MINE GIRL(ORIGINAL SIN\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Necesary?(ORIGINAL SIN\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u24785 (ORIGINAL SIN\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12489 \u12483 \u12506 \u12427 (ORIGINAL SIN\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93too young to die(ORIGINAL SIN\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Reincarnation(ORIGINAL SIN\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93mosquitone(ORIGINAL SIN\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u22826 \u38525 (ORIGINAL SIN\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/8tdYfQUB"}}{\fldrslt https://linkco.re/8tdYfQUB}}";\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93BeAUTIFUL MInd people(TOO HIGH DIMENSION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Orange(TOO HIGH DIMENSION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Insect invasion(TOO HIGH DIMENSION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12475 \u12452 \u12524 \u12540 \u12531 (TOO HIGH DIMENSION\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12456 \u12522 \u12540 \u12476 \u12398 \u12383 \u12417 \u12395 (TOO HIGH DIMENSION\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u29105 \u24111 \u22812 (TOO HIGH DIMENSION\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93EPHEMERAL KINGDOM(TOO HIGH DIMENSION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u19977 \u26085 \u26376 (TOO HIGH DIMENSION\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Allergie(TOO HIGH DIMENSION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Mole(TOO HIGH DIMENSION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/4NrfCgbA"}}{\fldrslt https://linkco.re/4NrfCgbA}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93CK.L(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12495 \u12522 \u12493 \u12474 \u12511 (Still life goes on\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u27531 \u12426 \u39321 (Still life goes on\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Dead carpet(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12458 \u12523 \u12501 \u12455 (Still life goes on\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Wednesday(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93nightmare(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93atmosphere(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93etude(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Hermit crab(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93life goes on(Still life goes on\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/PHQEBCGH"}}{\fldrslt https://linkco.re/PHQEBCGH}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12490 \u12452 \u12488 \u12521 \u12452 \u12480 \u12540 (TAMED SPEED\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Door(TAMED SPEED\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93impurities(TAMED SPEED\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Movin\'92on(TAMED SPEED\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93rainy blues(TAMED SPEED\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93to the next(TAMED SPEED\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12521 \u12501 \u12524 \u12471 \u12450 (TAMED SPEED\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12507 \u12540 \u12512 \u12471 \u12483 \u12463 (TAMED SPEED\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12498 \u12525 \u12452 \u12531 (TAMED SPEED\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Sign(TAMED SPEED\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/C0Cg6F1U"}}{\fldrslt https://linkco.re/C0Cg6F1U}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12479 \u12452 \u12460 \u12540 \u65286 \u12489 \u12521 \u12468 \u12531 (Inferior to animals\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12509 \u12465 \u12483 \u12488 \u12398 \u39764 \u29289 (Inferior to animals\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Delay(Inferior to animals\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Wolves howling(Inferior to animals\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93ORNAMENTAL(Inferior to animals\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93hyena(Inferior to animals\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93aquarium(Inferior to animals\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93the Thinking dead(Inferior to animals\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Shallow scheme(Inferior to animals\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u24785 \u26143 (Inferior to animals\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/BXT9YsAx"}}{\fldrslt https://linkco.re/BXT9YsAx}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93HELLy Christmas\'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/DEfMznyf"}}{\fldrslt https://linkco.re/DEfMznyf}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Maze walker(FAIRYTALE ADDICTION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93STRANGE LAND(FAIRYTALE ADDICTION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Little Red Riding Hood(FAIRYTALE ADDICTION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93The Wicked Wicth of the West(FAIRYTALE ADDICTION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93True Lies(FAIRYTALE ADDICTION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93NEVERLAND(FAIRYTALE ADDICTION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u24859 \u12398 \u12414 \u12414 \u12395 \u12431 \u12364 \u12414 \u12414 \u12395 \u20693 \u12399 \u21531 \u12384 \u12369 \u12434 \u20663 \u12388 \u12369 \u12385 \u12419 \u12358 \u12363 \u12418 \u12375 \u12428 \u12394 \u12356 r(FAIRYTALE ADDICTION\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Mr.Invincible(FAIRYTALE ADDICTION\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u35576 \u20995 \u12398 \u21091 (FAIRYTALE ADDICTION\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u12498 \u12459 \u12522 \u12488 \u12459 \u12466 r(FAIRYTALE ADDICTION\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/qRa87Tyv"}}{\fldrslt https://linkco.re/qRa87Tyv}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Hopeless town(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93BADMAN(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93GODS HAND(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Crack(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93darker than darkness(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93monopoly(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Know your limits(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u29190 \u12380 \u12427 (Hopeless town\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93\uc0\u24618 \u29289 (Hopeless town\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\} else if (number === \'93Across the way(Hopeless town\uc0\u21454 \u37682 \u65289 \'94) \{\
+      musicButton.href = "{\field{\*\fldinst{HYPERLINK "https://linkco.re/GEs0DeME"}}{\fldrslt https://linkco.re/GEs0DeME}}\'94;\
+      musicButton.style.display = "inline-block";\
+\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+    \} else \{\
+      musicButton.style.display = "none";\
+    \}\
+\
+    localStorage.setItem('lastDrawnDate', today.toISOString().split('T')[0]);\
+    localStorage.setItem('lastDrawnTime', currentTime);\
+  \}\
+\
+  function shareResult() \{\
+    const encodedText = encodeURIComponent(resultText);\
+    const url = `https://twitter.com/intent/tweet?text=$\{encodedText\}`;\
+    window.open(url, "_blank");\
+  \}\
+</script>\
+\
+</body>\
+</html>\
+}
