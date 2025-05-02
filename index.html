@@ -1,50 +1,80 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SNOWY UNDER OMIKUJI</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: "Arial", sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
       text-align: center;
-      background-color: #1e1e2f;
-      color: #fff;
+      padding: 2em;
     }
-    .omikuji-box {
-      margin-top: 50px;
+    img.header-image {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1em;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 1em;
     }
     button {
-      padding: 10px 20px;
-      font-size: 18px;
+      font-size: 1em;
+      padding: 0.5em 1em;
+      margin-top: 1em;
       background-color: #444;
       color: #fff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #666;
+    .result {
+      margin-top: 2em;
+      font-size: 1.2em;
     }
-    #music-button {
-      margin-top: 20px;
+    #musicButton, #shareButton {
       display: none;
+      margin-top: 1em;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+    }
+    #musicButton {
+      background-color: #1db954;
+      color: white;
+    }
+    #shareButton {
+      background-color: #1da1f2;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <div class="omikuji-box">
-    <h1>SNOWY UNDERおみくじ</h1>
-    <p id="result"></p>
-    <button onclick="drawOmikuji()">おみくじを引く</button>
-    <br>
-    <a id="music-button" href="#" target="_blank">
-      該当曲を聴く
-    </a>
+  <img class="header-image" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER ヘッダー画像" />
+  <h1>SNOWY UNDER おみくじ</h1>
+  <button onclick="drawFortune()">占う</button>
+  <div class="result">
+    <p id="fortuneText"></p>
+    <p id="numberText"></p>
+    <a id="musicButton" href="#" target="_blank">楽曲を聴く</a><br />
+    <a id="shareButton" href="#" target="_blank">Xで結果をシェア</a>
   </div>
 
   <script>
-    const omikujiResults = [
+    const fortunes = [
+      "世界は君を中心に動く最強の1日",
+      "もう笑いが止まんねぇ日",
+      "ごはんがおいしい日",
+      "無風…逆に一番かもな日",
+      "なんかもう心がザワザワする…日",
+      "引き篭もるが吉な日",
+      "もう諦めて明日は良い1日になるはずだ…よ"
+    ];
+
+    const numbers = [
       "太陽(ORIGINAL SIN収録）",
       "BeAUTIFUL MInd people(TOO HIGH DIMENSION収録）",
       "Orange(TOO HIGH DIMENSION収録）",
@@ -110,47 +140,42 @@
       "Across the way(Hopeless town収録）"
     ];
 
-    function drawOmikuji() {
-      const today = new Date();
-      const currentTime = today.getTime();
-      const lastDrawnDate = localStorage.getItem('lastDrawnDate');
-      const lastDrawnTime = localStorage.getItem('lastDrawnTime');
+    function drawFortune() {
+      const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+      const number = numbers[Math.floor(Math.random() * numbers.length)];
+      document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
+      document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      if (lastDrawnDate === today.toISOString().split('T')[0] && currentTime - lastDrawnTime < 86400000) {
-        alert("おみくじは1日1回までです。");
-        return;
+      const musicButton = document.getElementById("musicButton");
+      const shareButton = document.getElementById("shareButton");
+
+      // 曲リンク判定
+      if (number.includes("ORIGINAL SIN")) {
+        musicButton.href = "https://linkco.re/8tdYfQUB";
+      } else if (number.includes("TOO HIGH DIMENSION")) {
+        musicButton.href = "https://linkco.re/4NrfCgbA";
+      } else if (number.includes("Still life goes on")) {
+        musicButton.href = "https://linkco.re/PHQEBCGH";
+      } else if (number.includes("TAMED SPEED")) {
+        musicButton.href = "https://linkco.re/C0Cg6F1U";
+      } else if (number.includes("Inferior to animals")) {
+        musicButton.href = "https://linkco.re/BXT9YsAx";
+      } else if (number.includes("HELLy Christmas")) {
+        musicButton.href = "https://linkco.re/DEfMznyf";
+      } else if (number.includes("FAIRYTALE ADDICTION")) {
+        musicButton.href = "https://linkco.re/qRa87Tyv";
+      } else if (number.includes("Hopeless town")) {
+        musicButton.href = "https://linkco.re/GEs0DeME";
+      } else {
+        musicButton.style.display = "none";
       }
 
-      const number = omikujiResults[Math.floor(Math.random() * omikujiResults.length)];
-      const resultText = `今日の運勢は……「${number}」！`;
-      document.getElementById("result").innerText = resultText;
+      musicButton.style.display = "inline-block";
 
-      const musicButton = document.getElementById("music-button");
-      const links = {
-        "https://linkco.re/8tdYfQUB": ["太陽(ORIGINAL SIN収録）"],
-        "https://linkco.re/4NrfCgbA": ["BeAUTIFUL MInd people(TOO HIGH DIMENSION収録）", "Orange(TOO HIGH DIMENSION収録）", "Insect Invasion(TOO HIGH DIMENSION収録）", "セイレーン(TOO HIGH DIMENSION収録）", "エリーゼのために(TOO HIGH DIMENSION収録）", "熱帯夜(TOO HIGH DIMENSION収録）", "EPHEMERAL KINGDOM(TOO HIGH DIMENSION収録）", "三日月(TOO HIGH DIMENSION収録）", "Allergie(TOO HIGH DIMENSION収録）", "Mole(TOO HIGH DIMENSION収録）"],
-        "https://linkco.re/PHQEBCGH": ["CK.L(Still life goes on収録）", "ハリネズミ(TOO HIGH DIMENSION収録）", "残り香(TOO HIGH DIMENSION収録）", "Dead carpet(TOO HIGH DIMENSION収録）", "オルフェ(TOO HIGH DIMENSION収録）", "Wednesday(TOO HIGH DIMENSION収録）", "nightmare(TOO HIGH DIMENSION収録）", "atmosphere(TOO HIGH DIMENSION収録）", "etude(TOO HIGH DIMENSION収録）", "Hermit crab(TOO HIGH DIMENSION収録）", "Life goes on(TOO HIGH DIMENSION収録）"],
-        "https://linkco.re/C0Cg6F1U": ["ナイトライダー(TAMED SPEED収録）", "Door(TAMED SPEED収録）", "impurities(TAMED SPEED収録）", "Movin'on(TAMED SPEED収録）", "rainy blues(TAMED SPEED収録）", "to the next(TAMED SPEED収録）", "ラフレシア(TAMED SPEED収録）", "ホームシック(TAMED SPEED収録）", "ヒロイン(TAMED SPEED収録）", "Sign(TAMED SPEED収録）"],
-        "https://linkco.re/BXT9YsAx": ["タイガー＆ドラゴン(Inferior to animals収録）", "ポケットの魔物(Inferior to animals収録）", "Delay(Inferior to animals収録）", "Wolves howling(Inferior to animals収録）", "ORNAMENTAL(Inferior to animals収録）", "hyena(Inferior to animals収録）", "aquarium(Inferior to animals収録）", "the Thinking dead(Inferior to animals収録）", "Shallow scheme(Inferior to animals収録）", "惑星(Inferior to animals収録）"],
-        "https://linkco.re/DEfMznyf": ["HELLy Christmas(HELLy Christmas収録）"],
-        "https://linkco.re/qRa87Tyv": ["Maze walker(FAIRYTALE ADDICTION収録）", "STRANGE LAND(FAIRYTALE ADDICTION収録）", "Little Red Riding Hood(FAIRYTALE ADDICTION収録）", "The Wicked Witch of the West(FAIRYTALE ADDICTION収録）", "True Lies(FAIRYTALE ADDICTION収録）", "NEVERLAND(FAIRYTALE ADDICTION収録）", "愛のままにわがままに僕は君だけを傷つけちゃうかもしれない(FAIRYTALE ADDICTION収録）", "Mr.Invincible(FAIRYTALE ADDICTION収録）", "諸刃の剣(FAIRYTALE ADDICTION収録）", "ヒカリトカゲ(FAIRYTALE ADDICTION収録）"],
-        "https://linkco.re/GEs0DeME": ["Hopeless town(Hopeless town収録）", "BADMAN(Hopeless town収録）", "GODS HAND(Hopeless town収録）", "Crack(Hopeless town収録）", "darker than darkness(Hopeless town収録）", "monopoly(Hopeless town収録）", "Know your limits(Hopeless town収録）", "爆ぜる(Hopeless town収録）", "怪物(Hopeless town収録）", "Across the way(Hopeless town収録）"]
-      };
-
-      let found = false;
-      for (const [link, titles] of Object.entries(links)) {
-        if (titles.includes(number)) {
-          musicButton.href = link;
-          musicButton.style.display = "inline-block";
-          found = true;
-          break;
-        }
-      }
-
-      if (!found) musicButton.style.display = "none";
-
-      localStorage.setItem('lastDrawnDate', today.toISOString().split('T')[0]);
-      localStorage.setItem('lastDrawnTime', currentTime);
+      // X共有リンク
+      const tweetText = encodeURIComponent(`SNOWY UNDERのおみくじ結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\n#SNOWYUNDER #おみくじ`);
+      shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+      shareButton.style.display = "inline-block";
     }
   </script>
 </body>
