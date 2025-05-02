@@ -1,64 +1,68 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SNOWY UNDER おみくじ</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SNOWY UNDER OMIKUJI</title>
   <style>
     body {
-      background-color: black;
-      color: white;
-      font-family: 'Arial', sans-serif;
+      font-family: "Arial", sans-serif;
+      background-color: #000; /* 黒背景 */
+      color: #f0f0f0; /* 明るい文字色 */
       text-align: center;
-      padding: 20px;
+      padding: 2em;
+    }
+    img.header-image {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1em;
     }
     h1 {
       font-size: 2em;
-      margin-bottom: 20px;
+      margin-bottom: 1em;
+      color: #ffffff;
     }
-    .fortune {
-      font-size: 1.5em;
-      margin-bottom: 20px;
+    button {
+      font-size: 1em;
+      padding: 0.5em 1em;
+      margin-top: 1em;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    .number {
+    .result {
+      margin-top: 2em;
       font-size: 1.2em;
-      margin-bottom: 20px;
     }
-    #musicButton {
-      margin-top: 20px;
-    }
-    #shareButton {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #1DA1F2;
-      color: white;
+    #musicButton, #shareButton {
+      display: none;
+      margin-top: 1em;
       text-decoration: none;
+      padding: 0.5em 1em;
       border-radius: 5px;
     }
-    #shareButton:hover {
-      background-color: #0d95e8;
+    #musicButton {
+      background-color: #1db954; /* Spotifyグリーン */
+      color: white;
     }
-    img {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      margin-bottom: 20px;
+    #shareButton {
+      background-color: #1da1f2; /* Xブルー */
+      color: white;
     }
   </style>
 </head>
 <body>
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER">
-
-  <h1>SNOWY UNDERのおみくじ</h1>
-
+  <img class="header-image" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER ヘッダー画像" />
+  <h1>SNOWY UNDER おみくじ</h1>
   <button onclick="drawFortune()">占う</button>
-
-  <div class="fortune" id="fortuneText"></div>
-  <div class="number" id="numberText"></div>
-
-  <a id="musicButton" href="" target="_blank" style="display:none;">ラッキーソングを聞く</a>
-  <a id="shareButton" href="" target="_blank" style="display:none;">結果をシェアする</a>
+  <div class="result">
+    <p id="fortuneText"></p>
+    <p id="numberText"></p>
+    <a id="musicButton" href="#" target="_blank">楽曲を聴く</a><br />
+    <a id="shareButton" href="#" target="_blank">Xで結果をシェア</a>
+  </div>
 
   <script>
     const fortunes = [
@@ -72,7 +76,7 @@
     ];
 
     const numbers = [
-"Sink in white(Sink in white-p.e-収録)", 
+     "Sink in white(Sink in white-p.e-収録)", 
 "ラストクリスマス(Sink in white-p.e-収録)", 
 "Gravity of luv(Sink in white-p.e-収録)", 
 "月明かりと弱虫(Sink in white-p.e-収録)", 
@@ -269,31 +273,15 @@
     ];
 
     function drawFortune() {
-      const now = new Date();
-
-      // 今日の「占い日付」＝ 5時を区切りにする
-      const today5am = new Date(now);
-      if (now.getHours() < 5) {
-        today5am.setDate(today5am.getDate() - 1);
-      }
-      today5am.setHours(5, 0, 0, 0); // 今日の5:00:00に設定
-
-      const storedDate = localStorage.getItem('lastFortuneDate');
-      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
-        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
-        return;
-      }
-
-      // 占い結果を表示
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      // 音楽リンク設定
       const musicButton = document.getElementById("musicButton");
       const shareButton = document.getElementById("shareButton");
 
+      // 曲リンク設定
       if (number.includes("ORIGINAL SIN")) {
         musicButton.href = "https://linkco.re/8tdYfQUB";
       } else if (number.includes("TOO HIGH DIMENSION")) {
@@ -336,20 +324,15 @@
         musicButton.href = "https://linkco.re/uhG4qGe8";
 } else if (number.includes("heavenly!heavenly!heavenly!")) {
         musicButton.href = "https://linkco.re/ysm2QFub";
-
       } else {
         musicButton.style.display = "none";
       }
 
       musicButton.style.display = "inline-block";
 
-      // シェアリンク
       const tweetText = encodeURIComponent(`SNOWY UNDERのおみくじ結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\n#SNOWYUNDER #おみくじ`);
       shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
       shareButton.style.display = "inline-block";
-
-      // 今日の5時基準の占い実施日時を保存
-      localStorage.setItem('lastFortuneDate', today5am.toISOString());
     }
   </script>
 </body>
