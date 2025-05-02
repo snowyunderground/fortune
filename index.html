@@ -1,67 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SNOWY UNDER OMIKUJI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SNOWY UNDER おみくじ</title>
   <style>
     body {
-      font-family: "Arial", sans-serif;
-      background-color: #fdf6f0;
-      color: #333;
+      background-color: black;
+      color: white;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      padding: 2em;
-    }
-    img.header-image {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 1em;
+      padding: 20px;
     }
     h1 {
       font-size: 2em;
-      margin-bottom: 1em;
+      margin-bottom: 20px;
     }
-    button {
-      font-size: 1em;
-      padding: 0.5em 1em;
-      margin-top: 1em;
-      background-color: #444;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    .fortune {
+      font-size: 1.5em;
+      margin-bottom: 20px;
     }
-    .result {
-      margin-top: 2em;
+    .number {
       font-size: 1.2em;
-    }
-    #musicButton, #shareButton {
-      display: none;
-      margin-top: 1em;
-      text-decoration: none;
-      padding: 0.5em 1em;
-      border-radius: 5px;
+      margin-bottom: 20px;
     }
     #musicButton {
-      background-color: #1db954;
-      color: white;
+      margin-top: 20px;
     }
     #shareButton {
-      background-color: #1da1f2;
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #1DA1F2;
       color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    #shareButton:hover {
+      background-color: #0d95e8;
+    }
+    img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <img class="header-image" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER ヘッダー画像" />
-  <h1>SNOWY UNDER おみくじ</h1>
+  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER">
+
+  <h1>SNOWY UNDERのおみくじ</h1>
+
   <button onclick="drawFortune()">占う</button>
-  <div class="result">
-    <p id="fortuneText"></p>
-    <p id="numberText"></p>
-    <a id="musicButton" href="#" target="_blank">楽曲を聴く</a><br />
-    <a id="shareButton" href="#" target="_blank">Xで結果をシェア</a>
-  </div>
+
+  <div class="fortune" id="fortuneText"></div>
+  <div class="number" id="numberText"></div>
+
+  <a id="musicButton" href="" target="_blank" style="display:none;">ラッキーソングを聞く</a>
+  <a id="shareButton" href="" target="_blank" style="display:none;">結果をシェアする</a>
 
   <script>
     const fortunes = [
@@ -75,81 +72,228 @@
     ];
 
     const numbers = [
-      "太陽(ORIGINAL SIN収録）",
-      "BeAUTIFUL MInd people(TOO HIGH DIMENSION収録）",
-      "Orange(TOO HIGH DIMENSION収録）",
-      "Insect Invasion(TOO HIGH DIMENSION収録）",
-      "セイレーン(TOO HIGH DIMENSION収録）",
-      "エリーゼのために(TOO HIGH DIMENSION収録）",
-      "熱帯夜(TOO HIGH DIMENSION収録）",
-      "EPHEMERAL KINGDOM(TOO HIGH DIMENSION収録）",
-      "三日月(TOO HIGH DIMENSION収録）",
-      "Allergie(TOO HIGH DIMENSION収録）",
-      "Mole(TOO HIGH DIMENSION収録）",
-      "CK.L(Still life goes on収録）",
-      "ハリネズミ(TOO HIGH DIMENSION収録）",
-      "残り香(TOO HIGH DIMENSION収録）",
-      "Dead carpet(TOO HIGH DIMENSION収録）",
-      "オルフェ(TOO HIGH DIMENSION収録）",
-      "Wednesday(TOO HIGH DIMENSION収録）",
-      "nightmare(TOO HIGH DIMENSION収録）",
-      "atmosphere(TOO HIGH DIMENSION収録）",
-      "etude(TOO HIGH DIMENSION収録）",
-      "Hermit crab(TOO HIGH DIMENSION収録）",
-      "Life goes on(TOO HIGH DIMENSION収録）",
-      "ナイトライダー(TAMED SPEED収録）",
-      "Door(TAMED SPEED収録）",
-      "impurities(TAMED SPEED収録）",
-      "Movin'on(TAMED SPEED収録）",
-      "rainy blues(TAMED SPEED収録）",
-      "to the next(TAMED SPEED収録）",
-      "ラフレシア(TAMED SPEED収録）",
-      "ホームシック(TAMED SPEED収録）",
-      "ヒロイン(TAMED SPEED収録）",
-      "Sign(TAMED SPEED収録）",
-      "タイガー＆ドラゴン(Inferior to animals収録）",
-      "ポケットの魔物(Inferior to animals収録）",
-      "Delay(Inferior to animals収録）",
-      "Wolves howling(Inferior to animals収録）",
-      "ORNAMENTAL(Inferior to animals収録）",
-      "hyena(Inferior to animals収録）",
-      "aquarium(Inferior to animals収録）",
-      "the Thinking dead(Inferior to animals収録）",
-      "Shallow scheme(Inferior to animals収録）",
-      "惑星(Inferior to animals収録）",
-      "HELLy Christmas(HELLy Christmas収録）",
-      "Maze walker(FAIRYTALE ADDICTION収録）",
-      "STRANGE LAND(FAIRYTALE ADDICTION収録）",
-      "Little Red Riding Hood(FAIRYTALE ADDICTION収録）",
-      "The Wicked Witch of the West(FAIRYTALE ADDICTION収録）",
-      "True Lies(FAIRYTALE ADDICTION収録）",
-      "NEVERLAND(FAIRYTALE ADDICTION収録）",
-      "愛のままにわがままに僕は君だけを傷つけちゃうかもしれない(FAIRYTALE ADDICTION収録）",
-      "Mr.Invincible(FAIRYTALE ADDICTION収録）",
-      "諸刃の剣(FAIRYTALE ADDICTION収録）",
-      "ヒカリトカゲ(FAIRYTALE ADDICTION収録）",
-      "Hopeless town(Hopeless town収録）",
-      "BADMAN(Hopeless town収録）",
-      "GODS HAND(Hopeless town収録）",
-      "Crack(Hopeless town収録）",
-      "darker than darkness(Hopeless town収録）",
-      "monopoly(Hopeless town収録）",
-      "Know your limits(Hopeless town収録）",
-      "爆ぜる(Hopeless town収録）",
-      "怪物(Hopeless town収録）",
-      "Across the way(Hopeless town収録）"
+"Sink in white(Sink in white-p.e-収録)", 
+"ラストクリスマス(Sink in white-p.e-収録)", 
+"Gravity of luv(Sink in white-p.e-収録)", 
+"月明かりと弱虫(Sink in white-p.e-収録)", 
+"最愛と最哀(Sink in white-p.e-収録)", 
+"A secret of under the snow(Sink in white-p.e-収録)", 
+"結び目(Sink in white-p.e-収録)", 
+"遺言(遺言収録)”, 
+"蝶とマリー（忘れてください-p.e-収録）", 
+"忘れて下さい（忘れてください-p.e-収録）", 
+"極彩色の灰世界で（忘れてください-p.e-収録）", 
+"とんがり帽子と苺ケーキ（忘れてください-p.e-収録）", 
+"THE ONE（忘れてください-p.e-収録）", 
+"HONEY(PINK TAPIR収録)", 
+"卒業(PINK TAPIR収録)", 
+"Sleepy hollow(PINK TAPIR収録)", 
+"the sadman(PINK TAPIR収録)", 
+"Pretend not to see(PINK TAPIR収録)", 
+"百年桜(PINK TAPIR収録)", 
+"さくら(PINK TAPIR収録)", 
+"ゴースト(GHOSTNOTE収録）", 
+"ロミ夫とジュリ恵さん(GHOSTNOTE収録）", 
+"秒_沁(GHOSTNOTE収録）", 
+"Ultra Hyper Soul(GHOSTNOTE収録）", 
+"LONGINUS(GHOSTNOTE収録）", 
+"ホーリーグレイル・シンドローム(GHOSTNOTE収録）", 
+"Vestiges(GHOSTNOTE収録）", 
+"STAY(GHOSTNOTE収録）", 
+"blue on blue(blue on blue収録)", 
+"マリンスノウ(blue on blue収録)", 
+"シネマチック・ブギー・ナイト(blue on blue収録)", 
+"透明な花(blue on blue収録)", 
+"Spider’s Aim(blue on blue収録)", 
+"Voyage(blue on blue収録)", 
+"陽炎(blue on blue収録)", 
+"Hello,Crappy World(blue on blue収録)", 
+"DRAGON WARS あわよくば伝説へ(blue on blue収録)", 
+"No,Summerdays(blue on blue収録)", 
+"君に会いに行くよ(blue on blue収録)", 
+"Violet fear(Violet fear収録)", 
+"ハッピィデイズ(Violet fear収録)", 
+"りせっとぼたん(Violet fear収録)", 
+"ヘヴンズアンブレラ(Violet fear収録)", 
+"Bloody Love Song(Violet fear収録)", 
+"Midnight Pumpkin Drive(Violet fear収録)", 
+"楓恋(Violet fear収録)", 
+"シオン(Violet fear収録)", 
+"Between the sky and you(Violet fear収録)", 
+"embers(Violet fear収録)", 
+"MUSEUM(MUSEUM収録)", 
+"落日(MUSEUM収録)", 
+"桃色MURDER SHOW(MUSEUM収録)", 
+"心葬の月(MUSEUM収録)", 
+"星屑(MUSEUM収録)", 
+"溺愛本能ステータス(MUSEUM収録)", 
+"負け猫は遠吠える(MUSEUM収録)", 
+"緋い絲(MUSEUM収録)", 
+"殉職トリックスター(MUSEUM収録)", 
+"イノセントワールド(MUSEUM収録)", 
+"離魂届(MUSEUM収録)", 
+"クリスマスイヴの夜は部屋にお父さんお母さんが入って来ても寝たふりが好ましいと思います(MUSEUM収録)", 
+"極悪御法度天誅殺(MUSEUM収録)", 
+"Chocolate Discord(Chocolate Discord収録)", 
+"21g(Chocolate Discord収録)", 
+"Theory of evolution(Chocolate Discord収録)", 
+"Brain in a vat(Chocolate Discord収録)", 
+"regret(Chocolate Discord収録)", 
+"52ヘルツの鯨(Chocolate Discord収録)", 
+"Wizard(Chocolate Discord収録)", 
+"THE INNER BEAST(Singer in the dark収録)", 
+"世界で一つだけの花(Singer in the dark収録)", 
+"シーソーゲーム(Singer in the dark収録)", 
+"眠れる森(Singer in the dark収録)", 
+"あとがき(Singer in the dark収録)", 
+"Alchemy(Singer in the dark収録)", 
+"メガロドン(Singer in the dark収録)", "
+プラナリア(Singer in the dark収録)", 
+"パラダイス・ロスト(Singer in the dark収録)", 
+"マスカレード(Singer in the dark収録)", 
+"紫陽花と雨の夜(Singer in the dark収録)", 
+"小規模な愛の唄(Singer in the dark収録)", 
+"ライフ・イズ・ビューティフル(Singer in the dark収録)", 
+"惨獄死(Singer in the dark収録)", 
+"バナナはおやつに入りません(Singer in the dark収録)", 
+"真夜中のサーカス(THE END IS THE BEGINNING収録)", 
+"Another Cosmos(THE END IS THE BEGINNING収録)", 
+"シルバニア家族(THE END IS THE BEGINNING収録)", 
+"evergreen(THE END IS THE BEGINNING収録)", 
+"Eden for automata(THE END IS THE BEGINNING収録)", 
+"GUILTY(THE END IS THE BEGINNING収録)", 
+"エンドロール(THE END IS THE BEGINNING収録)", 
+"forbidden flame(THE END IS THE BEGINNING収録)", 
+"Little adventure in my room(THE END IS THE BEGINNING収録)", 
+"Magnetar(THE END IS THE BEGINNING収録)", 
+"vlinder(THE END IS THE BEGINNING収録)", 
+"灰とダイヤモンド(THE END IS THE BEGINNING収録)", 
+"ないものねだり(THE END IS THE BEGINNING収録)", 
+"Pray(THE END IS THE BEGINNING収録)", 
+"バタフライ・エフェクト(MUSEUM Ⅱ収録)", 
+"毒(MUSEUM Ⅱ収録)", 
+"苺センチメンタル(MUSEUM Ⅱ収録)", 
+"SUPER CHORD(MUSEUM Ⅱ収録)", 
+"六本木心中(MUSEUM Ⅱ収録)", 
+"終着駅(MUSEUM Ⅱ収録)", 
+"エル(MUSEUM Ⅱ収録)", 
+"君が望む永遠と僕が欲しかった唯一の倖せ(MUSEUM Ⅱ収録)", 
+"Smiley killer tune Z(MUSEUM Ⅱ収録)", 
+"課長風月(MUSEUM Ⅱ収録)", 
+"星屑セレネイド(MUSEUM Ⅱ収録)", 
+"雪の花(MUSEUM Ⅱ収録)", 
+"滅殺興行八九三式(MUSEUM Ⅱ収録)", 
+"ray not disappear(MUSEUM Ⅱ収録)", 
+"天使(MUSEUM Ⅱ収録)", 
+"ジャック・スパ郎(heavenly!heavenly!heavenly!収録)", 
+"heavenly(heavenly!heavenly!heavenly!収録)", 
+"スピカ(heavenly!heavenly!heavenly!収録)", 
+"北斗の件(heavenly!heavenly!heavenly!収録)", 
+"鎮痛薬(heavenly!heavenly!heavenly!収録)", 
+"サイコパる(heavenly!heavenly!heavenly!収録)", 
+"GOLD HAZE(heavenly!heavenly!heavenly!収録)", 
+"讃美歌(heavenly!heavenly!heavenly!収録)", 
+"くたくたのブランケット(heavenly!heavenly!heavenly!収録)", 
+"東京懐色ラプソディー(heavenly!heavenly!heavenly!収録)", 
+"PAINS LABYRINTH(ORIGINAL SIN収録)", 
+"堕天(ORIGINAL SIN収録)", 
+"LAND MINE GIRL(ORIGINAL SIN収録)", 
+"Necessary?(ORIGINAL SIN収録)", 
+"惑(ORIGINAL SIN収録)", 
+"ドッペる(ORIGINAL SIN収録)", 
+"too young to die(ORIGINAL SIN収録)", 
+"Reincarnation(ORIGINAL SIN収録)", 
+"mosquitone(ORIGINAL SIN収録)", 
+"太陽(ORIGINAL SIN収録)", 
+"BeAUTIFUL MInd people(TOO HIGH DIMENSION収録)", 
+"Orange(TOO HIGH DIMENSION収録)", 
+"Insect invasion(TOO HIGH DIMENSION収録)", 
+"セイレーン(TOO HIGH DIMENSION収録)", 
+"エリーゼのために(TOO HIGH DIMENSION収録)", 
+"熱帯夜(TOO HIGH DIMENSION収録)", 
+"EPHEMERAL KINGDOM(TOO HIGH DIMENSION収録)", 
+"三日月(TOO HIGH DIMENSION収録)", 
+"Allergie(TOO HIGH DIMENSION収録)", 
+"Mole(TOO HIGH DIMENSION収録)", 
+"CK.L(Still life goes on収録)”, 
+"ハリネズミ(Still life goes on収録)”, 
+"残り香(Still life goes on収録)”, 
+"Dead carpet(Still life goes on収録)”, 
+"オルフェ(Still life goes on収録)”, 
+"Wednesday(Still life goes on収録)”, 
+"nightmare(Still life goes on収録)”, 
+"atmosphere(Still life goes on収録)”, 
+"etude(Still life goes on収録)”, 
+"Hermit crab(Still life goes on収録)”, 
+"Life goes on(Still life goes on収録)”, 
+"ナイトライダー(TAMED SPEED収録)", 
+"Door(TAMED SPEED収録)", 
+"impurities(TAMED SPEED収録)", 
+"Movin’on(TAMED SPEED収録)", 
+"rainy blues(TAMED SPEED収録)", 
+"to the next(TAMED SPEED収録)", 
+"ラフレシア(TAMED SPEED収録)", 
+"ホームシック(TAMED SPEED収録)", 
+"ヒロイン(TAMED SPEED収録)", 
+"Sign(TAMED SPEED収録)", 
+"タイガー＆ドラゴン(Inferior to animals収録)", 
+"ポケットの魔物(Inferior to animals収録)", 
+"Delay(Inferior to animals収録)", 
+"Wolves howling(Inferior to animals収録)", 
+"ORNAMENTAL(Inferior to animals収録)", 
+"hyena(Inferior to animals収録)", 
+"aquarium(Inferior to animals収録)", 
+"the Thinking dead(Inferior to animals収録)", 
+"Shallow scheme(Inferior to animals収録)", 
+"惑星(Inferior to animals収録)", 
+"HELLy Christmas(HELLy Christmas収録)”, 
+"Maze walker(FAIRYTALE ADDICTION収録)", 
+"STRANGE LAND(FAIRYTALE ADDICTION収録)", 
+"Little Red Riding Hood(FAIRYTALE ADDICTION収録)", 
+"The Wicked Witch of the West(FAIRYTALE ADDICTION収録)", 
+"True Lies(FAIRYTALE ADDICTION収録)", 
+"NEVERLAND(FAIRYTALE ADDICTION収録)", 
+"愛のままにわがままに僕は君だけを傷つけちゃうかもしれない(FAIRYTALE ADDICTION収録)", "Mr.Invincible(FAIRYTALE ADDICTION収録)", 
+"諸刃の剣(FAIRYTALE ADDICTION収録)", 
+"ヒカリトカゲ(FAIRYTALE ADDICTION収録)", 
+"Hopeless town(Hopeless town収録)", 
+"BADMAN(Hopeless town収録)", 
+"GODS HAND(Hopeless town収録)", 
+"Crack(Hopeless town収録)", 
+"darker than darkness(Hopeless town収録)", 
+"monopoly(Hopeless town収録)", 
+"Know your limits(Hopeless town収録)", 
+"爆ぜる(Hopeless town収録)", 
+"怪物(Hopeless town収録)", 
+"Across the way(Hopeless town収録)"
     ];
 
     function drawFortune() {
+      const now = new Date();
+
+      // 今日の「占い日付」＝ 5時を区切りにする
+      const today5am = new Date(now);
+      if (now.getHours() < 5) {
+        today5am.setDate(today5am.getDate() - 1);
+      }
+      today5am.setHours(5, 0, 0, 0); // 今日の5:00:00に設定
+
+      const storedDate = localStorage.getItem('lastFortuneDate');
+      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
+        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
+        return;
+      }
+
+      // 占い結果を表示
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
+      // 音楽リンク設定
       const musicButton = document.getElementById("musicButton");
       const shareButton = document.getElementById("shareButton");
 
-      // 曲リンク判定
       if (number.includes("ORIGINAL SIN")) {
         musicButton.href = "https://linkco.re/8tdYfQUB";
       } else if (number.includes("TOO HIGH DIMENSION")) {
@@ -166,16 +310,46 @@
         musicButton.href = "https://linkco.re/qRa87Tyv";
       } else if (number.includes("Hopeless town")) {
         musicButton.href = "https://linkco.re/GEs0DeME";
+ } else if (number.includes("Sink in white-p.e-")) {
+        musicButton.href = "https://linkco.re/PzmVnz62";
+} else if (number.includes("忘れて下さい-p.e-")) {
+        musicButton.href = "https://linkco.re/UHepNv67";
+} else if (number.includes("遺言")) {
+        musicButton.href = "https://linkco.re/880faBsu";
+} else if (number.includes("PINK TAPIR")) {
+        musicButton.href = "https://linkco.re/CfZ2AMq3";
+} else if (number.includes("GHOSTNOTE")) {
+        musicButton.href = "https://linkco.re/fcxAVvX8";
+} else if (number.includes("blue on blue")) {
+        musicButton.href = "https://linkco.re/t13YVHDp";
+} else if (number.includes("violet fear")) {
+        musicButton.href = "https://linkco.re/RqHVxVaX";
+} else if (number.includes("MUSEUM")) {
+        musicButton.href = "https://linkco.re/vESsScZr";
+} else if (number.includes("Chocolate Discord")) {
+        musicButton.href = "https://linkco.re/X3YByyCG";
+} else if (number.includes("Singer in the dark")) {
+        musicButton.href = "https://linkco.re/MnEA7Ne0";
+} else if (number.includes("THE END IS THE BEGINNING")) {
+        musicButton.href = "https://linkco.re/s3zFGZRD";
+} else if (number.includes("MUSEUM Ⅱ")) {
+        musicButton.href = "https://linkco.re/uhG4qGe8";
+} else if (number.includes("heavenly!heavenly!heavenly!")) {
+        musicButton.href = "https://linkco.re/ysm2QFub";
+
       } else {
         musicButton.style.display = "none";
       }
 
       musicButton.style.display = "inline-block";
 
-      // X共有リンク
+      // シェアリンク
       const tweetText = encodeURIComponent(`SNOWY UNDERのおみくじ結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\n#SNOWYUNDER #おみくじ`);
       shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
       shareButton.style.display = "inline-block";
+
+      // 今日の5時基準の占い実施日時を保存
+      localStorage.setItem('lastFortuneDate', today5am.toISOString());
     }
   </script>
 </body>
