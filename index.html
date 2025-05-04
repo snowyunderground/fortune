@@ -2,63 +2,75 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNOWY UNDER おみくじ</title>
   <style>
     body {
-      font-family: 'Yu Gothic', sans-serif;
-      background-color: #f2f2f2;
+      background-color: black;
+      color: white;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      padding: 50px;
+      padding: 20px;
     }
     h1 {
-      color: #333;
+      font-size: 2em;
+      margin-bottom: 20px;
     }
-    #fortuneBox {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    .fortune {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+    .number {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    #musicButton {
+      margin-top: 20px;
+    }
+    #shareButton {
       display: inline-block;
-    }
-    button, a.button-link {
-      margin: 10px;
+      margin-top: 20px;
       padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 5px;
-      border: none;
-      background-color: #333;
+      background-color: #1DA1F2;
       color: white;
-      cursor: pointer;
       text-decoration: none;
+      border-radius: 5px;
     }
-    button:hover, a.button-link:hover {
-      background-color: #555;
+    #shareButton:hover {
+      background-color: #0d95e8;
     }
     img {
-      max-width: 300px;
+      width: 100%;
+      max-width: 600px;
       height: auto;
       margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <img src="header_image.jpg" alt="SNOWY UNDERロゴ">
-  <h1>SNOWY UNDER OMIKUJI</h1>
-  <div id="fortuneBox">
-    <p id="fortuneText">結果がここに表示されます</p>
-    <p id="numberText"></p>
-    <button onclick="drawFortune()">おみくじを引いてみる</button>
-    <a id="musicButton" class="button-link" href="#" target="_blank" style="display:none;">楽曲情報</a>
-    <a id="shareButton" class="button-link" href="#" target="_blank" style="display:none;">結果をシェアだ!!</a>
-  </div>
+  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER">
+
+  <h1>SNOWY UNDERのおみくじ</h1>
+
+  <button onclick="drawFortune()">占う</button>
+
+  <div class="fortune" id="fortuneText"></div>
+  <div class="number" id="numberText"></div>
+
+  <a id="musicButton" href="" target="_blank" style="display:none;">ラッキーソングを聞く</a>
+  <a id="shareButton" href="" target="_blank" style="display:none;">結果をシェアする</a>
 
   <script>
     const fortunes = [
-      "新世界の神", "誰もが振り向くナイスボディ", "凡人", "誰かの犬", "チーズ牛丼食べてそう", "ムッチムチ", "JI・GO・KU",
+      "世界は君を中心に動く最強の1日",
+      "もう笑いが止まんねぇ日",
+      "ごはんがおいしい日",
+      "無風…逆に一番かもな日",
+      "なんかもう心がザワザワする…日",
+      "引き篭もるが吉な日",
+      "もう諦めて明日は良い1日になるはずだ…よ"
     ];
-
-    const numbers = [
+ const numbers = [
       "HONEY(PINK TAPIR収録)", 
 　　　 "卒業(PINK TAPIR収録)",
       "Sleepy hollow(PINK TAPIR収録)",
@@ -257,19 +269,35 @@
       "爆ぜる(Hopeless town収録)", 
       "怪物(Hopeless town収録)", 
       "Across the way(Hopeless town収録)"
-    ];
-
+    ];   
     function drawFortune() {
+      const now = new Date();
+
+      // 今日の「占い日付」＝ 5時を区切りにする
+      const today5am = new Date(now);
+      if (now.getHours() < 5) {
+        today5am.setDate(today5am.getDate() - 1);
+      }
+      today5am.setHours(5, 0, 0, 0); // 今日の5:00:00に設定
+
+      const storedDate = localStorage.getItem('lastFortuneDate');
+      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
+        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
+        return;
+      }
+
+      // 占い結果を表示
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
-      document.getElementById("fortuneText").textContent = "今日の運勢はね…: " + fortune;
-      document.getElementById("numberText").textContent = "本日のラッキーソング: " + number;
+      document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
+      document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
+      // 音楽リンク設定
       const musicButton = document.getElementById("musicButton");
       const shareButton = document.getElementById("shareButton");
 
-      // 曲リンク設定
- HIGH DIMENSION収録)",      if (number.includes("ORIGINAL SIN")) {
+         
+     if (number.includes("ORIGINAL SIN")) {
         musicButton.href = "https://linkco.re/8tdYfQUB";
       } else if (number.includes("TOO HIGH DIMENSION")) {
         musicButton.href = "https://linkco.re/4NrfCgbA";
@@ -314,12 +342,15 @@
       } else {
         musicButton.style.display = "none";
       }
-
       musicButton.style.display = "inline-block";
 
+      // シェアリンク
       const tweetText = encodeURIComponent(`SNOWY UNDERのおみくじ結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\n#SNOWYUNDER #おみくじ`);
       shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
       shareButton.style.display = "inline-block";
+
+      // 今日の5時基準の占い実施日時を保存
+      localStorage.setItem('lastFortuneDate', today5am.toISOString());
     }
   </script>
 </body>
