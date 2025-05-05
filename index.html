@@ -28,7 +28,7 @@
       margin-top: 20px;
     }
     #shareButton {
-      display: inline-block !important;
+      display: inline-block;
       margin-top: 20px;
       padding: 10px 20px;
       background-color: #1DA1F2;
@@ -272,7 +272,9 @@
     ];   
     function drawFortune() {
       const now = new Date();
-
+const tweetText = encodeURIComponent(`SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\n#SNOWYUNDER #おみくじ`);
+      shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+      shareButton.style.display = "inline-block";
       // 今日の「占い日付」＝ 5時を区切りにする
       const today5am = new Date(now);
       if (now.getHours() < 5) {
