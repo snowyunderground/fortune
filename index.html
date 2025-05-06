@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNOWY UNDER OMIKUJI</title>
+ <!-- html2canvas CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     body {
       background-color: black;
@@ -61,11 +63,9 @@
 
   <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
   <a id="shareButton" href="#" target="_blank">Xでシェア</a>
-  <button id="saveImageButton" onclick="saveResultAsImage()">結果画像を保存</button>
+  <button onclick="saveResult()">結果画像を保存</button>
 
-  <!-- html2canvas CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
+ 
   <div class="fortune" id="fortuneText"></div>
   <div class="number" id="numberText"></div>
 
@@ -357,18 +357,13 @@
       musicButton.style.display = "inline-block";
 
       // シェアリンク
+ const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+      const tweetText = encodeURIComponent(shareText);
+      document.getElementById("shareButton").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+      document.getElementById("shareButton").style.display = "inline-block";
 
-const tweetText = encodeURIComponent(
-  `SNOWY UNDERのおみくじ結果🎲\n` +
-  `【運勢】${fortune}\n` +
-  `【ラッキーソング】${number}\n` +
-  `#SNOWYUNDER #おみくじ\n\n` +
-  `🔮SNOWYおみくじ → https://snowyunderground.github.io/fortune/\n` +
-  `🎪公式サイト → https://snowy-underground.bitfan.id`
-);
-shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
-           
-      shareButton.style.display = "inline-block";
+      // 表示切替
+      document.getElementById("buttonGroup").style.display = "block";
 
       // 今日の5時基準の占い実施日時を保存
       localStorage.setItem('lastFortuneDate', today5am.toISOString());
@@ -379,7 +374,7 @@ shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
       html2canvas(resultCard).then(canvas => {
         const link = document.createElement("a");
         link.download = "fortune_result.png";
-        link.href = canvas.toDataURL("image/png");
+        link.href = canvas.toDataURL();
         link.click();
         alert("画像を保存しました！画像を添えて投稿してね📷✨");
       });
