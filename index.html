@@ -1,20 +1,21 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SNOWY UNDER OMIKUJI</title>
- <!-- html2canvas CDN -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <style>
-.hidden {
-  display: none;
-}
     body {
       background-color: #000;
       color: #fff;
-      text-align: center;
       font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    img {
+      max-width: 100%;
     }
     button, a {
       margin: 10px;
@@ -30,66 +31,70 @@
       color: #fff;
       text-decoration: none;
     }
-    #result {
-      margin-top: 20px;
-    }  </style>
+    #resultWrapper.hidden {
+      display: none;
+    }
+    #resultWrapper {
+      background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNm9JylCYLkNOoIkW-5GewwxqMTW_LEwwrLkZ9ufEiaxWhOJVKfvN04uPs9CbbCzgSUPZGPfJCgW4cAVDLcw0D4YzSRLtAAndRUOQjvtV1ffEjXKxZH=w2400');
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      padding: 40px 20px;
+      position: relative;
+      max-width: 600px;
+      margin: 20px auto;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-   <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI">
-  <h1>SNOWY UNDER OMIKUJI</h1>
+  <!-- タイトル画像 -->
+  <img id="titleImage" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI" />
 
+  <h1>SNOWY UNDER OMIKUJI</h1>
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
-<!-- 結果エリア（非表示状態で背景画像をimgタグで表示） -->
-<div id="resultWrapper" class="hidden" style="position: relative; width: 100%; max-width: 600px; margin: 0 auto; text-align: center;">
-  <img id="resultBg" src="https://lh3.googleusercontent.com/pw/AP1GczNm9JylCYLkNOoIkW-5GewwxqMTW_LEwwrLkZ9ufEiaxWhOJVKfvN04uPs9CbbCzgSUPZGPfJCgW4cAVDLcw0D4YzSRLtAAndRUOQjvtV1ffEjXKxZH=w2400"
-       style="position: absolute; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; z-index: 0;" />
-
-  <div id="result" style="position: relative; padding: 40px 20px; z-index: 1; color: white;">
-    <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
-    <p id="numberText" style="font-size: 20px; margin-bottom: 20px;"></p>
+  <div id="resultWrapper" class="hidden">
+    <div id="result">
+      <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
+      <p id="numberText" style="font-size: 20px; margin-bottom: 20px;"></p>
+    </div>
   </div>
-</div>
 
   <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
-  <a id="shareButton" href="#" target="_blank">Xでシェア</a>
+  <a id="shareButton" href="#" target="_blank" rel="noopener noreferrer">Xでシェア</a>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
- 
-  <div class="fortune" id="fortuneText"></div>
-  <div class="number" id="numberText"></div>
-
-  <a id="musicButton" href="" target="_blank" style="display:none;">ラッキーソングを聞く</a>
-  <a id="shareButton" href="#" target="_blank" rel="noopener noreferrer" style="display: none;">Xでシェア</a>
 
   <script>
     const fortunes = [
-      "新世界の神になれる日",
-      "ごはんがおいしい日",
-      "誰もが振り向くナイスボディな日",
-      "THE凡人な日",
-      "チーズ牛丼食べてそうな日",
-      "コンビニのくじがやたらと気になる日",
-      "JI・GO・KU(明日に期待)"
+     "新世界の神になれる日",
+      "ごはんがうんまい日",
+      "誰もが振り向くセクシーボディな日",
+      “世界で一番凡人な日",
+      "チーズ牛丼食べてそうって言われる日",
+      "コンビニのくじが当たりそうな日(当たるとは言ってない)”,
+      "JI・GO・KU(明日に期待)",
     ];
- const numbers = [
+
+    const numbers = [
       "HONEY(PINK TAPIR収録)", 
-　　　 "卒業(PINK TAPIR収録)",
+　   "卒業(PINK TAPIR収録)",
       "Sleepy hollow(PINK TAPIR収録)",
       "Pretend not to see(PINK TAPIR収録)", 
       "the sad man(PINK TAPIR収録)", 
-　　　 "忘れて下さい(忘れて下さい収録)",
+　  "忘れて下さい(忘れて下さい収録)",
       "極彩色の灰世界で(忘れて下さい収録)",
       "とんがり帽子と苺ケーキ(忘れて下さい収録)", 
       "THE ONE(PINK TAPIR収録)", 
       "蝶とマリー(忘れて下さい収録）", 
       "Sink in white(Sink in white収録)", 
-　　　 "ラストクリスマス(Sink in white収録)",
+　  "ラストクリスマス(Sink in white収録)",
       "Gravity of luv(Sink in white収録)",
       "月明かりと弱虫(Sink in white収録)", 
       "最愛と最哀(Sink in white収録)", 
       "ゴースト(GHOSTNOTE収録）", 
       "Vestiges(GHOSTNOTE収録)", 
-　　　 "STAY(GHOSTNOTE収録)",
+　　"STAY(GHOSTNOTE収録)",
       "遺言(遺言収録)",
       "百年桜(PINK TAPIR収録)", 
       "さくら(PINK TAPIR収録)", 
@@ -269,37 +274,23 @@
       "Know your limits(Hopeless town収録)", 
       "爆ぜる(Hopeless town収録)", 
       "怪物(Hopeless town収録)", 
-      "Across the way(Hopeless town収録)"
-    ];   
+      "Across the way(Hopeless town収録)",
+
+    ];
+
     function drawFortune() {
-/*
-      const now = new Date();
-
-      // 今日の「占い日付」＝ 5時を区切りにする
-      const today5am = new Date(now);
-      if (now.getHours() < 5) {
-        today5am.setDate(today5am.getDate() - 1);
-      }
-      today5am.setHours(5, 0, 0, 0); // 今日の5:00:00に設定
-
-      const storedDate = localStorage.getItem('lastFortuneDate');
-      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
-        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
-        return;
-      }
-*/
-      // 占い結果を表示
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
+
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      // 音楽リンク設定
       const musicButton = document.getElementById("musicButton");
       const shareButton = document.getElementById("shareButton");
-      const saveImageButton = document.getElementById("saveImageButton");
+      const saveButton = document.getElementById("saveButton");
 
-     if (number.includes("ORIGINAL SIN")) {
+      // 音楽リンク
+      if (number.includes("ORIGINAL SIN")) {
         musicButton.href = "https://linkco.re/8tdYfQUB";
       } else if (number.includes("TOO HIGH DIMENSION")) {
         musicButton.href = "https://linkco.re/4NrfCgbA";
@@ -344,31 +335,50 @@
       } else {
         musicButton.style.display = "none";
       }
+
       musicButton.style.display = "inline-block";
       shareButton.style.display = "inline-block";
       saveButton.style.display = "inline-block";
 
       // シェアリンク
- const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+      const shareText =
+        `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
       const tweetText = encodeURIComponent(shareText);
-      document.getElementById("shareButton").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
-      document.getElementById("shareButton").style.display = "inline-block";
+      shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
 
-      // 表示切替
-      document.getElementById("buttonGroup").style.display = "block";
+      // 結果表示
+      document.getElementById("resultWrapper").classList.remove("hidden");
 
-      // 今日の5時基準の占い実施日時を保存
-      localStorage.setItem('lastFortuneDate', today5am.toISOString());
+      // 5時制限（コメントアウト中）
+      // localStorage.setItem('lastFortuneDate', new Date().toISOString());
     }
-     // 結果画像を保存
+
     function saveResult() {
-html2canvas(document.getElementById("resultWrapper")).then(canvas => {
-  const link = document.createElement('a');
-  link.href = canvas.toDataURL('image/png');
-  link.download = 'fortune_result.png';
-  link.click();
+      const wrapper = document.createElement("div");
+      wrapper.style.background = "#000";
+      wrapper.style.padding = "20px";
+      wrapper.style.textAlign = "center";
+
+      const titleImg = document.getElementById("titleImage").cloneNode(true);
+      titleImg.style.maxWidth = "100%";
+      titleImg.style.marginBottom = "10px";
+
+      const resultClone = document.getElementById("resultWrapper").cloneNode(true);
+      resultClone.classList.remove("hidden");
+
+      wrapper.appendChild(titleImg);
+      wrapper.appendChild(resultClone);
+
+      document.body.appendChild(wrapper);
+      html2canvas(wrapper, { useCORS: true }).then(canvas => {
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "fortune_result.png";
+        link.click();
+        document.body.removeChild(wrapper);
         alert("画像を保存しました！画像を添えて投稿してね📷✨");
       });
-    }  </script>
+    }
+  </script>
 </body>
 </html>
