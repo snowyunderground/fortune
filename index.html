@@ -32,16 +32,27 @@
     }  </style>
 </head>
 <body>
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczNm9JylCYLkNOoIkW-5GewwxqMTW_LEwwrLkZ9ufEiaxWhOJVKfvN04uPs9CbbCzgSUPZGPfJCgW4cAVDLcw0D4YzSRLtAAndRUOQjvtV1ffEjXKxZH=w2400" alt="SNOWY UNDER">
-
+   <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI">
   <h1>SNOWY UNDER OMIKUJI</h1>
 
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
-<div id="result">
-    <p id="fortuneText">今日の運勢: </p>
-    <p id="numberText">ラッキーソング: </p>
-  </div>
+<div id="result" style="
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNm9JylCYLkNOoIkW-5GewwxqMTW_LEwwrLkZ9ufEiaxWhOJVKfvN04uPs9CbbCzgSUPZGPfJCgW4cAVDLcw0D4YzSRLtAAndRUOQjvtV1ffEjXKxZH=w2400');
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+">
+  <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
+  <p id="numberText" style="font-size: 20px; margin-bottom: 20px;"></p>
+</div>
 
   <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
   <a id="shareButton" href="#" target="_blank">Xでシェア</a>
