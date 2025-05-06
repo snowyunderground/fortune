@@ -41,6 +41,8 @@
       margin: 20px auto;
       text-align: center;
       display: none; /* 初期は非表示 */
+      background-position: center; /* 背景を中央に配置 */
+      background-size: cover; /* 背景画像がフィットするように調整 */
     }
     #resultBg {
       position: absolute;
@@ -137,7 +139,7 @@
       html2canvas(resultArea, {
         allowTaint: true,
         useCORS: true,
-        backgroundColor: 'transparent', // 背景を透過に設定
+        backgroundColor: null, // 背景を透明に設定
         logging: true
       }).then(canvas => {
         const link = document.createElement('a');
