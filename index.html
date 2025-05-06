@@ -90,22 +90,6 @@
     ];
 
     function drawFortune() {
-      // 5時リセット制限機能（※必要ならコメントアウトを解除）
-      /*
-      const now = new Date();
-      const today5am = new Date(now);
-      if (now.getHours() < 5) {
-        today5am.setDate(today5am.getDate() - 1);
-      }
-      today5am.setHours(5, 0, 0, 0); // 今日の5:00:00に設定
-
-      const storedDate = localStorage.getItem('lastFortuneDate');
-      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
-        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
-        return;
-      }
-      */
-
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
 
@@ -132,9 +116,6 @@
       document.getElementById("shareButton").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
 
       document.getElementById("resultWrapper").classList.remove("hidden");
-
-      // ↓ 下記コードは5時制限を有効にするときのみ有効に
-      // localStorage.setItem('lastFortuneDate', today5am.toISOString());
     }
 
     function saveResult() {
