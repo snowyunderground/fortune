@@ -5,35 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNOWY UNDER OMIKUJI</title>
  <!-- html2canvas CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <style>
-     body {
-      font-family: sans-serif;
+    body {
+      background-color: #000;
+      color: #fff;
       text-align: center;
-      background-color: #f0f0f0;
-      padding: 20px;
+      font-family: sans-serif;
     }
-    .result-buttons {
-      display: none;
-      margin-top: 20px;
-    }
-    #fortuneResult {
-      margin-top: 20px;
-      padding: 20px;
-      background-color: #fff;
-      display: inline-block;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-    button, a.button-link {
+    button, a {
       margin: 10px;
       padding: 10px 20px;
+      font-size: 16px;
       border: none;
-      border-radius: 6px;
-      background-color: #444;
-      color: white;
-      text-decoration: none;
+      border-radius: 8px;
       cursor: pointer;
+    }
+    #musicButton, #shareButton, #saveButton {
+      display: none;
+      background-color: #444;
+      color: #fff;
+      text-decoration: none;
+    }
+    #result {
+      margin-top: 20px;
     }  </style>
 </head>
 <body>
@@ -43,7 +38,7 @@
 
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
-<div id="resultCard">
+<div id="result">
     <p id="fortuneText">今日の運勢: </p>
     <p id="numberText">ラッキーソング: </p>
   </div>
@@ -342,6 +337,8 @@
         musicButton.style.display = "none";
       }
       musicButton.style.display = "inline-block";
+      shareButton.style.display = "inline-block";
+      saveButton.style.display = "inline-block";
 
       // シェアリンク
  const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
@@ -356,9 +353,10 @@
       localStorage.setItem('lastFortuneDate', today5am.toISOString());
     }
 
-    function saveResultAsImage() {
-      const resultCard = document.getElementById("resultCard");
-      html2canvas(resultCard).then(canvas => {
+    function saveResult() {
+      html2canvas(document.querySelector("#result"), {
+        backgroundColor: "#000"
+      }).then(canvas => {
         const link = document.createElement("a");
         link.download = "fortune_result.png";
         link.href = canvas.toDataURL();
