@@ -32,7 +32,7 @@
     }  </style>
 </head>
 <body>
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER">
+  <img src="https://lh3.googleusercontent.com/pw/AP1GczNm9JylCYLkNOoIkW-5GewwxqMTW_LEwwrLkZ9ufEiaxWhOJVKfvN04uPs9CbbCzgSUPZGPfJCgW4cAVDLcw0D4YzSRLtAAndRUOQjvtV1ffEjXKxZH=w2400" alt="SNOWY UNDER">
 
   <h1>SNOWY UNDER OMIKUJI</h1>
 
@@ -45,8 +45,7 @@
 
   <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
   <a id="shareButton" href="#" target="_blank">Xでシェア</a>
-  <button onclick="saveResult()">結果画像を保存</button>
-
+  <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
  
   <div class="fortune" id="fortuneText"></div>
   <div class="number" id="numberText"></div>
@@ -265,6 +264,7 @@
       "Across the way(Hopeless town収録)"
     ];   
     function drawFortune() {
+/*
       const now = new Date();
 
       // 今日の「占い日付」＝ 5時を区切りにする
@@ -279,7 +279,7 @@
         alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
         return;
       }
-
+*/
       // 占い結果を表示
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
