@@ -31,17 +31,27 @@
       color: #fff;
       text-decoration: none;
     }
+    #topImage {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
+    }
     #resultWrapper {
       position: relative;
       width: 90%;
       max-width: 600px;
       margin: 20px auto;
-      text-align: center;
       border-radius: 12px;
       overflow: hidden;
     }
     #resultBg {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -56,15 +66,15 @@
 </head>
 <body>
 
-  <!-- 上部画像 -->
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400"
-       alt="SNOWY UNDER" style="width: 100%; max-height: 300px; object-fit: cover;" />
+  <!-- タイトル画像（サイズ修正済） -->
+  <img id="topImage" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400"
+       alt="SNOWY UNDER" />
 
   <h1>SNOWY UNDER OMIKUJI</h1>
 
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
-  <!-- 結果表示 -->
+  <!-- 結果表示（中央＆ズレ修正済） -->
   <div id="resultWrapper" class="hidden">
     <img id="resultBg" src="https://i.imgur.com/VP3Pf8G.png" alt="背景" />
     <div id="result">
@@ -90,13 +100,28 @@
     ];
 
     function drawFortune() {
+      // ↓ 5時リセット（コメントアウト状態で保持）
+      /*
+      const now = new Date();
+      const today5am = new Date(now);
+      if (now.getHours() < 5) {
+        today5am.setDate(today5am.getDate() - 1);
+      }
+      today5am.setHours(5, 0, 0, 0);
+
+      const storedDate = localStorage.getItem('lastFortuneDate');
+      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
+        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
+        return;
+      }
+      */
+
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
 
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      // 音楽リンク
       const musicButton = document.getElementById("musicButton");
       if (number.includes("ORIGINAL SIN")) {
         musicButton.href = "https://linkco.re/8tdYfQUB";
@@ -110,12 +135,13 @@
       document.getElementById("shareButton").style.display = "inline-block";
       document.getElementById("saveButton").style.display = "inline-block";
 
-      // シェアテキスト
       const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
       const tweetText = encodeURIComponent(shareText);
       document.getElementById("shareButton").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
 
       document.getElementById("resultWrapper").classList.remove("hidden");
+
+      // localStorage.setItem('lastFortuneDate', today5am.toISOString());
     }
 
     function saveResult() {
