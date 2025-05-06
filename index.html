@@ -11,6 +11,7 @@
       color: #fff;
       text-align: center;
       font-family: sans-serif;
+      margin: 0;
     }
     h1 {
       font-size: 2em;
@@ -40,7 +41,7 @@
       position: relative;
       width: 100%;
       max-width: 600px;
-      margin: 0 auto;
+      margin: 40px auto;
       text-align: center;
     }
     #resultBg {
@@ -58,16 +59,17 @@
       padding: 40px 20px;
       z-index: 1;
       color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
     }
   </style>
 </head>
 <body>
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI" style="max-width:100%;" />
   <h1>SNOWY UNDER OMIKUJI</h1>
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
   <div id="resultWrapper" class="hidden">
-    <img id="resultBg" src="https://github.com/snowyunderground/fortune/blob/main/無題324_20250506235627.PNG?raw=true" crossorigin="anonymous" />
+    <img id="resultBg" src="https://i.imgur.com/VP3Pf8G.png" crossorigin="anonymous" />
     <div id="result">
       <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
       <p id="numberText" style="font-size: 20px; margin-bottom: 20px;"></p>
