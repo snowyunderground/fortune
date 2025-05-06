@@ -14,17 +14,17 @@
       margin: 0;
       padding: 0;
     }
-    h1 {
-      font-size: 32px;
-      background: linear-gradient(45deg, #fff, #aaa);
-      -webkit-background-clip: text;
-      color: transparent;
-      margin: 10px 0;
-    }
-    img.title-image {
+    img.title-img {
       width: 90%;
-      max-width: 600px;
-      margin-top: 10px;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+    h1 {
+      font-size: 2em;
+      background: linear-gradient(90deg, #ffccff, #ccffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0.5em 0;
     }
     button, a {
       margin: 10px;
@@ -33,76 +33,60 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-    }
-    #musicButton, #shareButton, #saveButton {
-      display: none;
       background-color: #444;
       color: #fff;
       text-decoration: none;
+      display: inline-block;
     }
     #resultWrapper {
       position: relative;
       width: 100%;
       max-width: 600px;
       margin: 20px auto;
+      text-align: center;
       display: none;
     }
     #resultBg {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: 0;
       border-radius: 12px;
+      z-index: 0;
     }
     #result {
       position: relative;
-      padding: 80px 20px;
+      padding: 40px 20px;
       z-index: 1;
-    }
-    .outlined-text {
-      font-size: 24px;
-      font-weight: bold;
-      color: black;
-      text-shadow:
-        2px 2px 0 white,
-        -2px 2px 0 white,
-        2px -2px 0 white,
-        -2px -2px 0 white,
-        2px 0 0 white,
-        0 2px 0 white,
-        -2px 0 0 white,
-        0 -2px 0 white;
-      margin: 20px auto;
-      width: fit-content;
+      font-size: 20px;
+      text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <img class="title-image" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="Title">
+  <img class="title-img" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="Title">
   <h1>SNOWY UNDER OMIKUJI</h1>
+
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
-  <!-- 結果表示 -->
   <div id="resultWrapper">
-    <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg" alt="背景">
+    <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg />
     <div id="result">
-      <div id="fortuneText" class="outlined-text"></div>
-      <div id="numberText" class="outlined-text"></div>
+      <p id="fortuneText"></p>
+      <p id="numberText"></p>
     </div>
   </div>
 
-  <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
-  <a id="shareButton" href="#" target="_blank">Xでシェア</a>
+  <a id="musicButton" href="#" target="_blank">ラッキーソングを聞く</a>
+  <a id="shareButton" href="#" target="_blank" onclick="shareToTwitter()">Xでシェア</a>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
   <script>
     const fortunes = [
       "新世界の神になれる日",
       "ごはんがおいしい日",
-      "誰もが振り向くナイスボディな日",
+      "誰もが振り向くナイスボディな日"
     ];
     const numbers = [
       "讃美歌(heavenly!heavenly!heavenly!収録)"
@@ -111,45 +95,38 @@
     function drawFortune() {
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
-
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      const musicButton = document.getElementById("musicButton");
-      const shareButton = document.getElementById("shareButton");
-      const saveButton = document.getElementById("saveButton");
-
-      if (number.includes("ORIGINAL SIN")) {
-        musicButton.href = "https://linkco.re/8tdYfQUB";
-      } else if (number.includes("heavenly!heavenly!heavenly!")) {
-        musicButton.href = "https://linkco.re/ysm2QFub";
-      } else {
-        musicButton.style.display = "none";
-      }
-
-      musicButton.style.display = "inline-block";
-      shareButton.style.display = "inline-block";
-      saveButton.style.display = "inline-block";
-
-      const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
-      document.getElementById("shareButton").href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-
-      // 結果表示
       document.getElementById("resultWrapper").style.display = "block";
+      document.getElementById("musicButton").style.display = "inline-block";
+      document.getElementById("saveButton").style.display = "inline-block";
+
+      if (number.includes("heavenly!heavenly!heavenly!")) {
+        document.getElementById("musicButton").href = "https://linkco.re/ysm2QFub";
+      } else {
+        document.getElementById("musicButton").href = "#";
+      }
+    }
+
+    function shareToTwitter() {
+      const fortune = document.getElementById("fortuneText").textContent;
+      const number = document.getElementById("numberText").textContent;
+
+      const shareText = `SNOWY UNDER OMIKUJI結果🎲\n${fortune}\n${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+
+      window.open(url, "_blank");
     }
 
     function saveResult() {
-      const wrapper = document.getElementById("resultWrapper");
-      html2canvas(wrapper, {
-        useCORS: true,
-        backgroundColor: null,
-        scale: 2
+      html2canvas(document.getElementById("resultWrapper"), {
+        useCORS: true
       }).then(canvas => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
         link.download = 'fortune_result.png';
         link.click();
-        alert("画像を保存しました！画像を添えて投稿してね📷✨");
       });
     }
   </script>
