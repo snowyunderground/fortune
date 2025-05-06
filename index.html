@@ -31,15 +31,24 @@
       color: #fff;
       text-decoration: none;
     }
-    #topImage {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      max-height: 180px;
-      object-fit: contain;
-      margin: 0 auto;
-      display: block;
-    }
+   #topImage {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  max-height: 220px; /* ← 以前の180pxから少し大きく */
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+.text-outline {
+  color: white;
+  font-weight: bold;
+  text-shadow:
+    -1px -1px 0 #fff,
+     1px -1px 0 #fff,
+    -1px  1px 0 #fff,
+     1px  1px 0 #fff;
+}
     #resultWrapper {
       position: relative;
       width: 90%;
@@ -78,9 +87,9 @@
   <div id="resultWrapper" class="hidden">
     <img id="resultBg" src="https://i.imgur.com/VP3Pf8G.png" alt="背景" />
     <div id="result">
-      <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
-      <p id="numberText" style="font-size: 20px; margin-bottom: 20px;"></p>
-    </div>
+<p id="fortuneText" class="text-outline" style="font-size: 24px;"></p>
+<p id="numberText" class="text-outline" style="font-size: 20px; margin-bottom: 20px;"></p>
+         </div>
   </div>
 
   <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
