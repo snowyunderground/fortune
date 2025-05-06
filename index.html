@@ -9,17 +9,27 @@
     body {
       background-color: #000;
       color: #fff;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      font-family: sans-serif;
       margin: 0;
+      padding: 0;
     }
+
+    img.header {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
     h1 {
-      font-size: 2em;
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      font-size: 2.5em;
+      background: linear-gradient(to right, #00f0ff, #ff00e1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 20px 0;
+      margin-top: 20px;
     }
+
     button, a {
       margin: 10px;
       padding: 10px 20px;
@@ -27,92 +37,114 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      background-color: #444;
-      color: white;
-      text-decoration: none;
     }
+
     #musicButton, #shareButton, #saveButton {
       display: none;
+      background-color: #444;
+      color: #fff;
+      text-decoration: none;
     }
-    .hidden {
-      display: none;
-    }
+
     #resultWrapper {
       position: relative;
-      width: 100%;
+      width: 90%;
       max-width: 600px;
-      margin: 40px auto;
-      text-align: center;
+      margin: 20px auto;
+      border-radius: 12px;
+      overflow: hidden;
     }
+
     #resultBg {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 12px;
       z-index: 0;
     }
+
     #result {
       position: relative;
-      padding: 40px 20px;
       z-index: 1;
+      padding: 40px 20px;
       color: white;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 12px;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
+
+  <!-- 最上部画像 -->
+  <img class="header" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" 
+       alt="SNOWY UNDER Header" />
+
   <h1>SNOWY UNDER OMIKUJI</h1>
+
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
   <div id="resultWrapper" class="hidden">
-    <img id="resultBg" src="https://i.imgur.com/VP3Pf8G.png" crossorigin="anonymous" />
+    <img id="resultBg" src="https://i.imgur.com/VP3Pf8G.png" alt="Result Background" />
     <div id="result">
       <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
       <p id="numberText" style="font-size: 20px; margin-bottom: 20px;"></p>
     </div>
   </div>
 
-  <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
-  <a id="shareButton" href="#" target="_blank" rel="noopener noreferrer">Xでシェア</a>
+  <a id="musicButton" href="#" target="_blank">ラッキーソングを聞く</a>
+  <a id="shareButton" href="#" target="_blank">Xでシェア</a>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
   <script>
-    const fortunes = ["新世界の神になれる日", "ごはんがおいしい日", "誰もが振り向くナイスボディな日"];
-    const numbers = ["讃美歌(heavenly!heavenly!heavenly!収録)"];
+    const fortunes = [
+      "新世界の神になれる日",
+      "ごはんがおいしい日",
+      "誰もが振り向くナイスボディな日"
+    ];
+
+    const numbers = [
+      "讃美歌(heavenly!heavenly!heavenly!収録)",
+      "ORIGINAL SIN",
+      "幻想灯"
+    ];
 
     function drawFortune() {
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
+
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
+      // 楽曲リンク
       const musicButton = document.getElementById("musicButton");
-      const shareButton = document.getElementById("shareButton");
-      const saveButton = document.getElementById("saveButton");
-
-      if (number.includes("heavenly!heavenly!heavenly!")) {
+      if (number.includes("ORIGINAL SIN")) {
+        musicButton.href = "https://linkco.re/8tdYfQUB";
+      } else if (number.includes("heavenly!heavenly!heavenly!")) {
         musicButton.href = "https://linkco.re/ysm2QFub";
-        musicButton.style.display = "inline-block";
       } else {
-        musicButton.style.display = "none";
+        musicButton.href = "#";
       }
 
-      const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
-      shareButton.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-      shareButton.style.display = "inline-block";
-      saveButton.style.display = "inline-block";
+      musicButton.style.display = "inline-block";
+      document.getElementById("shareButton").style.display = "inline-block";
+      document.getElementById("saveButton").style.display = "inline-block";
 
+      // シェア用テキスト
+      const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+      const tweetText = encodeURIComponent(shareText);
+      document.getElementById("shareButton").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+
+      // 結果表示
       document.getElementById("resultWrapper").classList.remove("hidden");
     }
 
     function saveResult() {
-      const resultWrapper = document.getElementById("resultWrapper");
-      html2canvas(resultWrapper, {
+      const resultArea = document.getElementById("resultWrapper");
+      html2canvas(resultArea, {
         useCORS: true,
+        allowTaint: false,
         backgroundColor: null
       }).then(canvas => {
         const link = document.createElement('a');
@@ -121,7 +153,7 @@
         link.click();
         alert("画像を保存しました！画像を添えて投稿してね📷✨");
       }).catch(err => {
-        alert("画像の保存に失敗しました。もう一度お試しください。");
+        alert("画像保存に失敗しました…");
         console.error(err);
       });
     }
