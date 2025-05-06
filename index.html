@@ -40,6 +40,7 @@
       max-width: 600px;
       margin: 20px auto;
       text-align: center;
+      display: none; /* 初期は非表示 */
     }
     #resultBg {
       position: absolute;
@@ -74,7 +75,7 @@
   <button onclick="drawFortune()">おみくじを引いてみる</button>
 
   <!-- 結果表示 -->
-  <div id="resultWrapper" style="display: none;">
+  <div id="resultWrapper">
     <img id="resultBg" src="https://lh3.googleusercontent.com/pw/AP1GczNm9JylCYLkNOoIkW-5GewwxqMTW_LEwwrLkZ9ufEiaxWhOJVKfvN04uPs9CbbCzgSUPZGPfJCgW4cAVDLcw0D4YzSRLtAAndRUOQjvtV1ffEjXKxZH=w2400" alt="background" />
     <div id="result">
       <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
@@ -132,10 +133,12 @@
     function saveResult() {
       const resultArea = document.getElementById("resultWrapper");
 
+      // 背景画像を維持した状態で保存するため、backgroundImageを設定
       html2canvas(resultArea, {
         allowTaint: true,
         useCORS: true,
-        backgroundColor: null // 透明背景の問題回避
+        backgroundColor: 'transparent', // 背景を透過に設定
+        logging: true
       }).then(canvas => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
