@@ -102,6 +102,24 @@
                    1px 1px 0 white, -1px -1px 0 white;
       margin: 10px;
     }
+
+    /* 画像保存手順 */
+    .save-instructions {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 40px;
+    }
+
+    .save-instructions p {
+      margin: 5px 0;
+    }
+
+    .save-instructions img {
+      width: 30px;
+      height: 30px;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
   </style>
 </head>
 <body>
@@ -123,6 +141,13 @@
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
+
+  <!-- 画像保存手順の追加 -->
+  <div class="save-instructions">
+    <p><strong>画像保存手順：</strong></p>
+    <p><span>iPhoneの場合：</span> 画面を長押し → 「画像を保存」</p>
+    <p><span>Androidの場合：</span> 画面を長押し → 「画像を保存」</p>
+  </div>
 
   <script>
     const fortunes = [
@@ -190,14 +215,4 @@
       });
     }
 
-    // 5時リセット用コメントアウト（必ずこのまま保持）
-    /*
-    const resetTime = 5; // リセット時間を5時に設定
-    const now = new Date();
-    if (now.getHours() === resetTime) {
-      // リセット処理をここに追加
-    }
-    */
-  </script>
-</body>
-</html>
+    // 5時リセット用コメントアウト（必ずこのまま保持
