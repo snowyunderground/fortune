@@ -29,6 +29,7 @@
     }
 
     button, a {
+      display: inline-block;
       margin: 10px;
       padding: 10px 20px;
       font-size: 16px;
@@ -38,6 +39,11 @@
       background-color: #444;
       color: #fff;
       text-decoration: none;
+    }
+
+    #drawButton {
+      display: block;
+      margin: 0 auto 20px;
     }
 
     #musicButton, #shareButton, #saveButton {
@@ -55,6 +61,14 @@
       aspect-ratio: 3 / 4;
     }
 
+    #resultContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
     #resultBg {
       position: absolute;
       top: 0; left: 0;
@@ -62,17 +76,18 @@
       height: 100%;
       object-fit: cover;
       z-index: 0;
-      border-radius: 12px;
     }
 
     #result {
-      position: relative;
-      z-index: 1;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100%;
+      z-index: 1;
       padding: 20px;
     }
 
@@ -91,13 +106,15 @@
   <img class="title-image" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI" />
 
   <h1>SNOWY UNDER OMIKUJI</h1>
-  <button onclick="drawFortune()">おみくじを引いてみる</button>
+  <button id="drawButton" onclick="drawFortune()">おみくじを引いてみる</button>
 
   <div id="resultWrapper">
-    <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg" alt="背景" />
-    <div id="result">
-      <p id="fortuneText"></p>
-      <p id="numberText"></p>
+    <div id="resultContainer">
+      <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg" alt="背景" />
+      <div id="result">
+        <p id="fortuneText"></p>
+        <p id="numberText"></p>
+      </div>
     </div>
   </div>
 
@@ -123,7 +140,7 @@
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      // 背景画像付きの結果を表示
+      // 結果表示
       document.getElementById("resultWrapper").style.display = "block";
 
       // 楽曲リンク設定
@@ -134,9 +151,9 @@
         musicButton.href = "#";
       }
 
-      // ボタン表示（iOS向け対策）
-      document.getElementById("musicButton").style.visibility = "visible";
-      document.getElementById("musicButton").style.opacity = "1";
+      // ボタン表示
+      musicButton.style.visibility = "visible";
+      musicButton.style.opacity = "1";
 
       const shareBtn = document.getElementById("shareButton");
       shareBtn.style.visibility = "visible";
@@ -145,27 +162,22 @@
       document.getElementById("saveButton").style.visibility = "visible";
       document.getElementById("saveButton").style.opacity = "1";
 
-      // シェア動作（iPhone対応）
+      // シェア動作
       shareBtn.onclick = function () {
         const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
         const tweetText = encodeURIComponent(shareText);
         const shareURL = `https://twitter.com/intent/tweet?text=${tweetText}`;
         window.open(shareURL, '_blank', 'noopener,noreferrer');
       };
-
-      // localStorageはコメントアウトで残す
-      /*
-      const now = new Date();
-      const today5am = new Date(now);
-      if (now.getHours() < 5) today5am.setDate(today5am.getDate() - 1);
-      today5am.setHours(5, 0, 0, 0);
-      localStorage.setItem('lastFortuneDate', today5am.toISOString());
-      */
     }
 
     function saveResult() {
-      const resultWrapper = document.getElementById("resultWrapper");
-      html2canvas(resultWrapper, { backgroundColor: null }).then(canvas => {
+      const resultContainer = document.getElementById("resultContainer");
+      html2canvas(resultContainer, {
+        backgroundColor: null,
+        useCORS: true,
+        scale: 2
+      }).then(canvas => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL("image/png");
         link.download = 'fortune_result.png';
