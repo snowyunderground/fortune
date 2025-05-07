@@ -178,7 +178,9 @@
       html2canvas(resultContainer, {
         backgroundColor: null,
         useCORS: true,
-        scale: 2
+        scale: 2,  // 解像度を上げて保存するために変更（これが幅縮小問題の解決に繋がります）
+        width: resultContainer.offsetWidth,  // 画像保存時に幅を正しく反映
+        height: resultContainer.offsetHeight  // 高さも同様
       }).then(canvas => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL("image/png");
@@ -188,21 +190,13 @@
       });
     }
 
-    // 5時リセット機能のコード（コメントアウト）
+    // 5時リセット用コメントアウト（必ずこのまま保持）
     /*
-    function resetAtFive() {
-      const now = new Date();
-      const resetTime = new Date();
-      resetTime.setHours(5, 0, 0, 0);
-
-      if (now >= resetTime) {
-        localStorage.clear();
-        alert("5時リセットが完了しました！");
-      }
+    const resetTime = 5; // リセット時間を5時に設定
+    const now = new Date();
+    if (now.getHours() === resetTime) {
+      // リセット処理をここに追加
     }
-
-    // 毎日5時にリセット
-    setInterval(resetAtFive, 60000);
     */
   </script>
 </body>
