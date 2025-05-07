@@ -123,7 +123,7 @@
   <img class="title-image" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI" />
 
   <h1>SNOWY UNDER OMIKUJI</h1>
-  <button id="drawButton" onclick="drawFortune()">おみくじを引いてみる</button>
+  <button id="drawButton">おみくじを引いてみる</button>
 
   <div id="resultWrapper">
     <div id="resultContainer">
@@ -139,4 +139,101 @@
 
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
-  <button i
+  <button id="saveButton">📷 結果画面を保存</button>
+
+  <div class="instructions">
+    <strong>📱スマホでの保存方法</strong><br>
+    <strong>iPhone:</strong> 結果画像を<strong>長押し</strong> → 「写真に追加」をタップ<br>
+    <strong>Android:</strong> 結果画像を<strong>長押し</strong> → 「画像をダウンロード」や「保存」を選択<br><br>
+    ※画像が表示されない場合は、ページを再読み込みしてください。
+  </div>
+
+  <script>
+    const fortunes = [
+      "新世界の神になれる日",
+      "ごはんがおいしい日",
+      "誰もが振り向くナイスボディな日"
+    ];
+
+    const numbers = [
+      "讃美歌(heavenly!heavenly!heavenly!収録)"
+    ];
+
+    function drawFortune() {
+      const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+      const number = numbers[Math.floor(Math.random() * numbers.length)];
+
+      document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
+      document.getElementById("numberText").textContent = "ラッキーソング: " + number;
+      document.getElementById("resultWrapper").style.display = "block";
+
+      const musicButton = document.getElementById("musicButton");
+      if (number.includes("heavenly!heavenly!heavenly!")) {
+        musicButton.href = "https://linkco.re/ysm2QFub";
+      } else {
+        musicButton.href = "#";
+      }
+
+      // ボタン表示
+      [musicButton, shareButton, saveButton].forEach(btn => {
+        btn.style.visibility = "visible";
+        btn.style.opacity = "1";
+      });
+
+      // シェアボタン動作
+      document.getElementById("shareButton").onclick = () => {
+        const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+        const tweetText = encodeURIComponent(shareText);
+        window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, '_blank', 'noopener,noreferrer');
+      };
+
+      // 結果画像生成
+      html2canvas(document.getElementById("resultContainer"), {
+        backgroundColor: null,
+        useCORS: true,
+        scale: 2
+      }).then(canvas => {
+        const img = document.getElementById("resultImage");
+        img.src = canvas.toDataURL("image/png");
+        img.style.display = "block";
+      });
+    }
+
+    document.getElementById("drawButton").addEventListener("click", () => {
+      drawFortune();
+    });
+
+    document.getElementById("saveButton").addEventListener("click", () => {
+      html2canvas(document.getElementById("resultContainer"), {
+        backgroundColor: null,
+        useCORS: true,
+        scale: 2
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL("image/png");
+        link.download = 'fortune_result.png';
+        link.click();
+        alert("画像を保存しました！画像を添えて投稿してね📷✨");
+      });
+    });
+
+    // ↓↓↓ 5時リセット処理（将来的に使用するためコメントアウト）↓↓↓
+    /*
+    const now = new Date();
+    const resetHour = 5;
+    if (now.getHours() < resetHour) {
+      now.setDate(now.getDate() - 1);
+    }
+    const dateKey = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    if (localStorage.getItem("drawnDate") === dateKey) {
+      document.getElementById("drawButton").disabled = true;
+      document.getElementById("drawButton").textContent = "本日の運勢は既に引きました";
+    } else {
+      document.getElementById("drawButton").addEventListener("click", () => {
+        localStorage.setItem("drawnDate", dateKey);
+      });
+    }
+    */
+  </script>
+</body>
+</html>
