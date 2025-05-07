@@ -52,68 +52,19 @@
       transition: opacity 0.3s;
     }
 
-    #resultWrapper {
-      display: none;
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      margin: 20px auto;
-      aspect-ratio: 3 / 4;
-    }
-
-    #resultContainer {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    #resultBg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-
-    #result {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-      padding: 20px;
-    }
-
-    #fortuneText, #numberText {
-      font-size: 22px;
-      font-weight: bold;
-      color: black;
-      text-shadow: 2px 2px 0 white, -2px -2px 0 white,
-                   2px -2px 0 white, -2px 2px 0 white,
-                   1px 1px 0 white, -1px -1px 0 white;
-      margin: 10px;
-    }
-
     #resultImage {
       display: none;
       width: 100%;
       max-width: 600px;
       border-radius: 12px;
-      margin-top: 20px;
+      margin: 20px auto 0;
     }
 
     .instructions {
       color: #ccc;
       font-size: 14px;
       margin: 40px 20px 80px;
-      text-align: left;
+      text-align: center;
       max-width: 600px;
       line-height: 1.6;
     }
@@ -125,16 +76,7 @@
   <h1>SNOWY UNDER OMIKUJI</h1>
   <button id="drawButton">おみくじを引いてみる</button>
 
-  <div id="resultWrapper">
-    <div id="resultContainer">
-      <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg" alt="背景" />
-      <div id="result">
-        <p id="fortuneText"></p>
-        <p id="numberText"></p>
-      </div>
-    </div>
-  </div>
-
+  <!-- 結果画像（Canvasから変換された画像）が表示される場所 -->
   <img id="resultImage" alt="おみくじ結果画像（長押し保存可能）" />
 
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
@@ -163,58 +105,77 @@
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
 
-      document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
-      document.getElementById("numberText").textContent = "ラッキーソング: " + number;
-      document.getElementById("resultWrapper").style.display = "block";
+      const container = document.createElement("div");
+      container.style.width = "600px";
+      container.style.height = "800px";
+      container.style.display = "flex";
+      container.style.flexDirection = "column";
+      container.style.justifyContent = "center";
+      container.style.alignItems = "center";
+      container.style.backgroundImage = "url('https://i.imgur.com/QFhmfx6.jpeg')";
+      container.style.backgroundSize = "cover";
+      container.style.backgroundPosition = "center";
+      container.style.color = "black";
+      container.style.padding = "20px";
+      container.style.fontWeight = "bold";
+      container.style.textShadow = "2px 2px 0 white, -2px -2px 0 white";
 
-      const musicButton = document.getElementById("musicButton");
-      if (number.includes("heavenly!heavenly!heavenly!")) {
-        musicButton.href = "https://linkco.re/ysm2QFub";
-      } else {
-        musicButton.href = "#";
-      }
+      const fortuneP = document.createElement("p");
+      fortuneP.style.fontSize = "24px";
+      fortuneP.style.margin = "20px";
+      fortuneP.textContent = "今日の運勢: " + fortune;
 
-      // ボタン表示
-      [musicButton, shareButton, saveButton].forEach(btn => {
-        btn.style.visibility = "visible";
-        btn.style.opacity = "1";
-      });
+      const numberP = document.createElement("p");
+      numberP.style.fontSize = "24px";
+      numberP.style.margin = "20px";
+      numberP.textContent = "ラッキーソング: " + number;
 
-      // シェアボタン動作
-      document.getElementById("shareButton").onclick = () => {
-        const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
-        const tweetText = encodeURIComponent(shareText);
-        window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, '_blank', 'noopener,noreferrer');
-      };
+      container.appendChild(fortuneP);
+      container.appendChild(numberP);
 
-      // 結果画像生成
-      html2canvas(document.getElementById("resultContainer"), {
+      html2canvas(container, {
         backgroundColor: null,
         useCORS: true,
         scale: 2
       }).then(canvas => {
-        const img = document.getElementById("resultImage");
-        img.src = canvas.toDataURL("image/png");
-        img.style.display = "block";
+        const dataUrl = canvas.toDataURL("image/png");
+        const resultImage = document.getElementById("resultImage");
+        resultImage.src = dataUrl;
+        resultImage.style.display = "block";
+
+        // ボタン表示
+        [musicButton, shareButton, saveButton].forEach(btn => {
+          btn.style.visibility = "visible";
+          btn.style.opacity = "1";
+        });
+
+        // 音楽リンク
+        if (number.includes("heavenly!heavenly!heavenly!")) {
+          musicButton.href = "https://linkco.re/ysm2QFub";
+        } else {
+          musicButton.href = "#";
+        }
+
+        // シェアボタン
+        shareButton.onclick = () => {
+          const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+          const tweetText = encodeURIComponent(shareText);
+          window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, '_blank', 'noopener,noreferrer');
+        };
+
+        // 保存ボタン
+        saveButton.onclick = () => {
+          const link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = "fortune_result.png";
+          link.click();
+          alert("画像を保存しました！画像を添えて投稿してね📷✨");
+        };
       });
     }
 
     document.getElementById("drawButton").addEventListener("click", () => {
       drawFortune();
-    });
-
-    document.getElementById("saveButton").addEventListener("click", () => {
-      html2canvas(document.getElementById("resultContainer"), {
-        backgroundColor: null,
-        useCORS: true,
-        scale: 2
-      }).then(canvas => {
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL("image/png");
-        link.download = 'fortune_result.png';
-        link.click();
-        alert("画像を保存しました！画像を添えて投稿してね📷✨");
-      });
     });
 
     // ↓↓↓ 5時リセット処理（将来的に使用するためコメントアウト）↓↓↓
