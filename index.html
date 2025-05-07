@@ -52,21 +52,24 @@
       transition: opacity 0.3s;
     }
 
-    #resultImage {
+    #resultWrapper {
       display: none;
-      width: 100%;
-      max-width: 600px;
-      aspect-ratio: 3 / 4;
-      border-radius: 12px;
-      object-fit: cover;
       margin: 20px auto;
+      max-width: 600px;
     }
 
-    #downloadGuide {
-      margin: 40px 20px;
+    #resultImage {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    .instructions {
+      margin: 40px auto;
+      max-width: 90%;
       font-size: 14px;
-      line-height: 1.6;
       text-align: center;
+      line-height: 1.6;
       color: #ccc;
     }
   </style>
@@ -77,17 +80,27 @@
   <h1>SNOWY UNDER OMIKUJI</h1>
   <button id="drawButton">おみくじを引いてみる</button>
 
-  <img id="resultImage" src="" alt="おみくじ結果画像" />
+  <div id="resultWrapper">
+    <img id="resultImage" src="" alt="占い結果画像">
+  </div>
 
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
-  <div id="downloadGuide">
-    <p>📱<strong>画像保存の手順：</strong></p>
-    <p><strong>iPhone：</strong>結果画像を<strong>長押し</strong> →「写真に追加」を選択</p>
-    <p><strong>Android：</strong>結果画像を<strong>長押し</strong> →「画像を保存」を選択</p>
-    <p>うまくいかない場合は右上メニューなどから保存を選んでください</p>
+  <!--
+  // 5時にリセット処理（コメントアウト状態）
+  // const now = new Date();
+  // if (now.getHours() === 5 && now.getMinutes() === 0) {
+  //   location.reload();
+  // }
+  -->
+
+  <div class="instructions">
+    【画像保存の手順】<br>
+    iPhone：結果画像を長押し →「写真に追加」<br>
+    Android：結果画像を長押し →「画像をダウンロード」<br>
+    ※うまく保存できない場合は、右下の「📷 結果画面を保存」ボタンもお試しください。
   </div>
 
   <script>
@@ -101,89 +114,81 @@
       "讃美歌(heavenly!heavenly!heavenly!収録)"
     ];
 
-    document.getElementById("drawButton").addEventListener("click", () => {
+    const drawButton = document.getElementById("drawButton");
+    drawButton.addEventListener("click", drawFortune);
+
+    function drawFortune() {
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
 
-      // 画像生成
-      const resultCanvas = document.createElement("canvas");
-      resultCanvas.width = 600;
-      resultCanvas.height = 800;
-      const ctx = resultCanvas.getContext("2d");
+      const canvas = document.createElement("canvas");
+      canvas.width = 600;
+      canvas.height = 800;
+      const ctx = canvas.getContext("2d");
 
-      const bgImg = new Image();
-      bgImg.crossOrigin = "anonymous";
-      bgImg.src = "https://i.imgur.com/QFhmfx6.jpeg";
-      bgImg.onload = () => {
-        ctx.drawImage(bgImg, 0, 0, 600, 800);
+      const bg = new Image();
+      bg.crossOrigin = "anonymous";
+      bg.src = "https://i.imgur.com/QFhmfx6.jpeg";
+      bg.onload = function () {
+        ctx.drawImage(bg, 0, 0, 600, 800);
+
+        ctx.textAlign = "center";
+        ctx.fillStyle = "black";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 4;
+
+        ctx.font = "bold 20px sans-serif";
+        ctx.strokeText("今日の運勢：", 300, 360);
+        ctx.fillText("今日の運勢：", 300, 360);
 
         ctx.font = "bold 26px sans-serif";
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
+        ctx.strokeText(fortune, 300, 400);
+        ctx.fillText(fortune, 300, 400);
 
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = 6;
+        ctx.font = "bold 20px sans-serif";
+        ctx.strokeText("ラッキーソング：", 300, 460);
+        ctx.fillText("ラッキーソング：", 300, 460);
 
-        ctx.strokeText("今日の運勢: " + fortune, 300, 380);
-        ctx.fillText("今日の運勢: " + fortune, 300, 380);
-        ctx.strokeText("ラッキーソング: " + number, 300, 440);
-        ctx.fillText("ラッキーソング: " + number, 300, 440);
+        ctx.font = "bold 26px sans-serif";
+        ctx.strokeText(number, 300, 500);
+        ctx.fillText(number, 300, 500);
 
         const resultImg = document.getElementById("resultImage");
-        resultImg.src = resultCanvas.toDataURL("image/png");
-        resultImg.style.display = "block";
+        resultImg.src = canvas.toDataURL("image/png");
+        document.getElementById("resultWrapper").style.display = "block";
+
+        // 楽曲リンク設定
+        const musicButton = document.getElementById("musicButton");
+        if (number.includes("heavenly!heavenly!heavenly!")) {
+          musicButton.href = "https://linkco.re/ysm2QFub";
+        } else {
+          musicButton.href = "#";
+        }
+
+        // ボタン表示
+        [musicButton, shareButton, saveButton].forEach(btn => {
+          btn.style.visibility = "visible";
+          btn.style.opacity = "1";
+        });
+
+        // シェア動作
+        shareButton.onclick = function () {
+          const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+          const tweetText = encodeURIComponent(shareText);
+          const shareURL = `https://twitter.com/intent/tweet?text=${tweetText}`;
+          window.open(shareURL, '_blank', 'noopener,noreferrer');
+        };
       };
-
-      // 楽曲リンク
-      const musicButton = document.getElementById("musicButton");
-      if (number.includes("heavenly!heavenly!heavenly!")) {
-        musicButton.href = "https://linkco.re/ysm2QFub";
-      } else {
-        musicButton.href = "#";
-      }
-
-      musicButton.style.visibility = "visible";
-      musicButton.style.opacity = "1";
-
-      const shareBtn = document.getElementById("shareButton");
-      shareBtn.style.visibility = "visible";
-      shareBtn.style.opacity = "1";
-
-      document.getElementById("saveButton").style.visibility = "visible";
-      document.getElementById("saveButton").style.opacity = "1";
-
-      shareBtn.onclick = function () {
-        const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
-        const tweetText = encodeURIComponent(shareText);
-        const shareURL = `https://twitter.com/intent/tweet?text=${tweetText}`;
-        window.open(shareURL, '_blank', 'noopener,noreferrer');
-      };
-    });
+    }
 
     function saveResult() {
-      const resultImage = document.getElementById("resultImage");
+      const img = document.getElementById("resultImage");
       const link = document.createElement('a');
-      link.href = resultImage.src;
+      link.href = img.src;
       link.download = 'fortune_result.png';
       link.click();
       alert("画像を保存しました！画像を添えて投稿してね📷✨");
     }
-
-    /*
-    // 5時リセット機能（現在は非表示のまま保持）
-    const now = new Date();
-    const resetHour = 5;
-    if (now.getHours() < resetHour) {
-      now.setDate(now.getDate() - 1);
-    }
-    const dateKey = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    // if (localStorage.getItem("drawnDate") === dateKey) {
-    //   drawButton.disabled = true;
-    //   drawButton.textContent = "本日の運勢は既に引きました";
-    // } else {
-    //   localStorage.setItem("drawnDate", dateKey);
-    // }
-    */
   </script>
 </body>
 </html>
