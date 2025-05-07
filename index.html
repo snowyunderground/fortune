@@ -101,24 +101,21 @@
       margin: 10px;
     }
 
-    #savedImage {
-      max-width: 100%;
-      margin: 20px auto;
-      display: block;
+    #resultImage {
+      display: none;
+      width: 100%;
+      max-width: 600px;
       border-radius: 12px;
+      margin-top: 20px;
     }
 
     .instructions {
-      max-width: 600px;
-      margin: 40px auto;
-      font-size: 14px;
       color: #ccc;
+      font-size: 14px;
+      margin: 40px 20px 80px;
       text-align: left;
-      padding: 0 10px;
-    }
-
-    .instructions h3 {
-      color: #fff;
+      max-width: 600px;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -138,93 +135,8 @@
     </div>
   </div>
 
+  <img id="resultImage" alt="おみくじ結果画像（長押し保存可能）" />
+
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
-  <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
-
-  <!-- 5時リセット（現在一時的に無効化中） -->
-  <!--
-  const now = new Date();
-  if (now.getHours() === 5 && now.getMinutes() === 0) {
-    location.reload();
-  }
-  -->
-
-  <script>
-    const fortunes = [
-      "新世界の神になれる日",
-      "ごはんがおいしい日",
-      "誰もが振り向くナイスボディな日"
-    ];
-
-    const numbers = [
-      "讃美歌(heavenly!heavenly!heavenly!収録)"
-    ];
-
-    function drawFortune() {
-      const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-      const number = numbers[Math.floor(Math.random() * numbers.length)];
-
-      document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
-      document.getElementById("numberText").textContent = "ラッキーソング: " + number;
-
-      document.getElementById("resultWrapper").style.display = "block";
-
-      const musicButton = document.getElementById("musicButton");
-      if (number.includes("heavenly!heavenly!heavenly!")) {
-        musicButton.href = "https://linkco.re/ysm2QFub";
-      } else {
-        musicButton.href = "#";
-      }
-
-      musicButton.style.visibility = "visible";
-      musicButton.style.opacity = "1";
-
-      const shareBtn = document.getElementById("shareButton");
-      shareBtn.style.visibility = "visible";
-      shareBtn.style.opacity = "1";
-
-      document.getElementById("saveButton").style.visibility = "visible";
-      document.getElementById("saveButton").style.opacity = "1";
-
-      shareBtn.onclick = function () {
-        const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
-        const tweetText = encodeURIComponent(shareText);
-        const shareURL = `https://twitter.com/intent/tweet?text=${tweetText}`;
-        window.open(shareURL, '_blank', 'noopener,noreferrer');
-      };
-    }
-
-    function saveResult() {
-      const resultContainer = document.getElementById("resultContainer");
-      html2canvas(resultContainer, {
-        backgroundColor: null,
-        useCORS: true,
-        scale: 2
-      }).then(canvas => {
-        const imageData = canvas.toDataURL("image/png");
-
-        const oldImg = document.getElementById('savedImage');
-        if (oldImg) oldImg.remove();
-
-        const img = document.createElement('img');
-        img.src = imageData;
-        img.id = 'savedImage';
-        img.alt = 'おみくじ結果画像';
-        document.body.appendChild(img);
-
-        alert("画像が表示されました。長押しして保存してください📱✨");
-      });
-    }
-  </script>
-
-  <div class="instructions">
-    <h3>📱 スマホでの保存方法</h3>
-    <ul>
-      <li><strong>iPhone（Safari）</strong>：画像を<strong>長押し</strong> →「写真に追加」</li>
-      <li><strong>Android（Chrome）</strong>：画像を<strong>長押し</strong> →「画像をダウンロード」</li>
-    </ul>
-    <p>※ 保存ボタンを押すと画像が表示されます。そこから保存してください。</p>
-  </div>
-</body>
-</html>
+  <button i
