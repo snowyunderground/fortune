@@ -74,15 +74,13 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;  /* 背景画像が歪みなく表示されるように修正 */
+      object-fit: cover;
       z-index: 0;
     }
 
     #result {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);  /* 結果を中央配置 */
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       display: flex;
@@ -103,22 +101,24 @@
       margin: 10px;
     }
 
-    /* 画像保存手順 */
-    .save-instructions {
+    #savedImage {
+      max-width: 100%;
+      margin: 20px auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .instructions {
+      max-width: 600px;
+      margin: 40px auto;
       font-size: 14px;
       color: #ccc;
-      margin-top: 40px;
+      text-align: left;
+      padding: 0 10px;
     }
 
-    .save-instructions p {
-      margin: 5px 0;
-    }
-
-    .save-instructions img {
-      width: 30px;
-      height: 30px;
-      vertical-align: middle;
-      margin-left: 5px;
+    .instructions h3 {
+      color: #fff;
     }
   </style>
 </head>
@@ -142,16 +142,13 @@
   <button id="shareButton">Xでシェア</button>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
-  <!-- 画像保存手順の追加 -->
-  <div class="save-instructions">
-    <p><strong>画像保存手順：</strong></p>
-    <p><span>iPhoneの場合：</span> 画面を長押し → 「画像を保存」</p>
-    <p><span>Androidの場合：</span> 画面を長押し → 「画像を保存」</p>
-    <p><strong>画像保存手順（ダウンロード）：</strong></p>
-    <p><span>iPhoneの場合：</span> 結果画面が表示されたら、「画面を長押し」して「画像を保存」を選択</p>
-    <p><span>Androidの場合：</span> 結果画面が表示されたら、「画面を長押し」して「画像を保存」を選択</p>
-    <p><span>PCの場合：</span> 右クリック → 「画像を保存」</p>
-  </div>
+  <!-- 5時リセット（現在一時的に無効化中） -->
+  <!--
+  const now = new Date();
+  if (now.getHours() === 5 && now.getMinutes() === 0) {
+    location.reload();
+  }
+  -->
 
   <script>
     const fortunes = [
@@ -171,10 +168,8 @@
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      // 結果表示
       document.getElementById("resultWrapper").style.display = "block";
 
-      // 楽曲リンク設定
       const musicButton = document.getElementById("musicButton");
       if (number.includes("heavenly!heavenly!heavenly!")) {
         musicButton.href = "https://linkco.re/ysm2QFub";
@@ -182,7 +177,6 @@
         musicButton.href = "#";
       }
 
-      // ボタン表示
       musicButton.style.visibility = "visible";
       musicButton.style.opacity = "1";
 
@@ -193,7 +187,6 @@
       document.getElementById("saveButton").style.visibility = "visible";
       document.getElementById("saveButton").style.opacity = "1";
 
-      // シェア動作
       shareBtn.onclick = function () {
         const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
         const tweetText = encodeURIComponent(shareText);
@@ -207,26 +200,31 @@
       html2canvas(resultContainer, {
         backgroundColor: null,
         useCORS: true,
-        scale: 2,  // 解像度を上げて保存するために変更（これが幅縮小問題の解決に繋がります）
-        width: resultContainer.offsetWidth,  // 画像保存時に幅を正しく反映
-        height: resultContainer.offsetHeight  // 高さも同様
+        scale: 2
       }).then(canvas => {
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL("image/png");
-        link.download = 'fortune_result.png';
-        link.click();
-        alert("画像を保存しました！画像を添えて投稿してね📷✨");
+        const imageData = canvas.toDataURL("image/png");
+
+        const oldImg = document.getElementById('savedImage');
+        if (oldImg) oldImg.remove();
+
+        const img = document.createElement('img');
+        img.src = imageData;
+        img.id = 'savedImage';
+        img.alt = 'おみくじ結果画像';
+        document.body.appendChild(img);
+
+        alert("画像が表示されました。長押しして保存してください📱✨");
       });
     }
-
-    // 5時リセット用コメントアウト（必ずこのまま保持）
-    /*
-    const resetTime = 5; // リセット時間を5時に設定
-    const now = new Date();
-    if (now.getHours() === resetTime) {
-      // リセット処理をここに追加
-    }
-    */
   </script>
+
+  <div class="instructions">
+    <h3>📱 スマホでの保存方法</h3>
+    <ul>
+      <li><strong>iPhone（Safari）</strong>：画像を<strong>長押し</strong> →「写真に追加」</li>
+      <li><strong>Android（Chrome）</strong>：画像を<strong>長押し</strong> →「画像をダウンロード」</li>
+    </ul>
+    <p>※ 保存ボタンを押すと画像が表示されます。そこから保存してください。</p>
+  </div>
 </body>
 </html>
