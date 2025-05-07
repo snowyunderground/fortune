@@ -9,18 +9,14 @@
     body {
       background-color: #000;
       color: #fff;
-      font-family: sans-serif;
       text-align: center;
+      font-family: sans-serif;
       margin: 0;
       padding: 0;
     }
     img {
       max-width: 100%;
       height: auto;
-    }
-    h1 {
-      font-size: 2em;
-      margin: 20px 0;
     }
     button, a {
       margin: 10px;
@@ -29,25 +25,23 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      background-color: #444;
-      color: #fff;
       text-decoration: none;
-      display: inline-block;
     }
     #musicButton, #shareButton, #saveButton {
       display: none;
+      background-color: #444;
+      color: #fff;
     }
     #resultWrapper {
       position: relative;
       width: 100%;
       max-width: 600px;
-      margin: 30px auto;
+      margin: 20px auto;
+      text-align: center;
       display: none;
     }
     #resultBg {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -56,45 +50,52 @@
     }
     #result {
       position: relative;
+      padding: 40px 20px;
       z-index: 1;
-      padding: 60px 20px;
     }
     .outlined-text {
       font-size: 24px;
       font-weight: bold;
       color: black;
-      text-shadow: 2px 2px 0 white, -2px 2px 0 white, 2px -2px 0 white, -2px -2px 0 white;
-      margin-bottom: 20px;
+      -webkit-text-stroke: 1px white;
+      text-align: center;
+      word-break: break-word;
     }
-    #footerNote {
-      font-size: 12px;
+    #infoText {
+      margin-top: 30px;
+      font-size: 14px;
       color: #aaa;
-      margin-top: 50px;
-      padding: 0 20px 20px;
+      padding: 0 10px 30px;
+    }
+    .center-button {
+      display: flex;
+      justify-content: center;
     }
   </style>
 </head>
 <body>
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI">
+  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI" style="width: 90%; max-width: 800px; margin-top: 10px;">
   <h1>SNOWY UNDER OMIKUJI</h1>
 
-  <button onclick="drawFortune()" style="margin: 20px auto; display: block;">おみくじを引いてみる</button>
+  <div class="center-button">
+    <button onclick="drawFortune()">おみくじを引いてみる</button>
+  </div>
 
   <div id="resultWrapper">
-    <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg" alt="背景">
+    <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg" alt="背景画像">
     <div id="result">
       <p id="fortuneText" class="outlined-text"></p>
-      <p id="numberText" class="outlined-text"></p>
+      <p id="numberText" class="outlined-text" style="font-size: 20px;"></p>
     </div>
   </div>
 
-  <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
+  <a id="musicButton" href="#" target="_blank">楽曲リンク</a>
   <a id="shareButton" href="#" target="_blank" rel="noopener noreferrer">Xでシェア</a>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
-  <div id="footerNote">
+  <div id="infoText">
     SafariのJavaScript仕様上、一部ボタンが表示されないことがあるため、常に最新のSafari（iOS）にアップデートしてください。<br>
-    JavaScriptのタップイベントで反応しない場合、「設定 &gt; Safari &gt; 詳細 &gt; JavaScript」がオンになっているか確認してください。
+    JavaScriptのタップイベントで反応しない場合、「設定 > Safari > 詳細 > JavaScript」がオンになっているか確認してください。
   </div>
 
   <script>
@@ -103,27 +104,26 @@
       "ごはんがおいしい日",
       "誰もが振り向くナイスボディな日"
     ];
-
     const numbers = [
       "讃美歌(heavenly!heavenly!heavenly!収録)"
     ];
 
     function drawFortune() {
-      // const now = new Date();
-      // const today5am = new Date(now);
-      // if (now.getHours() < 5) {
-      //   today5am.setDate(today5am.getDate() - 1);
-      // }
-      // today5am.setHours(5, 0, 0, 0);
-      // const storedDate = localStorage.getItem('lastFortuneDate');
-      // if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
-      //   alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
-      //   return;
-      // }
-
+      /*
+      const now = new Date();
+      const today5am = new Date(now);
+      if (now.getHours() < 5) {
+        today5am.setDate(today5am.getDate() - 1);
+      }
+      today5am.setHours(5, 0, 0, 0);
+      const storedDate = localStorage.getItem('lastFortuneDate');
+      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
+        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
+        return;
+      }
+      */
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
-
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
@@ -131,29 +131,31 @@
       const shareButton = document.getElementById("shareButton");
       const saveButton = document.getElementById("saveButton");
 
-      if (number.includes("heavenly!heavenly!heavenly!")) {
+      if (number.includes("ORIGINAL SIN")) {
+        musicButton.href = "https://linkco.re/8tdYfQUB";
+      } else if (number.includes("heavenly!heavenly!heavenly!")) {
         musicButton.href = "https://linkco.re/ysm2QFub";
       } else {
         musicButton.style.display = "none";
       }
-
       musicButton.style.display = "inline-block";
       shareButton.style.display = "inline-block";
       saveButton.style.display = "inline-block";
-      document.getElementById("resultWrapper").style.display = "block";
 
       const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
       const tweetText = encodeURIComponent(shareText);
       shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
 
-      // localStorage.setItem('lastFortuneDate', today5am.toISOString());
+      document.getElementById("resultWrapper").style.display = "block";
+
+      localStorage.setItem('lastFortuneDate', new Date().toISOString());
     }
 
     function saveResult() {
       html2canvas(document.querySelector("#resultWrapper"), {
-        allowTaint: true,
         useCORS: true,
-        backgroundColor: null
+        backgroundColor: null,
+        scale: 2
       }).then(canvas => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
@@ -163,21 +165,5 @@
       });
     }
   </script>
-
-  <!-- 5時にリセット（現在は一時的に無効） -->
-  <!--
-  <script>
-    const now = new Date();
-    const resetHour = 5;
-    if (now.getHours() === resetHour && !localStorage.getItem('resetDone')) {
-      localStorage.clear();
-      localStorage.setItem('resetDone', 'true');
-      location.reload();
-    }
-    if (now.getHours() !== resetHour) {
-      localStorage.removeItem('resetDone');
-    }
-  </script>
-  -->
 </body>
 </html>
