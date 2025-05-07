@@ -63,9 +63,10 @@
     .instructions {
       color: #ccc;
       font-size: 14px;
-      margin: 40px 20px 80px;
+      margin: 40px auto 80px;
       text-align: center;
-      max-width: 600px;
+      max-width: 90%;
+      width: 600px;
       line-height: 1.6;
     }
   </style>
@@ -76,7 +77,6 @@
   <h1>SNOWY UNDER OMIKUJI</h1>
   <button id="drawButton">おみくじを引いてみる</button>
 
-  <!-- 結果画像（Canvasから変換された画像）が表示される場所 -->
   <img id="resultImage" alt="おみくじ結果画像（長押し保存可能）" />
 
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
@@ -101,7 +101,13 @@
       "讃美歌(heavenly!heavenly!heavenly!収録)"
     ];
 
-    function drawFortune() {
+    const drawButton = document.getElementById("drawButton");
+    const resultImage = document.getElementById("resultImage");
+    const musicButton = document.getElementById("musicButton");
+    const shareButton = document.getElementById("shareButton");
+    const saveButton = document.getElementById("saveButton");
+
+    drawButton.addEventListener("click", () => {
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
 
@@ -139,24 +145,22 @@
         scale: 2
       }).then(canvas => {
         const dataUrl = canvas.toDataURL("image/png");
-        const resultImage = document.getElementById("resultImage");
         resultImage.src = dataUrl;
         resultImage.style.display = "block";
 
-        // ボタン表示
         [musicButton, shareButton, saveButton].forEach(btn => {
           btn.style.visibility = "visible";
           btn.style.opacity = "1";
         });
 
-        // 音楽リンク
+        // 楽曲リンク
         if (number.includes("heavenly!heavenly!heavenly!")) {
           musicButton.href = "https://linkco.re/ysm2QFub";
         } else {
           musicButton.href = "#";
         }
 
-        // シェアボタン
+        // Xシェア
         shareButton.onclick = () => {
           const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
           const tweetText = encodeURIComponent(shareText);
@@ -172,13 +176,9 @@
           alert("画像を保存しました！画像を添えて投稿してね📷✨");
         };
       });
-    }
-
-    document.getElementById("drawButton").addEventListener("click", () => {
-      drawFortune();
     });
 
-    // ↓↓↓ 5時リセット処理（将来的に使用するためコメントアウト）↓↓↓
+    // ↓↓↓ 5時リセット（将来的使用のためコメントアウト）↓↓↓
     /*
     const now = new Date();
     const resetHour = 5;
@@ -187,10 +187,10 @@
     }
     const dateKey = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     if (localStorage.getItem("drawnDate") === dateKey) {
-      document.getElementById("drawButton").disabled = true;
-      document.getElementById("drawButton").textContent = "本日の運勢は既に引きました";
+      drawButton.disabled = true;
+      drawButton.textContent = "本日の運勢は既に引きました";
     } else {
-      document.getElementById("drawButton").addEventListener("click", () => {
+      drawButton.addEventListener("click", () => {
         localStorage.setItem("drawnDate", dateKey);
       });
     }
