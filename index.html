@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNOWY UNDER OMIKUJI</title>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <style>
@@ -14,22 +14,14 @@
       margin: 0;
       padding: 0;
     }
-
-    img.top-image {
-      width: 90%;
-      max-width: 600px;
-      margin-top: 10px;
-      border-radius: 10px;
+    img {
+      max-width: 100%;
+      height: auto;
     }
-
     h1 {
-      font-size: 28px;
-      background: linear-gradient(to right, #ffffff, #999999);
-      -webkit-background-clip: text;
-      color: transparent;
-      margin: 10px 0;
+      font-size: 2em;
+      margin: 20px 0;
     }
-
     button, a {
       margin: 10px;
       padding: 10px 20px;
@@ -42,55 +34,57 @@
       text-decoration: none;
       display: inline-block;
     }
-
     #musicButton, #shareButton, #saveButton {
       display: none;
     }
-
-    #drawButton {
-      margin-top: 20px;
-    }
-
     #resultWrapper {
-      display: none;
       position: relative;
-      width: 90%;
+      width: 100%;
       max-width: 600px;
       margin: 30px auto;
-      border-radius: 12px;
-      background-image: url('https://i.imgur.com/QFhmfx6.jpeg');
-      background-size: cover;
-      background-position: center;
+      display: none;
     }
-
+    #resultBg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      z-index: 0;
+    }
     #result {
       position: relative;
-      padding: 40px 20px;
       z-index: 1;
-      color: black;
-      text-shadow: -1px -1px 0 white, 1px -1px 0 white,
-                   -1px 1px 0 white, 1px 1px 0 white;
+      padding: 60px 20px;
     }
-
-    #notice {
-      margin-top: 40px;
-      font-size: 14px;
-      padding: 10px;
-      background-color: #111;
-      color: #ccc;
+    .outlined-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: black;
+      text-shadow: 2px 2px 0 white, -2px 2px 0 white, 2px -2px 0 white, -2px -2px 0 white;
+      margin-bottom: 20px;
+    }
+    #footerNote {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 50px;
+      padding: 0 20px 20px;
     }
   </style>
 </head>
 <body>
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER" class="top-image">
+  <img src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI">
   <h1>SNOWY UNDER OMIKUJI</h1>
 
-  <button id="drawButton" onclick="drawFortune()">おみくじを引いてみる</button>
+  <button onclick="drawFortune()" style="margin: 20px auto; display: block;">おみくじを引いてみる</button>
 
   <div id="resultWrapper">
+    <img id="resultBg" src="https://i.imgur.com/QFhmfx6.jpeg" alt="背景">
     <div id="result">
-      <p id="fortuneText" style="font-size: 24px; font-weight: bold;"></p>
-      <p id="numberText" style="font-size: 20px; margin-bottom: 20px;"></p>
+      <p id="fortuneText" class="outlined-text"></p>
+      <p id="numberText" class="outlined-text"></p>
     </div>
   </div>
 
@@ -98,8 +92,9 @@
   <a id="shareButton" href="#" target="_blank" rel="noopener noreferrer">Xでシェア</a>
   <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
-  <div id="notice">
-    ※iPhoneをご利用の方へ：Xでシェアボタンが表示されない場合は、ページを一度リロードしてください。
+  <div id="footerNote">
+    SafariのJavaScript仕様上、一部ボタンが表示されないことがあるため、常に最新のSafari（iOS）にアップデートしてください。<br>
+    JavaScriptのタップイベントで反応しない場合、「設定 &gt; Safari &gt; 詳細 &gt; JavaScript」がオンになっているか確認してください。
   </div>
 
   <script>
@@ -110,26 +105,21 @@
     ];
 
     const numbers = [
-      "讃美歌(heavenly!heavenly!heavenly!収録)",
-      "ORIGINAL SIN",
-      "夢追いベッドルーム"
+      "讃美歌(heavenly!heavenly!heavenly!収録)"
     ];
 
     function drawFortune() {
-      /*
-      const now = new Date();
-      const today5am = new Date(now);
-      if (now.getHours() < 5) {
-        today5am.setDate(today5am.getDate() - 1);
-      }
-      today5am.setHours(5, 0, 0, 0);
-      const storedDate = localStorage.getItem('lastFortuneDate');
-      if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
-        alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
-        return;
-      }
-      localStorage.setItem('lastFortuneDate', today5am.toISOString());
-      */
+      // const now = new Date();
+      // const today5am = new Date(now);
+      // if (now.getHours() < 5) {
+      //   today5am.setDate(today5am.getDate() - 1);
+      // }
+      // today5am.setHours(5, 0, 0, 0);
+      // const storedDate = localStorage.getItem('lastFortuneDate');
+      // if (storedDate && new Date(storedDate).getTime() === today5am.getTime()) {
+      //   alert("占いは1日1回だけです。明日の朝5時以降にまた試してね！");
+      //   return;
+      // }
 
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
@@ -137,30 +127,34 @@
       document.getElementById("fortuneText").textContent = "今日の運勢: " + fortune;
       document.getElementById("numberText").textContent = "ラッキーソング: " + number;
 
-      // 音楽リンク
       const musicButton = document.getElementById("musicButton");
-      if (number.includes("ORIGINAL SIN")) {
-        musicButton.href = "https://linkco.re/8tdYfQUB";
-      } else if (number.includes("heavenly!heavenly!heavenly!")) {
+      const shareButton = document.getElementById("shareButton");
+      const saveButton = document.getElementById("saveButton");
+
+      if (number.includes("heavenly!heavenly!heavenly!")) {
         musicButton.href = "https://linkco.re/ysm2QFub";
       } else {
-        musicButton.href = "#";
+        musicButton.style.display = "none";
       }
 
-      // ボタン表示
-      document.getElementById("resultWrapper").style.display = "block";
       musicButton.style.display = "inline-block";
-      document.getElementById("shareButton").style.display = "inline-block";
-      document.getElementById("saveButton").style.display = "inline-block";
+      shareButton.style.display = "inline-block";
+      saveButton.style.display = "inline-block";
+      document.getElementById("resultWrapper").style.display = "block";
 
-      // シェアボタン
       const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
       const tweetText = encodeURIComponent(shareText);
-      document.getElementById("shareButton").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+      shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+
+      // localStorage.setItem('lastFortuneDate', today5am.toISOString());
     }
 
     function saveResult() {
-      html2canvas(document.getElementById("resultWrapper"), { useCORS: true }).then(canvas => {
+      html2canvas(document.querySelector("#resultWrapper"), {
+        allowTaint: true,
+        useCORS: true,
+        backgroundColor: null
+      }).then(canvas => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
         link.download = 'fortune_result.png';
@@ -169,5 +163,21 @@
       });
     }
   </script>
+
+  <!-- 5時にリセット（現在は一時的に無効） -->
+  <!--
+  <script>
+    const now = new Date();
+    const resetHour = 5;
+    if (now.getHours() === resetHour && !localStorage.getItem('resetDone')) {
+      localStorage.clear();
+      localStorage.setItem('resetDone', 'true');
+      location.reload();
+    }
+    if (now.getHours() !== resetHour) {
+      localStorage.removeItem('resetDone');
+    }
+  </script>
+  -->
 </body>
 </html>
