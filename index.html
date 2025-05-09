@@ -97,7 +97,7 @@
 
   <div class="instructions">
     🌟おみくじは1日1回🌟  <br>
-    朝５時にリセットされるよ<br>
+    朝５時にリセットされるよ!<br>
     引けないよって時はリロードしてみてね🔄 <br>
 <br>
     【使い方と手順】 <br>
@@ -319,9 +319,8 @@
       "爆ぜる\n(Hopeless town収録)", 
       "怪物\n(Hopeless town収録)", 
       "Across the way\n(Hopeless town収録)"
-    ];
+   
 
- 
     ];
 
     let hasDrawn = false;
@@ -370,6 +369,8 @@
         document.getElementById("resultWrapper").style.display = "block";
 
         const musicButton = document.getElementById("musicButton");
+        const shareButton = document.getElementById("shareButton");
+
       
          if (number.includes("ORIGINAL SIN")) {
         musicButton.href = "https://linkco.re/8tdYfQUB";
