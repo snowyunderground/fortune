@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNOWY UNDER OMIKUJI</title>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <style>
     body {
       background-color: #000;
@@ -61,8 +62,6 @@
       width: 100%;
       height: auto;
       border-radius: 12px;
-      display: block;
-      margin: 0 auto;
     }
 
     .instructions {
@@ -72,12 +71,6 @@
       text-align: center;
       line-height: 1.6;
       color: #ccc;
-    }
-
-    /* 折り返しに対応 */
-    .text-wrap {
-      word-wrap: break-word;
-      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -94,16 +87,8 @@
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
 
-  <!--
-    // 5時にリセット処理（コメントアウト状態）
-    // const now = new Date();
-    // if (now.getHours() === 5 && now.getMinutes() === 0) {
-    //   location.reload();
-    // }
-  -->
-
   <div class="instructions">
- 🌟おみくじは1日1回🌟  <br>
+    🌟おみくじは1日1回🌟  <br>
 朝５時にリセットされるよ<br>
 引けないよって時はリロードしてみてね🔄 <br>
 <br>
@@ -117,22 +102,22 @@
 ※結果カードの文字の上じゃないところを長押ししてね。<br>
 うまく保存できない時はスクショでお願いします🙇<br>
 <br>
-⚠️ラッキーソングを聴くコーナーに関してはJASRACの著作権管理都合によりページ下のトラックリストでは視聴が出来ない為、各配信ストアリンクからご視聴ください。
+⚠️ラッキーソングを聴くコーナーは曲を使用タブからご視聴いただけます。
   </div>
 
   <script>
     const fortunes = [
       "新世界の神になれる日",
       "ごはんがうんまい日",
-      "誰もが振り向く\nセクシーボディな日",
+      "誰もが振り向くセクシーボディな日",
       "世界で一番凡人な日",
-      "チーズ牛丼食べてそう\nって言われる日",
-      "コンビニのくじが当たりそうな日\n（当たるとは言ってない）",
-      "JI・GO・KU（明日に期待）"
+      "チーズ牛丼食べてそうって言われる日",
+      "コンビニのくじが当たりそうな日(当たるとは言ってない)",
+      "JI・GO・KU(明日に期待)"
     ];
 
     const numbers = [
-         "HONEY\n(PINK TAPIR収録)", 
+       "HONEY\n(PINK TAPIR収録)", 
 　　　 "卒業\n(PINK TAPIR収録)",
       "Sleepy hollow\n(PINK TAPIR収録)",
       "Pretend not to see\n(PINK TAPIR収録)", 
@@ -325,13 +310,20 @@
       "Know your limits\n(Hopeless town収録)", 
       "爆ぜる\n(Hopeless town収録)", 
       "怪物\n(Hopeless town収録)", 
-      "Across the way\n(Hopeless town収録)" 
+      "Across the way\n(Hopeless town収録)"       
+      
     ];
 
-    const drawButton = document.getElementById("drawButton");
-    drawButton.addEventListener("click", drawFortune);
+    let hasDrawn = false;
 
-    function drawFortune() {
+    document.getElementById("drawButton").addEventListener("click", function () {
+      if (hasDrawn) {
+        alert("今日のおみくじはもう引いたよ！また明日チャレンジしてね🌙");
+        return;
+      }
+
+      hasDrawn = true;
+
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
       const number = numbers[Math.floor(Math.random() * numbers.length)];
 
@@ -352,26 +344,27 @@
         ctx.lineWidth = 4;
 
         ctx.font = "bold 20px sans-serif";
-        ctx.strokeText("今日の運勢：", 300, 340);
-        ctx.fillText("今日の運勢：", 300, 340);
+        ctx.strokeText("今日の運勢：", 300, 360);
+        ctx.fillText("今日の運勢：", 300, 360);
 
         ctx.font = "bold 26px sans-serif";
-        wrapText(ctx, fortune, 300, 380, 500, 30);
+        ctx.strokeText(fortune, 300, 400);
+        ctx.fillText(fortune, 300, 400);
 
         ctx.font = "bold 20px sans-serif";
-        ctx.strokeText("ラッキーソング：", 300, 480);
-        ctx.fillText("ラッキーソング：", 300, 480);
+        ctx.strokeText("ラッキーソング：", 300, 460);
+        ctx.fillText("ラッキーソング：", 300, 460);
 
         ctx.font = "bold 26px sans-serif";
-        wrapText(ctx, number, 300, 520, 500, 30);
+        ctx.strokeText(number, 300, 500);
+        ctx.fillText(number, 300, 500);
 
         const resultImg = document.getElementById("resultImage");
         resultImg.src = canvas.toDataURL("image/png");
         document.getElementById("resultWrapper").style.display = "block";
 
-        // 楽曲リンク設定
         const musicButton = document.getElementById("musicButton");
-         if (number.includes("ORIGINAL SIN")) {
+              if (number.includes("ORIGINAL SIN")) {
         musicButton.href = "https://linkco.re/8tdYfQUB";
       } else if (number.includes("TOO HIGH DIMENSION")) {
         musicButton.href = "https://linkco.re/4NrfCgbA";
@@ -413,19 +406,17 @@
         musicButton.href = "https://linkco.re/uhG4qGe8";
       } else if (number.includes("heavenly!heavenly!heavenly!")) {
         musicButton.href = "https://linkco.re/ysm2QFub";
-
-  
+        
+       
         } else {
           musicButton.href = "#";
         }
 
-        // ボタン表示
         [musicButton, shareButton].forEach(btn => {
           btn.style.visibility = "visible";
           btn.style.opacity = "1";
         });
 
-        // シェア動作
         shareButton.onclick = function () {
           const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
           const tweetText = encodeURIComponent(shareText);
@@ -433,26 +424,12 @@
           window.open(shareURL, '_blank', 'noopener,noreferrer');
         };
       };
-    }
+    });
 
-    // 長文折り返し対応
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-      const words = text.split(/(\s+|(?=[、。！？])|(?<=[、。！？]))/g);
-      let line = "";
-      for (let i = 0; i < words.length; i++) {
-        const testLine = line + words[i];
-        const testWidth = ctx.measureText(testLine).width;
-        if (testWidth > maxWidth && i > 0) {
-          ctx.strokeText(line, x, y);
-          ctx.fillText(line, x, y);
-          line = words[i];
-          y += lineHeight;
-        } else {
-          line = testLine;
-        }
-      }
-      ctx.strokeText(line, x, y);
-      ctx.fillText(line, x, y);
+    // 5時にリセット処理（自動リロード）
+    const now = new Date();
+    if (now.getHours() === 5 && now.getMinutes() === 0) {
+      location.reload();
     }
   </script>
 </body>
