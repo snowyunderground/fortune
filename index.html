@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNOWY UNDER OMIKUJI</title>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <style>
     body {
       background-color: #000;
@@ -46,7 +45,7 @@
       margin: 0 auto 20px;
     }
 
-    #musicButton, #shareButton, #saveButton {
+    #musicButton, #shareButton {
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.3s;
@@ -62,6 +61,8 @@
       width: 100%;
       height: auto;
       border-radius: 12px;
+      display: block;
+      margin: 0 auto;
     }
 
     .instructions {
@@ -71,6 +72,12 @@
       text-align: center;
       line-height: 1.6;
       color: #ccc;
+    }
+
+    /* 折り返しに対応 */
+    .text-wrap {
+      word-wrap: break-word;
+      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -86,37 +93,35 @@
 
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
-  <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
   <!--
-  // 5時にリセット処理（コメントアウト状態）
-  // const now = new Date();
-  // if (now.getHours() === 5 && now.getMinutes() === 0) {
-  //   location.reload();
-  // }
+    // 5時にリセット処理（コメントアウト状態）
+    // const now = new Date();
+    // if (now.getHours() === 5 && now.getMinutes() === 0) {
+    //   location.reload();
+    // }
   -->
 
   <div class="instructions">
-    【画像保存の手順3】<br>
+    【画像保存の手順１】<br>
     iPhone：結果画像を長押し →「写真に追加」<br>
     Android：結果画像を長押し →「画像をダウンロード」<br>
-    ※うまく保存できない場合は、右下の「📷 結果画面を保存」ボタンもお試しください。
+    ※うまく保存できない場合は、スマホのブラウザ設定をご確認ください。
   </div>
 
   <script>
-  const fortunes = [
-  "新世界の神になれる日",
-  "ごはんがうんまい日",
-  "誰もが振り向く\nセクシーボディな日",
-  "世界で一番凡人な日",
-  "チーズ牛丼食べてそう\nって言われる日",
-  "コンビニのくじが\n当たりそうな日\n(当たるとは言ってない)",
-  "JI・GO・KU(明日に期待)"
-];
-
+    const fortunes = [
+      "新世界の神になれる日",
+      "ごはんがうんまい日",
+      "誰もが振り向くセクシーボディな日",
+      "世界で一番凡人な日",
+      "チーズ牛丼食べてそうって言われる日",
+      "コンビニのくじが当たりそうな日（当たるとは言ってない）",
+      "JI・GO・KU（明日に期待）"
+    ];
 
     const numbers = [
-      "讃美歌(heavenly!heavenly!heavenly!収録)"
+      "讃美歌 (heavenly!heavenly!heavenly!収録)"
     ];
 
     const drawButton = document.getElementById("drawButton");
@@ -143,20 +148,18 @@
         ctx.lineWidth = 4;
 
         ctx.font = "bold 20px sans-serif";
-        ctx.strokeText("今日の運勢：", 300, 360);
-        ctx.fillText("今日の運勢：", 300, 360);
+        ctx.strokeText("今日の運勢：", 300, 340);
+        ctx.fillText("今日の運勢：", 300, 340);
 
         ctx.font = "bold 26px sans-serif";
-        ctx.strokeText(fortune, 300, 400);
-        ctx.fillText(fortune, 300, 400);
+        wrapText(ctx, fortune, 300, 380, 500, 30);
 
         ctx.font = "bold 20px sans-serif";
-        ctx.strokeText("ラッキーソング：", 300, 460);
-        ctx.fillText("ラッキーソング：", 300, 460);
+        ctx.strokeText("ラッキーソング：", 300, 480);
+        ctx.fillText("ラッキーソング：", 300, 480);
 
         ctx.font = "bold 26px sans-serif";
-        ctx.strokeText(number, 300, 500);
-        ctx.fillText(number, 300, 500);
+        wrapText(ctx, number, 300, 520, 500, 30);
 
         const resultImg = document.getElementById("resultImage");
         resultImg.src = canvas.toDataURL("image/png");
@@ -171,7 +174,7 @@
         }
 
         // ボタン表示
-        [musicButton, shareButton, saveButton].forEach(btn => {
+        [musicButton, shareButton].forEach(btn => {
           btn.style.visibility = "visible";
           btn.style.opacity = "1";
         });
@@ -186,13 +189,24 @@
       };
     }
 
-    function saveResult() {
-      const img = document.getElementById("resultImage");
-      const link = document.createElement('a');
-      link.href = img.src;
-      link.download = 'fortune_result.png';
-      link.click();
-      alert("画像を保存しました！画像を添えて投稿してね📷✨");
+    // 長文折り返し対応
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(/(\s+|(?=[、。！？])|(?<=[、。！？]))/g);
+      let line = "";
+      for (let i = 0; i < words.length; i++) {
+        const testLine = line + words[i];
+        const testWidth = ctx.measureText(testLine).width;
+        if (testWidth > maxWidth && i > 0) {
+          ctx.strokeText(line, x, y);
+          ctx.fillText(line, x, y);
+          line = words[i];
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.strokeText(line, x, y);
+      ctx.fillText(line, x, y);
     }
   </script>
 </body>
