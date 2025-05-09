@@ -4,31 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNOWY UNDER OMIKUJI - 毎日ひける占い</title>
-
-  <!-- SEO基礎 -->
   <meta name="description" content="SNOWY UNDER GROUNDの雑なおみくじページ。今日の運勢とラッキーソングをチェックしよう。毎日朝5時にリセットされるよ！">
   <meta name="keywords" content="SNOWY UNDER GROUND, おみくじ, 占い, 銀太, フィオーレ, ラッキーソング, ヴィジュアル系, バンド, 運勢">
   <meta name="author" content="SNOWY UNDER GROUND Official">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://i.imgur.com/LEwN2PN.png">
-
-  <!-- Open Graph / Facebook -->
   <meta property="og:title" content="SNOWY UNDER OMIKUJI - 今日の運勢をチェック！" />
   <meta property="og:description" content="SNOWY UNDER GROUNDの雑なおみくじページであなたの運勢とラッキーソングを占おう。" />
   <meta property="og:image" content="https://i.imgur.com/LEwN2PN.png" />
   <meta property="og:url" content="https://snowyunderground.github.io/fortune/" />
   <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="SNOWY UNDER OMIKUJI">
   <meta name="twitter:description" content="今日の運勢＆ラッキーソングを今すぐチェック！">
   <meta name="twitter:image" content="https://i.imgur.com/LEwN2PN.png">
-
-  <!-- JSライブラリ -->
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
   <style>
     body {
       background-color: #000;
@@ -38,7 +27,6 @@
       margin: 0;
       padding: 0;
     }
-
     img.title-image {
       width: 100%;
       max-width: 480px;
@@ -46,12 +34,10 @@
       display: block;
       margin: 10px auto;
     }
-
     h1 {
       font-size: 28px;
       margin: 0 0 20px;
     }
-
     button, a {
       display: inline-block;
       margin: 10px;
@@ -64,30 +50,25 @@
       color: #fff;
       text-decoration: none;
     }
-
     #drawButton {
       display: block;
       margin: 0 auto 20px;
     }
-
     #musicButton, #shareButton {
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.3s;
     }
-
     #resultWrapper {
       display: none;
       margin: 20px auto;
       max-width: 600px;
     }
-
     #resultImage {
       width: 100%;
       height: auto;
       border-radius: 12px;
     }
-
     .instructions {
       margin: 40px auto;
       max-width: 90%;
@@ -96,17 +77,14 @@
       line-height: 1.6;
       color: #ccc;
     }
-
- /* 折り返しに対応 */
     .text-wrap {
       word-wrap: break-word;
       white-space: pre-wrap;
-   }
+    }
   </style>
 </head>
 <body>
   <img class="title-image" src="https://lh3.googleusercontent.com/pw/AP1GczOH_tNjrElU_ZsQZ0SzL-Yds4-ETI5KVno2cHEYhOm_hCJnkyPFUCQOr-b5dA_evXAjyZ2YEHCcG-ZzgxJWEJFBQgG5gdcCsKn3rAazDLTsHywI5my9=w2400" alt="SNOWY UNDER OMIKUJI" />
-
   <h1>SNOWY UNDER OMIKUJI</h1>
   <button id="drawButton">おみくじを引いてみる</button>
 
@@ -119,229 +97,33 @@
 
   <div class="instructions">
     🌟おみくじは1日1回🌟  <br>
-朝５時にリセットされるよ<br>
-引けないよって時はリロードしてみてね🔄 <br>
-<br>
-【使い方と手順】 <br>
-　まず上に表示された結果カードを長押しして保存📲<br>
+    朝５時にリセットされるよ<br>
+    引けないよって時はリロードしてみてね🔄 <br><br>
+    【使い方と手順】 <br>
+    まず上に表示された結果カードを長押しして保存📲<br>
     ↓<br>
-　Xにシェアボタンを押してご自分のアカウントにログイン<br>
-　↓<br>
-　保存した結果カードを添付してポスト📤<br>
-<br>
-※結果カードの文字の上じゃないところを長押ししてね。<br>
-うまく保存できない時はスクショでお願いします🙇<br>
-<br>
-⚠️ラッキーソングを聴くコーナーは曲を使用タブからご視聴いただけます。
+    Xにシェアボタンを押してご自分のアカウントにログイン<br>
+    ↓<br>
+    保存した結果カードを添付してポスト📤<br><br>
+    ※結果カードの文字の上じゃないところを長押ししてね。<br>
+    うまく保存できない時はスクショでお願いします🙇<br><br>
+    ⚠️ラッキーソングを聴くコーナーは曲を使用タブからご視聴いただけます。
   </div>
 
   <script>
     const fortunes = [
-      "新世界の神になれる日",
-      "ごはんがうんまい日",
-      "誰もが振り向くセクシーボディな日",
-      "世界で一番凡人な日",
-      "チーズ牛丼食べてそうって言われる日",
-      "コンビニのくじが当たりそうな日(当たるとは言ってない)",
-      "JI・GO・KU(明日に期待)"
+      "新世界の神に\nなれる日",
+      "明日は明日で\n明日で明日で明日で",
+      "ごはんが\nうんまい日",
+      "誰もが振り向く\nセクシーボディな日",
+      "世界で一番\n凡人な日",
+      "コンビニのくじが\n当たりそうな日",
+      "JI・GO・KU\n(明日に期待)"
     ];
 
     const numbers = [
-       "HONEY\n(PINK TAPIR収録)", 
-　　　 "卒業\n(PINK TAPIR収録)",
-      "Sleepy hollow\n(PINK TAPIR収録)",
-      "Pretend not to see\n(PINK TAPIR収録)", 
-      "the sad man\n(PINK TAPIR収録)", 
-　　　 "忘れて下さい\n(忘れて下さい収録)",
-      "極彩色の灰世界で\n(忘れて下さい収録)",
-      "とんがり帽子と苺ケーキ\n(忘れて下さい収録)", 
-      "THE ONE\n(PINK TAPIR収録)", 
-      "蝶とマリー\n(忘れて下さい収録）", 
-      "Sink in white\n(Sink in white収録)", 
-　　　 "ラストクリスマス\n(Sink in white収録)",
-      "Gravity of luv\n(Sink in white収録)",
-      "月明かりと弱虫\n(Sink in white収録)", 
-      "最愛と最哀\n(Sink in white収録)", 
-      "ゴースト\n(GHOSTNOTE収録）", 
-      "Vestiges\n(GHOSTNOTE収録)", 
-　　　 "STAY\n(GHOSTNOTE収録)",
-      "遺言\n(遺言収録)",
-      "百年桜\n(PINK TAPIR収録)", 
-      "さくら\n(PINK TAPIR収録)", 
-      "ゴースト\n(GHOSTNOTE収録）", 
-      "ロミ夫とジュリ恵さん\n(GHOSTNOTE収録）", 
-      "秒_沁\n(GHOSTNOTE収録）", 
-      "Ultra Hyper Soul\n(GHOSTNOTE収録）", 
-      "LONGINUS\n(GHOSTNOTE収録）", 
-      "ホーリーグレイル・シンドローム\n(GHOSTNOTE収録）", 
-      "Vestiges\n(GHOSTNOTE収録）", 
-      "STAY\n(GHOSTNOTE収録）", 
-      "blue on blue\n(blue on blue収録)", 
-      "マリンスノウ\n(blue on blue収録)", 
-      "シネマチック・ブギー・ナイト\n(blue on blue収録)", 
-      "透明な花\n(blue on blue収録)", 
-      "Spider’s Aim\n(blue on blue収録)", 
-      "Voyage\n(blue on blue収録)", 
-      "陽炎\n(blue on blue収録)", 
-      "Hello,Crappy World\n(blue on blue収録)", 
-      "DRAGON WARS あわよくば伝説へ\n(blue on blue収録)", 
-      "No,Summerdays\n(blue on blue収録)", 
-      "君に会いに行くよ\n(blue on blue収録)", 
-      "Violet fear\n(Violet fear収録)", 
-      "ハッピィデイズ\n(Violet fear収録)", 
-      "りせっとぼたん\n(Violet fear収録)", 
-      "ヘヴンズアンブレラ\n(Violet fear収録)", 
-      "Bloody Love Song\n(Violet fear収録)", 
-      "Midnight Pumpkin Drive\n(Violet fear収録)", 
-      "楓恋\n(Violet fear収録)", 
-      "シオン\n(Violet fear収録)", 
-      "Between the sky and you\n(Violet fear収録)", 
-      "embers\n(Violet fear収録)",
-      "Chocolate Discord\n(Chocolate Discord収録)", 
-      "21g\n(Chocolate Discord収録)", 
-      "Theory of evolution\n(Chocolate Discord収録)", 
-      "Brain in a vat\n(Chocolate Discord収録)", 
-      "regret(\nChocolate Discord収録)", 
-      "52ヘルツの鯨\n(Chocolate Discord収録)", 
-      "Wizard\n(Chocolate Discord収録)", 
-      "THE INNER BEAST\n(Singer in the dark収録)", 
-      "世界に一つだけの花\n(Singer in the dark収録)", 
-      "シーソーゲーム\n(Singer in the dark収録)", 
-      "眠れる森\n(Singer in the dark収録)", 
-      "あとがき\n(Singer in the dark収録)", 
-      "Alchemy\n(Singer in the dark収録)", 
-      "メガロドン\n(Singer in the dark収録)", 
-      "プラナリア\n(Singer in the dark収録)", 
-      "パラダイス・ロスト\n(Singer in the dark収録)", 
-      "マスカレード\n(Singer in the dark収録)", 
-      "紫陽花と雨の夜\n(Singer in the dark収録)", 
-      "小規模な愛の唄\n(Singer in the dark収録)", 
-      "惨獄死\n(Singer in the dark収録)", 
-      "バナナはおやつに入りません\n(Singer in the dark収録)", 
-      "真夜中のサーカス\n(THE END IS THE BEGINNING収録)", 
-      "Another Cosmos\n(THE END IS THE BEGINNING収録)", 
-      "シルバニア家族\n(THE END IS THE BEGINNING収録)", 
-      "evergreen\n(THE END IS THE BEGINNING収録)", 
-      "Eden for automata\n(THE END IS THE BEGINNING収録)", 
-      "GUILTY\n(THE END IS THE BEGINNING収録)", 
-      "エンドロール\n(THE END IS THE BEGINNING収録)", 
-      "forbbiden flame\n(THE END IS THE BEGINNING収録)", 
-      "Little adventure in my room\n(THE END IS THE BEGINNING収録)", 
-      "Magnetar\n(THE END IS THE BEGINNING収録)", 
-      "vlinder\n(THE END IS THE BEGINNING収録)", 
-      "灰とダイヤモンド\n(THE END IS THE BEGINNING収録)", 
-      "ないものねだり\n(THE END IS THE BEGINNING収録)", 
-      "Pray\n(THE END IS THE BEGINNING収録)", 
-      "MUSEUM\n(MUSEUM収録)", 
-      "落日\n(MUSEUM収録)", 
-      "桃色MURDER SHOW\n(MUSEUM収録)", 
-      "心葬の月\n(MUSEUM収録)", 
-      "溺愛本能ステータス\n(MUSEUM収録)", 
-      "負け猫は遠吠える\n(MUSEUM収録)", 
-      "緋い絲\n(MUSEUM収録)", 
-      "殉職トリックスター\n(MUSEUM収録)", 
-      "イノセントワールド\n(MUSEUM収録)", 
-      "離魂届\n(MUSEUM収録)", 
-      "クリスマスイヴの夜はお父さんお母さんが\n部屋に入って来ても寝たふりが\n好ましいと思います\n(MUSEUM収録)", 
-      "極悪御法度天誅殺\n(MUSEUM収録)", 
-      "バタフライ・エフェクト\n(MUSEUM Ⅱ収録)", 
-      "毒\n(MUSEUM Ⅱ収録)", 
-      "苺センチメンタル\n(MUSEUM Ⅱ収録)", 
-      "SUPER CHORD\n(MUSEUM Ⅱ収録)", 
-      "六本木心中\n(MUSEUM Ⅱ収録)", 
-      "終着駅\n(MUSEUM Ⅱ収録)", 
-      "エル(MUSEUM Ⅱ収録)", 
-      "君が望む永遠と\n僕が欲しかった唯一の倖せ\n(MUSEUM Ⅱ収録)", 
-      "Smiley killer tune Z\n(MUSEUM Ⅱ収録)", 
-      "課長風月\n(MUSEUM Ⅱ収録)", 
-      "星屑セレネイド\n(MUSEUM Ⅱ収録)", 
-      "雪の花\n(MUSEUM Ⅱ収録)", 
-      "滅殺興行八九三式\n(MUSEUM Ⅱ収録)", 
-      "ray not disappear\n(MUSEUM Ⅱ収録)", 
-      "天使\n(MUSEUM Ⅱ収録)", 
-      "ジャック・スパ郎\n(heavenly!heavenly!heavenly!収録)", 
-      "heavenly\n(heavenly!heavenly!heavenly!収録)", 
-      "スピカ\n(heavenly!heavenly!heavenly!収録)", 
-      "北斗の件\n(heavenly!heavenly!heavenly!収録)", 
-      "鎮痛薬\n(heavenly!heavenly!heavenly!収録)", 
-      "サイコパる\n(heavenly!heavenly!heavenly!収録)", 
-      "GOLD HAZE\n(heavenly!heavenly!heavenly!収録)", 
-      "讃美歌\n(heavenly!heavenly!heavenly!収録)", 
-      "くたくたのブランケット\n(heavenly!heavenly!heavenly!収録)", 
-      "東京懐色ラプソディー\n(heavenly!heavenly!heavenly!収録)", 
-      "PAINS LABYRINTH\n(ORIGINAL SIN収録)", 
-      "堕天\n(ORIGINAL SIN収録)", 
-      "LAND MINE GIRL\n(ORIGINAL SIN収録)", 
-      "Necessary?\n(ORIGINAL SIN収録)", 
-      "惑\n(ORIGINAL SIN収録)", 
-      "ドッペる\n(ORIGINAL SIN収録)", 
-      "too young to die\n(ORIGINAL SIN収録)", 
-      "Reincarnation\n(ORIGINAL SIN収録)", 
-      "mosquitone\n(ORIGINAL SIN収録)", 
-      "太陽\n(ORIGINAL SIN収録)", 
-      "BeAUTIFUL MInd people\n(TOO HIGH DIMENSION収録)", 
-      "Orange\n(TOO HIGH DIMENSION収録)", 
-      "Insect invasion\n(TOO HIGH DIMENSION収録)", 
-      "セイレーン\n(TOO HIGH DIMENSION収録)", 
-      "エリーゼのために\n(TOO HIGH DIMENSION収録)", 
-      "熱帯夜\n(TOO HIGH DIMENSION収録)", 
-      "EPHEMERAL KINGDOM\n(TOO HIGH DIMENSION収録)", 
-      "三日月\n(TOO HIGH DIMENSION収録)", 
-      "Allergie\n(TOO HIGH DIMENSION収録)", 
-      "Mole\n(TOO HIGH DIMENSION収録)", 
-      "CK.L\n(Still life goes on収録)", 
-      "ハリネズミ\n(Still life goes on収録)", 
-      "残り香\n(Still life goes on収録)", 
-      "Dead carpet\n(Still life goes on収録)", 
-      "オルフェ\n(Still life goes on収録)", 
-      "Wednesday\n(Still life goes on収録)", 
-      "nightmare\n(Still life goes on収録)", 
-      "atmosphere\n(Still life goes on収録)", 
-      "etude\n(Still life goes on収録)", 
-      "Hermit crab\n(Still life goes on収録)", 
-      "Life goes on\n(Still life goes on収録)", 
-      "ナイトライダー\n(TAMED SPEED収録)", 
-      "Door\n(TAMED SPEED収録)", 
-      "impurities\n(TAMED SPEED収録)", 
-      "Movin'on\n(TAMED SPEED収録)", 
-      "rainy blues\n(TAMED SPEED収録)", 
-      "to the next\n(TAMED SPEED収録)", 
-      "ラフレシア\n(TAMED SPEED収録)", 
-      "ホームシック\n(TAMED SPEED収録)",
-      "ヒロイン\n(TAMED SPEED収録)", 
-      "Sign\n(TAMED SPEED収録)", 
-      "タイガー＆ドラゴン\n(Inferior to animals収録)", 
-      "ポケットの魔物\n(Inferior to animals収録)",
-      "Delay\n(Inferior to animals収録)", 
-      "Shallow scheme\n(Inferior to animals収録)", 
-      "Wolves howling\n(Inferior to animals収録)", 
-      "ORNAMENTAL\n(Inferior to animals収録)", 
-      "hyena\n(Inferior to animals収録)",
-      "aquarium\n(Inferior to animals収録)", 
-      "the Thinking dead\n(Inferior to animals収録)",
-      "惑星\n(Inferior to animals収録)", 
-      "HELLy Christmas(HELLy Christmas収録)", 
-      "Maze walker\n(FAIRYTALE ADDICTION収録)", 
-      "STRANGE LAND\n(FAIRYTALE ADDICTION収録)", 
-      "Little Red Riding Hood\n(FAIRYTALE ADDICTION収録)", 
-      "The Wicked Witch of the West\n(FAIRYTALE ADDICTION収録)", 
-      "True Lies\n(FAIRYTALE ADDICTION収録)", 
-      "NEVERLAND\n(FAIRYTALE ADDICTION収録)", 
-      "愛のままにわがままに僕は\n君だけを傷つけちゃうかもしれない\n(FAIRYTALE ADDICTION収録)", 
-      "Mr.Invincible\n(FAIRYTALE ADDICTION収録)", 
-      "諸刃の剣\n(FAIRYTALE ADDICTION収録)", 
-      "ヒカリトカゲ\n(FAIRYTALE ADDICTION収録)", 
-      "Hopeless town\n(Hopeless town収録)", 
-      "BADMAN\n(Hopeless town収録)", 
-      "GODS HAND\n(Hopeless town収録)", 
-      "Crack\n(Hopeless town収録)", 
-      "darker than darkness\n(Hopeless town収録)", 
-      "monopoly\n(Hopeless town収録)", 
-      "Know your limits\n(Hopeless town収録)", 
-      "爆ぜる\n(Hopeless town収録)", 
-      "怪物\n(Hopeless town収録)", 
-      "Across the way\n(Hopeless town収録)"       
-      
+      "HONEY\n(PINK TAPIR収録)",
+      "ORIGINAL SIN\n(黒曜に咲く夜桜)"
     ];
 
     let hasDrawn = false;
@@ -351,7 +133,6 @@
         alert("今日のおみくじはもう引いたよ！また明日チャレンジしてね🌙");
         return;
       }
-
       hasDrawn = true;
 
       const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
@@ -367,7 +148,6 @@
       bg.src = "https://i.imgur.com/hA6weKR.png";
       bg.onload = function () {
         ctx.drawImage(bg, 0, 0, 600, 800);
-
         ctx.textAlign = "center";
         ctx.fillStyle = "black";
         ctx.strokeStyle = "white";
@@ -377,67 +157,23 @@
         ctx.strokeText("今日の運勢：", 300, 360);
         ctx.fillText("今日の運勢：", 300, 360);
 
-        ctx.font = "bold 26px sans-serif";
-        ctx.strokeText(fortune, 300, 400);
-        ctx.fillText(fortune, 300, 400);
+        ctx.font = "bold 24px sans-serif";
+        wrapText(ctx, fortune, 300, 400, 400, 32);
 
         ctx.font = "bold 20px sans-serif";
-        ctx.strokeText("ラッキーソング：", 300, 460);
-        ctx.fillText("ラッキーソング：", 300, 460);
+        ctx.strokeText("ラッキーソング：", 300, 500);
+        ctx.fillText("ラッキーソング：", 300, 500);
 
-        ctx.font = "bold 26px sans-serif";
-        ctx.strokeText(number, 300, 500);
-        ctx.fillText(number, 300, 500);
+        ctx.font = "bold 24px sans-serif";
+        wrapText(ctx, number, 300, 540, 400, 32);
 
         const resultImg = document.getElementById("resultImage");
         resultImg.src = canvas.toDataURL("image/png");
         document.getElementById("resultWrapper").style.display = "block";
 
         const musicButton = document.getElementById("musicButton");
-              if (number.includes("ORIGINAL SIN")) {
-        musicButton.href = "https://linkco.re/8tdYfQUB";
-      } else if (number.includes("TOO HIGH DIMENSION")) {
-        musicButton.href = "https://linkco.re/4NrfCgbA";
-      } else if (number.includes("Still life goes on")) {
-        musicButton.href = "https://linkco.re/PHQEBCGH";
-      } else if (number.includes("TAMED SPEED")) {
-        musicButton.href = "https://linkco.re/C0Cg6F1U";
-      } else if (number.includes("Inferior to animals")) {
-        musicButton.href = "https://linkco.re/BXT9YsAx";
-      } else if (number.includes("HELLy Christmas")) {
-        musicButton.href = "https://linkco.re/DEfMznyf";
-      } else if (number.includes("FAIRYTALE ADDICTION")) {
-        musicButton.href = "https://linkco.re/qRa87Tyv";
-      } else if (number.includes("Hopeless town")) {
-        musicButton.href = "https://linkco.re/GEs0DeME";
-      } else if (number.includes("Sink in white")) {
-        musicButton.href = "https://linkco.re/PzmVnz62";
-      } else if (number.includes("忘れて下さい")) {
-        musicButton.href = "https://linkco.re/UHepNv67";
-      } else if (number.includes("遺言")) {
-        musicButton.href = "https://linkco.re/880faBsu";
-      } else if (number.includes("PINK TAPIR")) {
-        musicButton.href = "https://linkco.re/CfZ2AMq3";
-      } else if (number.includes("GHOSTNOTE")) {
-        musicButton.href = "https://linkco.re/fcxAVvX8";
-      } else if (number.includes("blue on blue")) {
-        musicButton.href = "https://linkco.re/t13YVHDp";
-      } else if (number.includes("violet fear")) {
-        musicButton.href = "https://linkco.re/RqHVxVaX";
-      } else if (number.includes("MUSEUM")) {
-        musicButton.href = "https://linkco.re/vESsScZr";
-      } else if (number.includes("Chocolate Discord")) {
-        musicButton.href = "https://linkco.re/X3YByyCG";
-      } else if (number.includes("Singer in the dark")) {
-        musicButton.href = "https://linkco.re/MnEA7Ne0";
-      } else if (number.includes("THE END IS THE BEGINNING")) {
-        musicButton.href = "https://linkco.re/s3zFGZRD";
-      } else if (number.includes("MUSEUM Ⅱ")) {
-        musicButton.href = "https://linkco.re/uhG4qGe8";
-      } else if (number.includes("heavenly!heavenly!heavenly!")) {
-        musicButton.href = "https://linkco.re/ysm2QFub";
-        
-       
+        if (number.includes("ORIGINAL SIN")) {
+          musicButton.href = "https://linkco.re/8tdYfQUB";
         } else {
           musicButton.href = "#";
         }
@@ -456,29 +192,34 @@
       };
     });
 
-    // 5時にリセット処理（自動リロード）
+    // 改行対応 wrapText
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const lines = text.split('\n');
+      lines.forEach((lineText) => {
+        let words = lineText.split(/(\s+|(?=[、。！？])|(?<=[、。！？]))/g);
+        let line = "";
+        for (let i = 0; i < words.length; i++) {
+          const testLine = line + words[i];
+          const testWidth = ctx.measureText(testLine).width;
+          if (testWidth > maxWidth && i > 0) {
+            ctx.strokeText(line, x, y);
+            ctx.fillText(line, x, y);
+            line = words[i];
+            y += lineHeight;
+          } else {
+            line = testLine;
+          }
+        }
+        ctx.strokeText(line, x, y);
+        ctx.fillText(line, x, y);
+        y += lineHeight;
+      });
+    }
+
+    // 毎朝5時にリセット（自動リロード）※テスト用ではコメントアウト可
     const now = new Date();
     if (now.getHours() === 5 && now.getMinutes() === 0) {
       location.reload();
-   
-  // 長文折り返し対応
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-      const words = text.split(/(\s+|(?=[、。！？])|(?<=[、。！？]))/g);
-      let line = "";
-      for (let i = 0; i < words.length; i++) {
-        const testLine = line + words[i];
-        const testWidth = ctx.measureText(testLine).width;
-        if (testWidth > maxWidth && i > 0) {
-          ctx.strokeText(line, x, y);
-          ctx.fillText(line, x, y);
-          line = words[i];
-          y += lineHeight;
-        } else {
-          line = testLine;
-        }
-      }
-      ctx.strokeText(line, x, y);
-      ctx.fillText(line, x, y);
     }
   </script>
 </body>
