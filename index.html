@@ -86,6 +86,7 @@
 
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
+  <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
   <!--
   // 5時にリセット処理（コメントアウト状態）
@@ -97,11 +98,11 @@
 
   <div class="instructions">
    【使い方と手順】 <br>
-　まず上に表示された結果画像を長押しして保存📲<br>
+　まず上に表示された結果画像を長押しして保存<br>
     ↓<br>
 　Xにシェアボタンを押してご自分のアカウントにログイン<br>
 　↓<br>
-　保存した結果画像を添付してポストして下さい📷✨<br>
+　保存した結果画像を添付してポスト♩<br>
   <br>
     ※うまく保存できない場合はスクショして下さい。
   </div>
@@ -180,7 +181,7 @@
 
         // シェア動作
         shareButton.onclick = function () {
-          const shareText = `🎲SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nおみくじ → https://snowyunderground.github.io/fortune/\nSNOWY公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+          const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
           const tweetText = encodeURIComponent(shareText);
           const shareURL = `https://twitter.com/intent/tweet?text=${tweetText}`;
           window.open(shareURL, '_blank', 'noopener,noreferrer');
