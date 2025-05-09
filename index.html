@@ -86,7 +86,6 @@
 
   <a id="musicButton" href="#" target="_blank">ラッキーソングを聴く</a>
   <button id="shareButton">Xでシェア</button>
-  <button id="saveButton" onclick="saveResult()">📷 結果画面を保存</button>
 
   <!--
   // 5時にリセット処理（コメントアウト状態）
@@ -97,17 +96,25 @@
   -->
 
   <div class="instructions">
-    【画像保存の手順】<br>
-    iPhone：結果画像を長押し →「写真に追加」<br>
-    Android：結果画像を長押し →「画像をダウンロード」<br>
-    ※うまく保存できない場合は、右下の「📷 結果画面を保存」ボタンもお試しください。
+   【使い方と手順】 <br>
+　まず上に表示された結果画像を長押しして保存📲<br>
+    ↓<br>
+　Xにシェアボタンを押してご自分のアカウントにログイン<br>
+　↓<br>
+　保存した結果画像を添付してポストして下さい📷✨<br>
+  <br>
+    ※うまく保存できない場合はスクショして下さい。
   </div>
 
   <script>
     const fortunes = [
-      "新世界の神になれる日",
-      "ごはんがおいしい日",
-      "誰もが振り向くナイスボディな日"
+    "新世界の神になれる日",
+      "ごはんがうんまい日",
+      "誰もが振り向くセクシーボディな日",
+      “世界で一番凡人な日",
+      "チーズ牛丼食べてそうって言われる日",
+      "コンビニのくじが当たりそうな日(当たるとは言ってない)”,
+      "JI・GO・KU(明日に期待)"  
     ];
 
     const numbers = [
@@ -173,7 +180,7 @@
 
         // シェア動作
         shareButton.onclick = function () {
-          const shareText = `SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nSNOWYおみくじ → https://snowyunderground.github.io/fortune/\n公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
+          const shareText = `🎲SNOWY UNDER OMIKUJI結果🎲\n【運勢】${fortune}\n【ラッキーソング】${number}\nおみくじ → https://snowyunderground.github.io/fortune/\nSNOWY公式サイト → https://snowy-underground.bitfan.id\n#SNOWYUNDER #おみくじ`;
           const tweetText = encodeURIComponent(shareText);
           const shareURL = `https://twitter.com/intent/tweet?text=${tweetText}`;
           window.open(shareURL, '_blank', 'noopener,noreferrer');
