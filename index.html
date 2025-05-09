@@ -96,6 +96,12 @@
       line-height: 1.6;
       color: #ccc;
     }
+
+ /* 折り返しに対応 */
+    .text-wrap {
+      word-wrap: break-word;
+      white-space: pre-wrap;
+   }
   </style>
 </head>
 <body>
@@ -454,6 +460,25 @@
     const now = new Date();
     if (now.getHours() === 5 && now.getMinutes() === 0) {
       location.reload();
+   
+  // 長文折り返し対応
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(/(\s+|(?=[、。！？])|(?<=[、。！？]))/g);
+      let line = "";
+      for (let i = 0; i < words.length; i++) {
+        const testLine = line + words[i];
+        const testWidth = ctx.measureText(testLine).width;
+        if (testWidth > maxWidth && i > 0) {
+          ctx.strokeText(line, x, y);
+          ctx.fillText(line, x, y);
+          line = words[i];
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.strokeText(line, x, y);
+      ctx.fillText(line, x, y);
     }
   </script>
 </body>
